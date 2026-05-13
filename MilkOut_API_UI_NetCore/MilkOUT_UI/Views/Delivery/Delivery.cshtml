@@ -1,0 +1,86 @@
+﻿nitesh@{
+    ViewData["Title"] = "Delivery";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h5 class="page-title">Delivery</h5>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Delivery</li>
+        </ol>
+    </div>
+
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    @* <div class="card-title">Search Deliveries </div>*@
+                    <div class="card-title">Delivery List </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH Delivery-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name<span class="text-red">*</span> </label>
+                                <select id="ddlSearchDealerName" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this);">
+                                    <option value="">Select Dealer Name </option>
+                                </select>
+                                <div class="invalid-feedback">Please Select Dealer</div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Delivery Date</label>
+                                <input type="text" name="datefilter" class="form-control" id="txtSearchDeliveryDate"
+                                    placeholder="Delivery Date" autocomplete="off">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Delivery Document</th>
+                                    <th>Delivery Date</th>
+                                    <th>Status</th>
+                                   @* <th>Shhiped To</th>
+                                    <th>Created By</th>
+                                    <th>Created On</th>*@
+                                    <th class="text-right" style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row"></div>
+
+</div>
+
+
+@section Scripts {
+    <script src="~/tran_js/delivery.js" asp-append-version="true"></script>
+}

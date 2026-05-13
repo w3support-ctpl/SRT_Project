@@ -1,0 +1,446 @@
+﻿@{
+    ViewData["Title"] = "Invoice Publish";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Invoice Publish</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Invoice Publish</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Invoice Publish List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="#" class="btn btn-link btn-sm  mr-2" onclick="ShowDownloadInvoice();"><i
+                                    class="fa fa-download mr-2"></i> Download Invoice</a>
+                        }
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0)" class="btn btn-link btn-sm  mr-2"
+                                onclick="ShowGenerateInvoice();"><i class="fa fa-cloud-upload mr-2"></i> Generate
+                                Invoice</a>
+                        }
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0)" class="btn btn-link btn-sm  mr-2"
+                                onclick="ShowPublishInvoice();"><i class="fa fa-cloud-upload mr-2"></i> Publish Invoice</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchVoucherType">Invoice Type <span
+                                        class="text-red">*</span></label>
+                                <select id="dllSearchVoucherType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');ClearInvalidState(this);">
+                                    <option value="">Select Invoice Type</option>
+                                </select>
+                                <div class="invalid-feedback">Invoice Type must be selected.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchPeriod">
+                                    Invoice Date <span class="text-red">*</span>
+                                </label>
+                                <input type="text" class="form-control" name="datefilter" id="txtSearchPeriod"
+                                    onchange="OnDurationChnage()" />
+                                <input type="text" class="form-control" id="txtSearchPeriodHidden" hidden
+                                    style="display: none;" />
+                                <div class="invalid-feedback">Invalid Invoice Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchMCCType">MCC Type </label>
+                                <select id="dllSearchMCCType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();">
+                                    <option value="">All MCC Type</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchMCC">MCC Name </label>
+                                <div class="row gutters-xs">
+                                    <div class="col">
+                                        <select id="dllSearchMCC" class="form-control select2" required=""
+                                            onchange="ClearDataTable('tableSearch')">
+                                            <option value="">All MCC </option>
+                                        </select>
+                                    </div>
+
+                                    <span class="col-auto">
+                                        <button id="btn_MCC_View" class="btn btn-primary" type="button"
+                                            onclick="GetSearchList();">Go!</button>
+                                    </span>
+                                    <div class="invalid-feedback">Posting Status must be selected.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="height: 70vh;">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    @* <th style="width: 20px;">#</th> *@
+                                    <th class="text-center">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="selectAllInvoice"
+                                                onclick="SelectAllInvoiceCheckbox();" />
+                                            <label for="selectAllInvoice"
+                                                class="custom-control-label text-dark"></label>
+                                        </label>
+                                    </th>
+                                    <th>Date</th>
+                                    <th>Farmer Code</th>
+                                    <th>Farmer Name</th>
+                                    <th>MCC Code</th>
+                                    <th>MCC Name</th>
+                                    <th>MCC Type</th>
+                                    <th>Invoice No</th>
+                                    <th>Muster Cycle</th>
+                                    <th>Net Payable</th>
+                                    <th>Invoice Generated On</th>
+                                    <th>Invoice Publish status</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                @* <div class="card-header">
+                <div class="card-title">View Milk Rate</div>
+                <!-- <div class="card-options">
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+                </div> -->
+                </div> *@
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="panel panel-primary">
+                                <div>
+                                    <div class="user-tabs mb-4">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs">
+                                            <li>
+                                                <a href="#tab1" class="active" data-toggle="tab">Publish Invoice</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tab2" data-toggle="tab">Download Invoice</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-content">
+                                <!----    ----    ----    ----    Tab - Rate Table    ----    ----    ----    ---->
+
+                                <div class="tab-pane active" id="tab1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">Publish Invoice</div>
+                                            <div class="card-options">
+                                                @if (ShowAddButton == true)
+                                                {
+                                                    <a href="javascript:void(0)" class="btn btn-link btn-sm  mr-2"
+                                                        onclick="tab1ShowGenerateInvoice();"><i
+                                                            class="fa fa-cloud-upload mr-2"></i> Generate
+                                                        Invoice</a>
+                                                }
+                                                @if (ShowAddButton == true)
+                                                {
+                                                    <a href="javascript:void(0)" class="btn btn-link btn-sm  mr-2"
+                                                        onclick="tab1ShowPublishInvoice();"><i
+                                                            class="fa fa-cloud-upload mr-2"></i> Publish Invoice</a>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab1txtSearchPeriod">Invoice
+                                                            Date <span class="text-red">*</span></label>
+                                                        <input type="date" id="tab1txtSearchPeriod" class="form-control"
+                                                            placeholder="Enter Invoice Date" maxlength="50"
+                                                            autocomplete="off" onchange="OnDurationChnage()">
+                                                        <div class="invalid-feedback">Invalid Invoice Date</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab1dllSearchVoucherType">Invoice Type <span
+                                                                class="text-red">*</span></label>
+                                                        <select id="tab1dllSearchVoucherType"
+                                                            class="form-control select2" required=""
+                                                            onchange="ClearDataTable('tab1tableSearch');ClearInvalidState(this);">
+                                                            <option value="">Select Invoice Type</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Invoice Type must be selected.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search" for="tab1dllSearchMCCType">MCC
+                                                            Type
+                                                        </label>
+                                                        <select id="tab1dllSearchMCCType" class="form-control select2"
+                                                            required=""
+                                                            onchange="ClearDataTable('tab1tableSearch');GetMCCName();ClearInvalidState(this);">
+                                                            <option value="">All MCC Type</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab1dllSearchMCCWorkType">MCC Work Type
+                                                        </label>
+                                                        <select id="tab1dllSearchMCCWorkType"
+                                                            class="form-control select2" required=""
+                                                            onchange="ClearDataTable('tab1tableSearch');GetMCCName();ClearInvalidState(this);">
+                                                            <option value="">All MCC Work Type</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-4 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search" for="tab1dllSearchMCC">MCC Name
+                                                        </label>
+                                                        <div class="row gutters-xs">
+                                                            <div class="col">
+                                                                <select id="tab1dllSearchMCC"
+                                                                    class="form-control select2" required=""
+                                                                    onchange="ClearDataTable('tab1tableSearch');ClearInvalidState(this);">
+                                                                    <option value="">All MCC </option>
+                                                                </select>
+                                                            </div>
+
+                                                            <span class="col-auto">
+                                                                <button id="tab1btn_MCC_View" class="btn btn-primary"
+                                                                    type="button"
+                                                                    onclick="GetSearchMCCList();">Go!</button>
+                                                            </span>
+                                                            <div class="invalid-feedback">Posting Status must be
+                                                                selected.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive" style="height: 70vh;">
+                                                <table id="tab1tableSearch"
+                                                    class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="tab1selectAllInvoice"
+                                                                        onclick="tab1SelectAllInvoiceCheckbox();" />
+                                                                    <label for="tab1selectAllInvoice"
+                                                                        class="custom-control-label text-dark"></label>
+                                                                </label>
+                                                            </th>
+                                                            <th>MCC Code</th>
+                                                            <th>MCC Name</th>
+                                                            <th>MCC Type</th>
+                                                            <th>MCC Work Type</th>
+                                                            <th hidden></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tab1tableData">
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="tab2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">Download Invoice</div>
+                                            <div class="card-options">
+                                                @if (ShowAddButton == true)
+                                                {
+                                                    <a href="#" class="btn btn-link btn-sm  mr-2"
+                                                        onclick="tab2ShowDownloadInvoice();"><i class="fa fa-download mr-2"></i>
+                                                        Download Invoice</a>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab2txtSearchPeriod">Invoice Date <span
+                                                                class="text-red">*</span></label>
+                                                        <input type="date" id="tab2txtSearchPeriod" class="form-control"
+                                                            placeholder="Enter Invoice Date" maxlength="50"
+                                                            autocomplete="off" onchange="OnDurationChnage()" />
+                                                        <div class="invalid-feedback">Invalid Invoice Date</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab2dllSearchVoucherType">Invoice Type <span
+                                                                class="text-red">*</span></label>
+                                                        <select id="tab2dllSearchVoucherType"
+                                                            class="form-control select2" required=""
+                                                            onchange="ClearDataTable('tab2tableSearch');ClearInvalidState(this);">
+                                                            <option value="">Select Invoice Type</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Invoice Type must be selected.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search" for="tab2dllSearchMCCType">MCC
+                                                            Type
+                                                        </label>
+                                                        <select id="tab2dllSearchMCCType" class="form-control select2"
+                                                            required=""
+                                                            onchange="ClearDataTable('tab2tableSearch');tab2GetMCCName();ClearInvalidState(this);">
+                                                            <option value="">All MCC Type</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-2 col-lg-2">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search"
+                                                            for="tab2dllSearchMCCWorkType">MCC Work Type
+                                                        </label>
+                                                        <select id="tab2dllSearchMCCWorkType"
+                                                            class="form-control select2" required=""
+                                                            onchange="ClearDataTable('tab2tableSearch');tab2GetMCCName();ClearInvalidState(this);">
+                                                            <option value="">All MCC Work Type</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6 col-md-4 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label-search" for="tab2dllSearchMCC">MCC Name
+                                                        </label>
+                                                        <div class="row gutters-xs">
+                                                            <div class="col">
+                                                                <select id="tab2dllSearchMCC"
+                                                                    class="form-control select2" required=""
+                                                                    onchange="ClearDataTable('tab2tableSearch');ClearInvalidState(this);">
+                                                                    <option value="">All MCC</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <span class="col-auto">
+                                                                <button id="tab2btn_MCC_View" class="btn btn-primary"
+                                                                    type="button" onclick="GetSearchListData();">
+                                                                    Go!
+                                                                </button>
+                                                            </span>
+                                                            <div class="invalid-feedback">Posting Status must be
+                                                                selected.</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="table-responsive" style="height: 70vh">
+                                                <table id="tab2tableSearch"
+                                                    class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center">
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input"
+                                                                        id="tab2selectAllInvoice"
+                                                                        onclick="tab2SelectAllInvoiceCheckbox();" />
+                                                                    <label for="tab2selectAllInvoice"
+                                                                        class="custom-control-label text-dark"></label>
+                                                                </label>
+                                                            </th>
+                                                            <th>Date</th>
+                                                            <th>Farmer Code</th>
+                                                            <th>Farmer Name</th>
+                                                            <th>MCC Code</th>
+                                                            <th>MCC Name</th>
+                                                            <th>MCC Type</th>
+                                                            <th>Invoice No</th>
+                                                            <th>Muster Cycle</th>
+                                                            <th>Net Payable</th>
+                                                            <th>Invoice Generated On</th>
+                                                            <th>Publish</th>
+                                                            <th hidden></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tab2tableData"></tbody>
+                                                </table>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/invoice_invoicepublish.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,324 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Milk Collection MCC Entry</div>
+            <div class="card-options">
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" id="btn_Save_Tanker" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseMCCEntry();">Close</a>
+            </div>
+        </div>
+
+
+
+        <!----    ----    ----    ----    Section - Success and Error Message for Data Entry    ----    ----    ----    ---->
+
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+
+
+
+        <div class="card-body">
+            <!----    ----    ----    ----    Section - Input fields - Tanker & MCC Details    ----    ----    ----    ---->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Tanker No</label>
+                        <input type="text" id="txtMCCEntryTankerNo" class="form-control" placeholder="Enter Tanker No " maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Name</label>
+                        <input type="text" id="txtMCCEntryRouteName" class="form-control" placeholder="Enter Route Name" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift</label>
+                        <input type="text" id="txtMCCEntryShift" class="form-control" placeholder="Enter Shift" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="text" id="txtMCCEntryTime" class="form-control" placeholder="Enter Time " maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">BMC Name</label>
+                        <input type="text" id="txtMCCEntryBMCName" class="form-control" placeholder="Enter BMC Name" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Date</label>
+                        <input type="date" id="txtMCCEntryCollectionDate" class="form-control" placeholder="Enter Collection Date" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+
+
+            <!----    ----    ----    ----    Details Entered by MCC Agent    ----    ----    ----    ---->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Details Entered by MCC Agent</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Milk Type</label>
+                                <input type="text" id="txtEntryMCCAgentMilkType" class="form-control" placeholder="Enter Milk Type" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Milk Status</label>
+                                <input type="text" id="txtEntryMCCAgentMilkStatus" class="form-control" placeholder="Enter Milk Status" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Weight</label>
+                                <input type="text" id="txtEntryMCCAgentWeight" class="form-control" placeholder="Enter Weight" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Liters</label>
+                                <input type="text" id="txtEntryMCCAgentLiters" class="form-control" placeholder="Enter Liters" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">SNF</label>
+                                <input type="text" id="txtEntryMCCAgentSNF" class="form-control" placeholder="Enter SNF" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">FAT</label>
+                                <input type="text" id="txtEntryMCCAgentFat" class="form-control" placeholder="Enter FAT" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!----    ----    ----    ----    Details Entered by Route Chemist Agent    ----    ----    ----    ---->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Details Entered by Route Chemist</div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Milk Status</label>
+                                <input type="text" id="txtEntryRouteChemistMilkStatus" class="form-control" placeholder="Enter Milk Status" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">SNF</label>
+                                <input type="text" id="txtEntryRouteChemistSNF" class="form-control" placeholder="Enter SNF" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">FAT</label>
+                                <input type="text" id="txtEntryRouteChemistFat" class="form-control" placeholder="Enter FAT" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Compartment</label>
+                                <input type="text" id="txtEntryRouteChemistCompartment" class="form-control" placeholder="Enter Compartment" autocomplete="off" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!----    ----    ----    ----    TABLE - Quantity at Depot    ----    ----    ----    ---->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Quantity at Depot</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm mr-2" id="btnAddQuantity" onclick="OpenQuantityModal('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableMilkQuantityList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Milk Type</th>
+                                    <th>Milk Status</th>
+                                    <th>Weight</th>
+                                    <th>Liters</th>
+                                    <th>Time</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryQuantity">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!----    ----    ----    ----    TABLE - Quality at Depot    ----    ----    ----    ---->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Quality at Depot</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm mr-2" id="btnAddQuality" onclick="OpenQualityModal('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableMilkQualityList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Sample No</th>
+                                    <th>Status</th>
+                                    <th>SNF</th>
+                                    <th>FAT</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryQuality">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!----    ----    ----    ----    Modal - Milk Quantity at Depot    ----    ----    ----    ---->
+
+<div class="modal fade" id="modelEntryQuantityTruck" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditQuantityTruck"></h5>
+                <span hidden id="lblActionQuantity"></span>
+                <span hidden id="lblQuantityId"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlEntryQuantityMilkType" class="form-control select2 w-100"
+                                    required="" onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryQuantityMilkStatus" class="form-control select2 w-100"
+                                    required="">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Weight <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQuantityWeight" class="form-control" placeholder="Enter Weight" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnQuantitySave" onclick="SaveMilkQuantity();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!----    ----    ----    ----    Modal - Milk Quality at Depot    ----    ----    ----    ---->
+
+<div class="modal fade" id="modelEntryQualityTruck" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditQualityTruck"></h5>
+                <span hidden id="lblActionQuality"></span>
+                <span hidden id="lblQualityId"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryQualitySampleNo" class="form-control-label">Sample No <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQualitySampleNo" class="form-control" placeholder="Enter Sample No" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryQualityMilkStatus" class="form-control select2 w-100"
+                                    required="">
+                                <option value="">Select Status</option>
+                            </select>
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryBaseSNF" class="form-control-label">FAT <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQualityFat" class="form-control" placeholder="Enter FAT" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntrySNF" class="form-control-label">SNF <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQualitySNF" class="form-control" placeholder="Enter SNF" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnQualitySave" onclick="SaveMilkQuality();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

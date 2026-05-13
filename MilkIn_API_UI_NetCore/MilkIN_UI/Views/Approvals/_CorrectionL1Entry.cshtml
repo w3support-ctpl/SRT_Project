@@ -1,0 +1,186 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Correction Request Entry</div>
+            <div class="card-options">
+                <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--DATA FROM DB-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input type="text" id="txtEntryRemark" class="form-control" placeholder="Enter Remark" maxlength="100" autocomplete="off">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Date </label>
+                        <input type="text" id="txtEntryRequestDate" class="form-control"
+                               value="" maxlength="50" autocomplete="off"
+                               disabled>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Name </label>
+                        <input type="text" id="txtEntryAgentName" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Mobile No </label>
+                        <input type="text" id="txtEntryAgentMobileNo" class="form-control"
+                               value="" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name </label>
+                        <input type="text" id="txtEntryMCCName" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Farmer Name </label>
+                        <input type="text" id="txtEntryFarmerName" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Shift</label>
+                        <input type="text" id="txtEntryCollectionShift" class="form-control" value="X Y Z" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input type="text" id="txtEntryRemarks" class="form-control"
+                               value="" maxlength="100" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <!--
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Transaction Date </label>
+                        <input type="text" id="txtEntryTransactionDate" class="form-control"
+                               value="25 May 2023" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                -->
+            </div>
+
+            <!--REQUESTED DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Requested Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Requested Milk Quantity </label>
+                        <input type="text" id="txtEntryRequestedMilkQuantity" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Requested SNF </label>
+                        <input type="text" id="txtEntryRequestedSNF" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Requested FAT </label>
+                        <input type="text" id="txtEntryRequestedFAT" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!--RECORDED DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Recorded Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Recorded Milk Quantity </label>
+                        <input type="text" id="txtEntryRecordedMilkQuantity" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Recorded SNF </label>
+                        <input type="text" id="txtEntryRecordedSNF" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Recorded FAT </label>
+                        <input type="text" id="txtEntryRecordedFAT" class="form-control"
+                               value="" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+            <!-- APPROVED -->
+            <!-- 
+            <h5 class="mb-4 font-weight-bold text-secondary">Approval</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approved Quantity <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryUpdatedQuantity" class="form-control"
+                               placeholder="Enter Approved Quantity" minlength="1" autocomplete="off">
+                        <div class="invalid-feedback">Updated Quantity can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approved SNF <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryUpdatedSNF" class="form-control"
+                               placeholder="Enter Approved SNF" value="" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Updated SNF can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approved FAT <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryUpdatedFAT" class="form-control"
+                               placeholder="Enter Approved FAT" value="" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Updated FAT can't be blank.</div>
+                    </div>
+                </div>
+ 
+            </div>-->
+        </div>
+    </div>
+</div>

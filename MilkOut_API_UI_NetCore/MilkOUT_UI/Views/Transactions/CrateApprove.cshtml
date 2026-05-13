@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Crate Approval";
+}
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Crate Approval</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Transaction</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Crate Received from Dealer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Crate Approval</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm mr-3" onclick="RejectCrate();"><i class="fa fa-save mr-2"></i> Reject</a>
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ApproveCrate();"><i class="fa fa-save mr-2"></i> Approve</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name</label>
+                                <select id="ddlSearchDealer" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this)">
+                                    <option value="">Select Dealer Name</option>
+                                </select>
+                                <div class="invalid-feedback">Dealer Name must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="form-label-search">Received Period<span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchReceivedPeriod" name="datefilter"
+                                       placeholder="Received Period"
+                                       maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid Received Period</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <button id="btn_Search" class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                    <i class="fa fa-search mr-2"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="height: 70vh;">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" onchange="SelectAllCheckbox();" class="custom-control-input select-all checkbox"
+                                                   id="selectAll" />
+                                            <label for="selectAll" class="custom-control-label text-dark"></label>
+                                        </label>
+                                    </th>
+                                    <th hidden></th>
+                                    <th>Dealer Name</th>
+                                    <th>Material</th>
+                                    <th>Received Date</th>
+                                    <th>Good Qty</th>
+                                    <th>Broken Qty</th>
+                                    <th>Third Party Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/transactions_crateapprove.js" asp-append-version="true"></script>
+}
+
+

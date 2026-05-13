@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Complaints";
+}
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Complaints</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Transactions</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Complaints</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Complaints List</div>
+                    <div class="card-options">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Complaint Type </label>
+                                <select id="ddlSearchComplaintType" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this); ClearDataTable('tableSearch');">
+                                    <option value="">Select Complaint Type</option>
+                                </select>
+                                <div class="invalid-feedback">Complaint Type must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Complaint Period <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchComplaintPeriod" name="datefilter"
+                                       placeholder="Enter Complaints Period" maxlength="50" autocomplete="off"
+                                       onkeypress="ClearDataTable('tableSearch'); ClearDataTable('tableSearch');">
+                                <div class="invalid-feedback">Invalid Complaint Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Complaint Status </label>
+                                <select id="ddlSearchComplaintStatus" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this); ClearDataTable('tableSearch');">
+                                    <option value="">Complaint Status</option>
+                                </select>
+                                <div class="invalid-feedback">Complaint Status must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <button id="btn_Search" class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                    <i class="fa fa-search mr-2"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Complaint Date</th>
+                                    <th>Complaint Type</th>
+                                    <th>User Type</th>
+                                    <th>User Name</th>
+                                    <th>Open Days</th>
+                                    <th>Complaint Id</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryRemarks" tabdocumentation="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRemarks">Add Remarks</h5>
+                <span hidden id="lblActionRemarks"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Remarks<span class="text-red">*</span> </label>
+                    <textarea id="txtEntryRemarks" class="form-control" placeholder="Enter Remarks"  rows="1" autocomplete="off" onkeypress="ClearInvalidState(this)"></textarea>
+                    <div class="invalid-feedback"> Remarks can't be blank.</div>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_SaveRemarks"
+                    onclick="SaveEntryRemarksDetails();">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/tran_js/transactions_complaints.js" asp-append-version="true"></script>
+}
+

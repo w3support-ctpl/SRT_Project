@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "Incentives";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Incentives</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0);">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Incentives</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Incentives List</div>
+                    <div class="card-options">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="OpenModal();">
+                            <i class="fa fa-upload mr-2"></i> Upload
+                        </a>
+                        <a href="javascript:void(0)" id="btn_Add" class="btn btn-primary btn-sm mr-2"
+                           onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Ledger Status </label>
+                                <select class="form-control select2" id="ddlSearchLedgerStatus" required=""
+                                        onchange="ClearDataTable('tableSearch');" style="font-size: .8375rem;">
+                                    <option value="" selected>Select Ledger Status</option>
+                                </select>
+                                <div class="invalid-feedback">Ledger Status must be selected.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3" id="divSearchEntryPeriod" style="display:none;">
+                            <div class="form-group">
+                                <label class="form-label-search">Entry Period </label>
+                                <input type="text" class="form-control" id="txtSearchEntryPeriod" name="datefilter"
+                                       maxlength="50" autocomplete="off" value=""
+                                       onkeypress="ClearDataTable('tableSearch');">
+                                <div class="invalid-feedback">Invalid Posting Period</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                    style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                    onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                               class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px;">#</th>
+                                    <th>Entry Date</th>
+                                    <th>User Type</th>
+                                    <th>User Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Incentives Type</th>
+                                    <th>Total Amount</th>
+                                    <th>Amount Paid</th>
+                                    <th>Balance</th>
+                                    <th>No. Of Installments</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+    <div class="modal fade" id="modelEntryMCC" tabdocumentation="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excel Upload</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4 col-md-4">
+                            <div class="form-group">
+                                <label class="form-label-search">MCC Name <span class="text-red">*</span></label>
+                                <select id="ddlSearchMCC" class="form-control select2 w-100" required=""
+                                        onchange="ClearInvalidState(this);">
+                                    <option value="">Select MCC </option>
+                                </select>
+                                <div class="invalid-feedback">MCC must be selected.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-4">
+                            <label class="form-label-search">File <span class="text-red">*</span></label>
+                            <input id="txtEntryExcelUpload" class="form-control w-100" type="file" class="dropify" />
+
+                        </div>
+                        <div class="col-sm-12 col-lg-4 col-md-4">
+                            <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);"
+                                    type="button" title="Add" onclick="SaveExcelUploadEntry();">
+                                <i class="fa fa-upload mr-2"></i> Upload
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" style="height: 300px !important;">
+                        <!-- style="height: 300px !important;">-->
+                        <table id="tableUploadFarmerEntryModal"
+                               class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;"></th>
+                                    <th>MCC FARMER CODE</th>
+                                    <th>Entry Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryModelUploadFarmer">
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                    @* <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                    <input id="txtEntryExcelUpload" type="file" class="dropify" data-height="180" />
+                    </div>
+                    </div> *@
+                </div>
+                @* <div class="modal-footer" style="justify-content:flex-start">
+                <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                title="Add" onclick="SaveExcelUploadEntry();">
+                <i class="fa fa-upload mr-2"></i> Upload
+                </button>
+                </div> *@
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/manage_incentives.js" asp-append-version="true"></script>
+}

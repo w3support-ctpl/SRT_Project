@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Transporter";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Transporter</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Transporter</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Transporter List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Transporter Name</label>
+                                <input type="text" id="txtSearchTransporterName" class="form-control"
+                                       placeholder="Transporter Name"
+                                       maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Transporter Code</th>
+                                    <th>Transporter Name</th>
+                                    <th>Contact Person</th>
+                                    <th>Mobile No</th>
+                                    <th>Status</th>
+                                    <th>
+                                        District
+                                    </th>
+                                    <th>
+                                        Taluka
+                                    </th>
+                                    <th>
+                                        Village
+                                    </th>
+                                    <th>
+                                        Bank Name
+                                    </th>
+                                    <th>
+                                        Account Name
+                                    </th>
+                                    <th>
+                                        Account No
+                                    </th>
+                                    <th>
+                                        IFSC Code
+                                    </th>
+                                    <th>
+                                        Company Pan No
+                                    </th>
+                                    <th>
+                                        FSSAI License No
+                                    </th>
+                                    <th>FSSAI License Valid Till
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/masters_transporter.js" asp-append-version="true"></script>
+}

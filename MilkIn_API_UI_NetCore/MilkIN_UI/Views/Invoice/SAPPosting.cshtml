@@ -1,0 +1,259 @@
+﻿@{
+    ViewData["Title"] = "SAP Posting";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">SAP Posting</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Farmer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">SAP List</div>
+                    <div class="card-options">
+                        <a href="javascript:void(0)" class="btn btn-secondary btn-sm  mr-2" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Voucher Date <span
+                                        class="text-red">*</span></label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Voucher Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Voucher Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryMCCType">MCC Type </label>
+                                <select id="dllSearchEntryMCCType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();">
+                                    <option value="">All MCC Type</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryMCCWorkType">MCC Work Type
+                                </label>
+                                <select id="dllSearchEntryMCCWorkType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();">
+                                    <option value="">All MCC Work Type</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryMCC">MCC Name </label>
+                                <div class="row gutters-xs">
+                                    <div class="col">
+                                        <select id="dllSearchEntryMCC" class="form-control select2" required=""
+                                            onchange="ClearDataTable('tableSearch');">
+                                            <option value="">All MCC Name</option>
+                                        </select>
+                                    </div>
+
+                                    <span class="col-auto">
+                                        <button class="btn btn-primary" type="button"
+                                            onclick="GetSearchList();">Go!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="table-responsive" style="height: 70vh;">
+                            <table id="tableSearch"
+                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20px;">#</th>
+                                        <th>Voucher Date</th>
+                                        <th>Farmer Name</th>
+                                        <th>MCC Name</th>
+                                        <th>Muster Cycle</th>
+                                        <th>Amount</th>
+                                        <th>Income Document No.</th>
+                                        <th>Description</th>
+                                        <th>Income Status</th>
+                                        <th class="text-right" style="width: 50px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryFarmer" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmer">Add</h5>
+                <span hidden id="lblActionFarmer"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Income For <span class="text-red">*</span></label>
+                            <select id="ddlEntryIncomeFor" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);GetSearchIncomeFor();">
+                                <option value="">Select Income For</option>
+                            </select>
+                            <div class="invalid-feedback">Income For must be selected.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Voucher Date <span class="text-red">*</span></label>
+                            <input type="date" id="txtEntryVoucherDate" class="form-control" value=""
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Voucher Date</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12" id="divddlEntryMCC">
+                        <div class="form-group">
+                            <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryMCC" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);GetSearchFarmerName();">
+                                <option value="">Select MCC Name</option>
+                            </select>
+                            <div class="invalid-feedback">MCC Name must be selected.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12" id="divddlEntryFarmer">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryFarmer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Farmer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Farmer Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Amount <span class="text-red">*</span></label>
+                            <input type="number" id="txtEntryAmount" class="form-control" placeholder="Enter Amount"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Amount can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="col-form-label">Description</label>
+                            <textarea class="form-control" id="txtEntryDescription" name="example-textarea-input" maxlength="50"
+                                rows="2" placeholder="Enter Description"></textarea>
+                        </div>
+                    </div>
+
+                    @* <div id="divddlEntryRadio1" class="col-12">
+                        <div class="form-group">
+                            <label class="custom-switch">
+                                <input id="chkEntryMilkPayment" type="checkbox" value="" class="custom-switch-input"
+                                    checked>
+                                <span class="custom-switch-indicator"></span>
+                                <span class="custom-switch-description">Milk Payment</span>
+                            </label>
+                        </div>
+                    </div> *@
+                    @* <div class="row"> *@
+
+                    <div class="col-6" id="divddlEntryRadio1">
+                        <div class="form-group">
+                            <input type="radio" id="radioMilkPayment1" class="form-control" checked="checked"
+                                style="height: 1rem; width: 1rem; display: inline; vertical-align: sub"
+                                name="radioAcceptReject" value="1" />
+                            <label for="radioMilkPayment1">Milk Payment</label>
+                        </div>
+                    </div>
+                    <div class="col-6" id="divddlEntryRadio2">
+                        <div class="form-group">
+                            <input type="radio" id="radioMilkPayment2" class="form-control"
+                                style="height: 1rem; width: 1rem; display: inline; vertical-align: sub"
+                                name="radioAcceptReject" value="0" />
+                            <label for="radioMilkPayment2">MPPI</label>
+                        </div>
+                    </div>
+
+                    @* </div> *@
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Farmer"
+                    onclick="SaveFarmerEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modelEntryMCC" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditMCC">Error Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12" id="divEntryErrorMessage">
+                        <label class="col-form-label">Error Message</label>
+                        <textarea class="form-control" id="txtEntryErrorMessage" name="example-textarea-input" rows="4"
+                            placeholder="Error Message"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/invoice_sapposting.js" asp-append-version="true"></script>
+}

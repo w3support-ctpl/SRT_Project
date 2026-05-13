@@ -1,0 +1,335 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Farmer Data Correction</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remark</label>
+                        <input type="text" id="txtEntryRemark" class="form-control" placeholder="Enter Remark" maxlength="100" autocomplete="off">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <!--Farmer DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Farmer Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Farmer Name </label>
+                        <input type="text" id="txtEntryFarmerName" class="form-control" placeholder="Enter Farmer Name" 
+                        maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Farmer Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Birth Date </label>
+                        <input type="text" id="txtEntryBirthDate" class="form-control" value="" 
+                                onchange="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Birth Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No </label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No" 
+                        maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Email ID </label>
+                        <input type="email" id="txtEntryEmailID" class="form-control" placeholder="Enter Email ID" 
+                        maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Email Id</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name </label>
+                        <select id="ddlEntryMCCName" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);" disabled>
+                            <option value="">Select MCC Name</option>
+                        </select>
+                        <div class="invalid-feedback">MCC Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Pan No </label>
+                        <input type="text" id="txtEntryPanNo" class="form-control" placeholder="Enter Pan No" 
+                        maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Pan No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Aadhar No </label>
+                        <input type="text" id="txtEntryAadharNo" class="form-control" maxlength="12" 
+                                placeholder="Enter Aadhar No" autocomplete="off" onkeypress="ClearInvalidState(this);" 
+                                disabled>
+                        <div class="invalid-feedback">Invalid Aadhar No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Alternate Mobile No </label>
+                        <input type="tel" id="txtEntryAlternateMobileNo" class="form-control" 
+                                placeholder="Enter Mobile No" maxlength="10" autocomplete="off" 
+                                onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+            </div>
+            <!--New Mobile Number-->
+            <div id="divNewMobileNumber" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Contact Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">New Mobile No <span class="text-red">*</span></label>
+                            <input type="tel" id="txtEntryNewMobileNo" class="form-control" placeholder="Enter New Mobile No" 
+                                    maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Mobile No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <!--BANK DETAILS-->
+            <div id="divBankDetails" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Bank Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Bank Name </label>
+                            <select id="ddlEntryBankName" class="form-control select2 w-100"
+                                    required="" onchange="GetBranch(); ClearInvalidState(this);" disabled>
+                                <option value="">Select Bank Name</option>
+                            </select>
+                            <div class="invalid-feedback">Bank Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Branch Name </label>
+                            <select id="ddlEntryBranchName" class="form-control select2 w-100"
+                                    required="" onchange="SetIFSCCode(''); ClearInvalidState(this);" disabled>
+                                <option value="">Select Branch Name</option>
+                            </select>
+                            <div class="invalid-feedback">Branch Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account Name </label>
+                            <input type="text" id="txtEntryAccountName" class="form-control"
+                                   placeholder="Enter Account Name" maxlength="50" autocomplete="off"
+                                   onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Account Name can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account No </label>
+                            <input type="text" id="txtEntryAccountNo" class="form-control"
+                                   placeholder="Enter Account No" maxlength="20" autocomplete="off"
+                                   onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Account No can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">IFSC Code </label>
+                            <label id="txtEntryIFSCCode" class="form-control"> </label>
+                            <div class="invalid-feedback">Invalid IFSC Code.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NEW Bank Details-->
+            <div id="divNewBankDetails" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">New Bank Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Bank Name <span class="text-red">*</span></label>
+                            <select id="ddlNewEntryBankName" class="form-control select2 w-100"
+                                    required="" onchange="GetNewBranch(); ClearInvalidState(this);">
+                                <option value="">Select Bank Name</option>
+                            </select>
+                            <div class="invalid-feedback">Bank Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Branch Name <span class="text-red">*</span></label>
+                            <select id="ddlNewEntryBranchName" class="form-control select2 w-100"
+                                    required="" onchange="SetNewIFSCCode(''); ClearInvalidState(this);">
+                                <option value="">Select Branch Name</option>
+                            </select>
+                            <div class="invalid-feedback">Branch Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account Name <span class="text-red">*</span></label>
+                            <input type="text" id="txtNewEntryAccountName" class="form-control" 
+                                    placeholder="Enter Account Name" 
+                                    maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Account Name can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Account No <span class="text-red">*</span></label>
+                            <input type="text" id="txtNewEntryAccountNo" class="form-control" 
+                                    placeholder="Enter Account No" 
+                                    maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Account No can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">IFSC Code </label>
+                            <label id="txtNewEntryIFSCCode" class="form-control"> </label>
+                            <div class="invalid-feedback">Invalid IFSC Code.</div>
+                        </div>
+                    </div>
+                </div>
+                <!--PHOTOS/UPLOAD-->
+                <h5 class="mb-4 font-weight-bold text-secondary">Other Details</h5>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <div class="p-2 border mb-4">
+                                <div class="upload-images d-flex">
+                                    <div>
+                                        <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                    </div>
+                                    <div class="ml-3 mt-2">
+                                        <h6 class="mb-0 mt-3 font-weight-bold">Bank Cheque / PassBook</h6>
+                                    </div>
+                                    <div class="float-right ml-auto">
+                                        <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                        <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!--Nominee DETAILS-->
+            <div id="divNomineeDetails" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Nominee Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Name <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryNomineeName" class="form-control"
+                                   placeholder="Enter Nominee Name" maxlength="50" autocomplete="off" disabled>
+                            <div class="invalid-feedback">Nominee Name can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Relation <span class="text-red">*</span></label>
+                            <select id="ddlEntryNomineeRelation" class="form-control select2 w-100"
+                                    required="" disabled>
+                                <option value="">Select Nominee Relation</option>
+                            </select>
+                            <div class="invalid-feedback">Nominee Relation must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Mobile No <span class="text-red">*</span></label>
+                            <input type="tel" id="txtEntryNomineeMobileNo" class="form-control"
+                                   placeholder="Enter Nominee Mobile No" maxlength="10" autocomplete="off"
+                                   onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Invalid Mobile No</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Aadhar No </label>
+                            <input type="text" id="txtEntryNomineeAadharNo" class="form-control"
+                                   maxlength="12" placeholder="Enter Nominee Aadhar No" autocomplete="off"
+                                   onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Invalid Aadhar No</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- New Nominee Details-->
+            <div id="divNewNomineeDetails" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">New Nominee Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Name <span class="text-red">*</span></label>
+                            <input type="text" id="txtNewEntryNomineeName" class="form-control" placeholder="Enter Nominee Name" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Nominee Name can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Relation <span class="text-red">*</span></label>
+                            <select id="ddlNewEntryNomineeRelation" class="form-control select2 w-100"
+                                    required="">
+                                <option value="">Select Nominee Relation</option>
+                            </select>
+                            <div class="invalid-feedback">Nominee Relation can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Mobile No <span class="text-red">*</span></label>
+                            <input type="tel" id="txtNewEntryNomineeMobileNo" class="form-control" placeholder="Enter Nominee Mobile No" maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Mobile No</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Nominee Aadhar No <span class="text-red">*</span></label>
+                            <input type="text" id="txtNewEntryNomineeAadharNo" class="form-control" maxlength="12" placeholder="Enter Nominee Aadhar No" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Aadhar No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

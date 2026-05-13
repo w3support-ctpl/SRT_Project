@@ -1,0 +1,263 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Route Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Live Status
+                    <input id="chkEntryLiveStatus" type="checkbox" value="1" class="custom-switch-input">
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Code <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRouteCode" class="form-control" placeholder="Enter Route Code" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Route Code can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRouteName" class="form-control" placeholder="Enter Route Name" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Route Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Collection Shift <span class="text-red">*</span></label>
+                        <select id="ddlEntryMilkCollectionShift" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Milk Collection Shift</option>
+                        </select>
+                        <div class="invalid-feedback">Milk Collection Shift must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label for="ddlEntryVehicleType" class="form-label">Vehicle Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryVehicleType" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);SetMCCDropdown();">
+                            <option value="">Select Vehicle Type</option>
+                        </select>
+                        <div class="invalid-feedback">Vehicle Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Freight Fix Cost</label>
+                        <input type="number" id="txtEntryFreightFixCost" class="form-control" placeholder="Enter Freight Fix Cost"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Freight Fix Cost can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-4 col-sm-12" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Frequency <span class="text-red">*</span></label>
+                        <select id="ddlEntryFrequency" name="ddlEntryFrequency" class="form-control select2 w-100" 
+                        required="" placeholder="Select Frequency" multiple onchange="ClearInvalidState(this);">
+                            <option value="">Select Frequency</option>
+                        </select>
+                        <div class="invalid-feedback">Frequency can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Start Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryStartDate" class="form-control" placeholder="Enter Start Date"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Start Date can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route End Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryEndDate" class="form-control" placeholder="Enter End Date"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">End Date can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Trip Start Time <span class="text-red">*</span></label>
+                        <input type="time" id="txtEntryStartTime" class="form-control" placeholder="Enter Start Time"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Start Time can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Trip End Time <span class="text-red">*</span></label>
+                        <input type="time" id="txtEntryEndTime" class="form-control" placeholder="Enter End Time"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">End Time can't be blank.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Total Route Distance in KM <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryTotalDistance" class="form-control" placeholder="Enter Total Distance in KM"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Total Distance in KM can't be blank.</div>
+                    </div>
+                </div>
+                
+            </div>
+            <!--PERFORMANCE INDICATOR-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Performance Benchmark</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Duration (in hours) </label>
+                        <input type="number" id="txtDuration" class="form-control" placeholder="Enter Duration"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Fuel Required (in liters) </label>
+                        <input type="number" id="txtFuelRequired" class="form-control" placeholder="Enter Fuel Required"
+                               maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <!--ROUTE ITEM-->
+            <div id="divEntryRouteItemTable" class="row">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Route Item List</div>
+                                    <div class="card-options">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="OpenModal('Add');ResetRouteItemForm();"><i class="fa fa-plus mr-2"></i> Add</a>
+                                    </div>
+                                </div>
+                                <div id="divItemSuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div id="divItemError" class="card-alert alert alert-danger mb-0" style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablerouteitems" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Stage No</th>
+                                                    <th>MCC</th>
+                                                    <th>Distance in KM</th>
+                                                    <th>Arrival Time</th>
+                                                    <th>Departure Time</th>
+                                                    <th class="text-right" style="width: 30px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntry">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FOOTER DELETE-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--MODAL SECTION-->
+<div class="modal fade" id="modelEntryRoute" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRouteItem"></h5>
+                <span hidden id="lblActionRouteItem"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ddlEntryMCCName" class="form-control-label">MCC <span class="text-red">*</span></label>
+                        <select id="ddlEntryMCCName" class="form-control  select2 w-100" name="ddlEntryMCCName" maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <option value="">Select MCC</option>
+                        </select>
+                        <span id="lblRouteId" hidden style="display: none;"></span>
+                        <span id="lblRouteItemStageNo" hidden style="display: none;"></span>
+                        <span id="lblRouteItemAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">MCC must be selected.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="txtEntryDistanceInKm" class="form-control-label">Distance (in KM) <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtEntryDistanceInKm" placeholder="Enter Distance (in Km)" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Distance can't be blank.</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="txtEntryArrivalTime" class="form-control-label">Arrival Time <span class="text-red">*</span></label>
+                                <input type="time" class="form-control" id="txtEntryArrivalTime" placeholder="Enter Arrival Time" maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Arrival Time can't be blank.</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="txtEntryDepartureTime" class="form-control-label">Departure Time <span class="text-red">*</span></label>
+                                <input type="time" class="form-control" id="txtEntryDepartureTime" placeholder="Enter Departure Time" maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Departure Time can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Item" onclick="SaveRouteItemEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+

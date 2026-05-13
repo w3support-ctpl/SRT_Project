@@ -1,0 +1,231 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Correction Request Entry</div>
+            <div class="card-options">
+                <a href="#" id="btnSave" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--DATA FROM DB-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input type="text" id="txtEntryRemark" class="form-control" placeholder="Enter Remark"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Date </label>
+                        <input type="text" id="txtEntryRequestDate" class="form-control" value="" maxlength="50"
+                            autocomplete="off" disabled>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Name </label>
+                        <input type="text" id="txtEntryAgentName" class="form-control" value="A B C" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Mobile No </label>
+                        <input type="text" id="txtEntryAgentMobileNo" class="form-control" value="9898767654"
+                            autocomplete="off" disabled>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name </label>
+                        <input type="text" id="txtEntryMCCName" class="form-control" value="X Y Z" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Farmer Name </label>
+                        <input type="text" id="txtEntryFarmerName" class="form-control" value="" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Shift</label>
+                        <input type="text" id="txtEntryCollectionShift" class="form-control" value="X Y Z"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input type="text" id="txtEntryRemarks" class="form-control"
+                            value="Milk quantity is recorded less." maxlength="100" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+            <!--RECORDED DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Recorded Details</h5>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Quantity </label>
+                        <input type="text" id="txtEntryRecordedMilkQuantity" class="form-control" value="250 KG"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FAT </label>
+                        <input type="text" id="txtEntryRecordedFAT" class="form-control" value="3.5" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">SNF </label>
+                        <input type="text" id="txtEntryRecordedSNF" class="form-control" value="8.6" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--REQUESTED DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Requested Details</h5>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Quantity </label>
+                        <input type="text" id="txtEntryRequestedMilkQuantity" class="form-control" value=""
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FAT </label>
+                        <input type="text" id="txtEntryRequestedFAT" class="form-control" value="" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">SNF </label>
+                        <input type="text" id="txtEntryRequestedSNF" class="form-control" value="" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!--Non-Editable Section-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Approved/Rejected</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <input type="radio" id="radioEntryAccept1" class="form-control" checked="checked"
+                            style="height:1rem;width:1rem;display:inline;vertical-align:sub;" name="radioAcceptReject1"
+                            value="Accepted" disabled>
+                        <label for="radioEntryAccept1">Accept Request</label>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <input type="radio" id="radioEntryReject1" class="form-control"
+                            style="height:1rem;width:1rem;display:inline;vertical-align:sub;" name="radioAcceptReject1"
+                            value="Rejected" disabled>
+                        <label for="radioEntryReject1">Reject Request</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Updated Quantity <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryUpdatedQuantity1" class="form-control" value="Updated Quantity"
+                            minlength="1" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRemarksApproveReject1" class="form-control" value="Remarks"
+                            maxlength="200" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!--Editable Section-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Approve/Reject</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Quantity <span class="text-red">*</span></label>
+                        <input type="number" id="txtEntryApprovedMilkQuantity" class="form-control"
+                            onkeypress="ClearInvalidState(this);" value="" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Invalid Quantity</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FAT <span class="text-red">*</span></label>
+                        <input type="number" id="txtEntryApprovedFAT" class="form-control" value=""
+                            onkeypress="ClearInvalidState(this);" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Invalid FAT</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">SNF <span class="text-red">*</span></label>
+                        <input type="number" id="txtEntryApprovedSNF" class="form-control"
+                            onkeypress="ClearInvalidState(this);" value="" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Invalid SNF</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

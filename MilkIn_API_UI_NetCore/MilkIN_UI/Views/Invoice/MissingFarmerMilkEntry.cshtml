@@ -1,0 +1,202 @@
+﻿@{
+    ViewData["Title"] = "Missing Farmer Milk Entry";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Missing Farmer Milk Entry</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Missing Farmer Milk Entry</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Missing Farmer Milk Entry</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                    class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 form-group">
+                            <label class="form-label-search" for="txtSearchPeriod">
+                                Entry Period
+                            </label>
+                            <input type="text" class="form-control" name="datefilter" id="txtSearchPeriod"
+                                onchange="ClearDataTable('tableSearch')" />
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Date</th>
+                                    <th>Farmer Code</th>
+                                    <th>Farmer Name</th>
+                                    <th>Milk Type</th>
+                                    <th>Milk Status</th>
+                                    <th>Quantity (KG)</th>
+                                    <th>Quantity (Ltr)</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                    <th>Status</th>
+                                    <th hidden></th>
+                                    @* <th class="text-right" style="width: 50px;">Action</th> *@
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<!--MODAL-->
+<div class="modal fade" id="modelEntryFarmerCollection" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmerCollection">Add</h5>
+                <span hidden id="lblActionFarmerCollection"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Collection Date <span class="text-red">*</span></label>
+                            <input type="date" id="txtEntryCollectionDate" class="form-control" value=""
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Collection Date</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Collection Shift <span class="text-red">*</span></label>
+                            <select id="ddlEntryCollectionShift" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Collection Shift</option>
+                            </select>
+                            <div class="invalid-feedback">Collection Shift must be selected.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryFarmer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Farmer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Farmer Name must be selected.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkType" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkStatus" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+
+                        <div class="form-group">
+                            <label class="form-label">Quantity (Ltr) <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryLiters" class="form-control"
+                                placeholder="Enter Quantity (Ltr)" maxlength="50" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Weight can't be blank.</div>
+                        </div>
+
+                    </div>
+                    @* </div>
+                    <div class="row"> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">FAT <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryFAT" class="form-control" placeholder="Enter FAT"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">FAT can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label">SNF <span class="text-red">*</span></label>
+                                <input type="text" id="txtEntrySNF" class="form-control" placeholder="Enter SNF"
+                                    maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">SNF can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div> *@
+
+                    @* <div class="row" id="divEntryCellNo"> *@
+
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Farmer_Collection"
+                    onclick="SaveFarmerCollectionEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/invoice_missing_farmer_milk_entry.js" asp-append-version="true"></script>
+}

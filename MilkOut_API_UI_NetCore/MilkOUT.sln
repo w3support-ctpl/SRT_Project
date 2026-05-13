@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilkOUT_API", "MilkOUT_API\MilkOUT_API.csproj", "{12234FC1-6B35-4BC9-BD4C-4E227E529C22}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilkOUT_UI", "MilkOUT_UI\MilkOUT_UI.csproj", "{9D4EE075-5961-4457-91D3-DEA468999918}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilkOUT_Jobs", "MilkOUT_Jobs\MilkOUT_Jobs.csproj", "{B84FDF37-9DFB-45DF-9548-D01A17B27007}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MilkOUT_DayEnd_Jobs", "MilkOUT_DayEnd_Jobs\MilkOUT_DayEnd_Jobs.csproj", "{4238B1BA-8361-4377-BAA4-711F79E4E315}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilkOUT_SalesEmployee", "MilkOUT_SalesEmployee\MilkOUT_SalesEmployee.csproj", "{03E5EAD2-2EE9-4B07-96A6-40C1A1CFEF37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FleetX", "FleetX\FleetX.csproj", "{BDB1CD8D-8494-4257-A065-6ECB5D8D9FFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12234FC1-6B35-4BC9-BD4C-4E227E529C22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12234FC1-6B35-4BC9-BD4C-4E227E529C22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12234FC1-6B35-4BC9-BD4C-4E227E529C22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12234FC1-6B35-4BC9-BD4C-4E227E529C22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D4EE075-5961-4457-91D3-DEA468999918}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D4EE075-5961-4457-91D3-DEA468999918}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D4EE075-5961-4457-91D3-DEA468999918}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D4EE075-5961-4457-91D3-DEA468999918}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B84FDF37-9DFB-45DF-9548-D01A17B27007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84FDF37-9DFB-45DF-9548-D01A17B27007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84FDF37-9DFB-45DF-9548-D01A17B27007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84FDF37-9DFB-45DF-9548-D01A17B27007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4238B1BA-8361-4377-BAA4-711F79E4E315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4238B1BA-8361-4377-BAA4-711F79E4E315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4238B1BA-8361-4377-BAA4-711F79E4E315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4238B1BA-8361-4377-BAA4-711F79E4E315}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E5EAD2-2EE9-4B07-96A6-40C1A1CFEF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E5EAD2-2EE9-4B07-96A6-40C1A1CFEF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E5EAD2-2EE9-4B07-96A6-40C1A1CFEF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E5EAD2-2EE9-4B07-96A6-40C1A1CFEF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB1CD8D-8494-4257-A065-6ECB5D8D9FFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB1CD8D-8494-4257-A065-6ECB5D8D9FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB1CD8D-8494-4257-A065-6ECB5D8D9FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB1CD8D-8494-4257-A065-6ECB5D8D9FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56663F3B-AFC3-4DDD-8D96-36DDB7330375}
+	EndGlobalSection
+EndGlobal

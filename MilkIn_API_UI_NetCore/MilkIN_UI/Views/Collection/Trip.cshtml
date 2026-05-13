@@ -1,0 +1,153 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Trip Document";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Trip Document</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Milk Collection</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Trip Document</li>
+            <span id="lblSessionRoleId" hidden
+                style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Trip List</div>
+                    <!--
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                    -->
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Trip Document Status </label>
+                                <select class="form-control select2" id="ddlSearchTripDocumentStatus"
+                                    onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Trip Document</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 form-group">
+                            <label class="form-label-search" for="txtSearchDuration">Entry Period </label>
+                            <input type="text" class="form-control" name="datefilter" id="txtSearchDuration"
+                                onchange="ClearDataTable('tableSearch')" autocomplete="off" />
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <!--TRIP DOCUMENT STATUS CREATED-->
+                    <div id="tableTripCreated">
+                        <div class="table-responsive">
+                            <table id="tableSearchCreated"
+                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Trip No</th>
+                                        <th>Vehicle No</th>
+                                        <th>Route Name</th>
+                                        <th>Driver</th>
+                                        <th>Shift</th>
+                                        <th>Duration</th>
+                                        <th>Net Distance</th>
+                                        <th>Status</th>
+
+                                        <th class="text-right" style="width: 100px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!--TRIP DOCUMENT STATUS PENDING-->
+                    <div id="tableTripPending" style="display:none;">
+                        <div class="table-responsive">
+                            <table id="tableSearchPending"
+                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Vehicle No</th>
+                                        <th>Route Name</th>
+                                        <th>Driver</th>
+                                        <th>Shift</th>
+                                        <th>Duration</th>
+                                        <th>Distance as per Driver App</th>
+                                        <th>Distance as per FleetX</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>MH-XXXX</td>
+                                        <td>Loni Phata</td>
+                                        <td>P Q R</td>
+                                        <td>Morning</td>
+                                        <td>07:00 AM - 10:45 AM</td>
+                                        <td>120.00</td>
+                                        <td>112.00</td>
+                                        <td>Active</td>
+                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                            <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit"
+                                                onclick="ShowEditEntry('1');">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>MH-YYYY</td>
+                                        <td>Pimpari Phata</td>
+                                        <td>A B C</td>
+                                        <td>Morning</td>
+                                        <td>07:20 AM - 11:02 AM</td>
+                                        <td>90.00</td>
+                                        <td>85.00</td>
+                                        <td>Active</td>
+                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                            <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit"
+                                                onclick="ShowEditEntry('1');">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/collection_trip.js" asp-append-version="true"></script>
+}

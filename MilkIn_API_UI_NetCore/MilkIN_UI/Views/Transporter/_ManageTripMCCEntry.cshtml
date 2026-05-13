@@ -1,0 +1,404 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Manage Trip MCC Entry</div>
+            <div class="card-options">
+                @* <label class="custom-switch" style="margin-right: 40px;">
+                Live Status
+                <input id="chkEntryLiveStatus" type="checkbox" value="1" class="custom-switch-input">
+                <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <label class="custom-switch" style="margin-right: 40px;">
+                Active Status
+                <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label> *@
+                <a id="shift_btn_Save" href="#" class="btn btn-primary btn-sm mr-2"
+                    onclick="SaveShiftStartEntry(this);"><i class="fa fa-clock-o mr-2"></i> Start Shift</a>
+                <a id="end_btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveShiftEndEntry(this);"><i
+                        class="fa fa-clock-o mr-2"></i> End Shift</a>
+                <a id="btn_MCCSave" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveMCCEntry(this);"><i
+                        class="fa fa-truck mr-2"></i> Turck Reach MCC</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseMCCEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntryMCCSuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryMCCError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMCCName" class="form-control" placeholder="Enter MCC Name"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Route Name can't be blank.</div>
+
+                        <span id="lblMCCAction" hidden style="display: none;"></span>
+                        <span id="lblMCCMCCId" hidden style="display: none;"></span>
+                        <span id="lblMCCMCCCollectionShiftId" hidden style="display: none;"></span>
+                        <span id="lblMCCEntryId" hidden style="display: none;"></span>
+                        <span id="lblMCCRouteId" hidden style="display: none;"></span>
+                        <span id="lblMCCTripDocumentId" hidden style="display: none;"></span>
+                        <span id="lblMCCDriverId" hidden style="display: none;"></span>
+                        <span id="lblMCCCollectionShift" hidden style="display: none;"></span>
+                        <span id="lblMCCVehicleId" hidden style="display: none;"></span>
+                        <span id="lblMCCVehicleType" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Collection Shift <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMilkCollectionShift" class="form-control"
+                            placeholder="Enter Milk Collection Shift" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Driver Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift Status <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryShiftStatus" class="form-control"
+                            placeholder="Enter Shift Status" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Vehicle No must be selected.</div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab"
+                                            onclick="GetFarmerCollectionList();">Farmer Collection</a></li>
+                                    <li><a href="#tab2" data-toggle="tab" onclick="GetMCCCollectionList();">MCC
+                                            Collection</a>
+                                    </li>
+                                    <li id="liChemist"><a href="#tab3" data-toggle="tab"
+                                            onclick="GetChemistCollectionList();">Chemist
+                                            Collection</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Farmer Collection List</div>
+                                    <div class="card-options">
+                                        <a href="#" id="excelDownload" class="btn btn-primary btn-sm mr-2"
+                                            onclick="ExcelDownload();"><i class="fa fa-file-excel-o mr-2"></i>
+                                            Template Download</a>
+                                        <a href="#" class="btn btn-primary btn-sm mr-2" onclick="ExcelUpload();"><i
+                                                class="fa fa-file-excel-o mr-2"></i>
+                                            Excel</a>
+                                        <a href="#" class="btn btn-primary btn-sm mr-2"
+                                            onclick="OpenModalFarmerChemist('Farmer','','');"><i
+                                                class="fa fa-plus mr-2"></i>
+                                            Add</a>
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableFarmerCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Farmer Code</th>
+                                                    <th>Farmer Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (KG)</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th class="text-right" style="width: 50px;">Action</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 90px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryFarmerCollection">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">MCC Collection List</div>
+                                    <div class="card-options">
+                                        @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                                        {
+                                            <a href="#" class="btn btn-primary btn-sm mr-2" onclick="OnAgentClear();"><i
+                                                    class="fa fa-trash mr-2"></i> Clear MCC Collection</a>
+                                        }
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <!----    ----    ----    ----    Table - SNF Deduction    ----    ----    ----    ---->
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableMCCCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 80px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryMCCCollection">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!----    ----    ----    ----    Tab - FAT Deduction    ----    ----    ----    ---->
+                        <div class="tab-pane " id="tab3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Chemist Collection List</div>
+                                    <div class="card-options">
+                                         @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                                        {
+                                            <a href="#" class="btn btn-primary btn-sm mr-2" onclick="OnChemistClear();"><i
+                                                    class="fa fa-trash mr-2"></i> Clear Chemist Collection</a>
+                                        }
+                                        <a href="#" class="btn btn-primary btn-sm mr-2"
+                                            onclick="OpenModalFarmerChemist('Chemist','','');"><i
+                                                class="fa fa-plus mr-2"></i>
+                                            Add</a>
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <!----    ----    ----    ----    Table - FAT Deduction    ----    ----    ----    ---->
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableChemistCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Cell No.</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (KG)</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 80px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryChemistCollection">
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--FOOTER DELETE-->
+        @* <div id="divFooterDelete" class="card-footer text-right">
+        <div class="d-flex">
+        <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+        class="fa fa-trash"></i></button>
+        </div>
+        </div> *@
+    </div>
+</div>
+
+
+<div class="modal fade" id="modelEntryFarmerCollection" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmerChemistCollection"></h5>
+                <span hidden id="lblActionFarmerChemistCollection"></span>
+                @* <span hidden id="lblEntryBaseRateId"></span> *@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6" id="divEntryFarmer">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryFarmer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Farmer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Farmer Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6" id="divEntryCellNo">
+                        <div class="form-group">
+                            <label class="form-label">Cell No <span class="text-red">*</span></label>
+                            <select id="ddlEntryCellNo" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Cell No</option>
+                            </select>
+                            <div class="invalid-feedback">Cell No must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkType" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    @* </div>
+                    <div class="row"> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkStatus" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label"><span id="lblWeightName"></span> <span
+                                        class="text-red">*</span></label>
+                                <input type="text" id="txtEntryWeight" class="form-control" placeholder="Enter Quantity"
+                                    maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Weight can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div>
+                    <div class="row"> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">FAT <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryFAT" class="form-control" placeholder="Enter FAT"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">FAT can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label">SNF <span class="text-red">*</span></label>
+                                <input type="text" id="txtEntrySNF" class="form-control" placeholder="Enter SNF"
+                                    maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">SNF can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div> *@
+
+                    @* <div class="row" id="divEntryCellNo"> *@
+
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Farmer_Collection"
+                    onclick="SaveFarmerCollectionEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryExcelUpload" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditExcelUpload">Excel Upload</h5>
+                <span hidden id="lblActionExcelUpload"></span>
+                @* <span hidden id="lblEntryBaseRateId"></span> *@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                        <input id="txtEntryExcelUpload" type="file" class="dropify" data-height="180" />
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content:flex-start">
+                    <button type="button" class="btn btn-primary btn-sm mr-2" id="btn_Save_Excel_Upload"
+                        onclick="SaveExcelUploadEntry();"><i class="fa fa-upload mr-2"></i> Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

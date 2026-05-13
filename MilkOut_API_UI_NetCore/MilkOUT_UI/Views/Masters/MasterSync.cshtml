@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Master Sync SAP";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Dealer</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Master Sync SAP</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Master Sync SAP</div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadDealerRoute();"><i class="fa fa-download mr-2"></i> Download
+                                    Route</a>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadDealer();"><i class="fa fa-download mr-2"></i> Download Dealer</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadUOM();"><i class="fa fa-download mr-2"></i> Download UOM</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadProduct();"><i class="fa fa-download mr-2"></i> Download
+                                    Product</a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadPaymentTerm();"><i class="fa fa-download mr-2"></i> Download
+                                    Payment Term</a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadGetNotificationCode();"><i class="fa fa-download mr-2"></i>
+                                    Download Complaint Group</a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                    onclick="DownloadDealerCrateLimit();"><i class="fa fa-download mr-2"></i>
+                                    Download Dealer Crate Limit</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/masters_sync.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,229 @@
+﻿@{
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowEditButton = false;
+    bool ShowDelButton = false;
+    if (AccessString.Substring(2, 1) == "1")
+    {
+        ShowEditButton = true;
+    }
+    if (AccessString.Substring(3, 1) == "1")
+    {
+        ShowDelButton = true;
+    }
+}
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">View MPPI Rate Chart</div>
+            <div class="card-options">
+                <a href="#" class="btn btn-primary btn-sm" onclick="GetMPPIRateChartMCCView();"><i
+                        class="fa fa-plus mr-2"></i>
+                    Assgin</a>
+                <!--<a href="#" id="btn_View" class="btn btn-primary btn-sm mr-2" onclick="GetMilkRateView();"><i class="fa fa-eye mr-2"></i> View</a>-->
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <!----    ----    ----    ----    Section - Success and Error Message for Data Entry    ----    ----    ----    ---->
+
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <!----    ----    ----    ----    Section - Input fields - Milk Rate Details    ----    ----    ----    ---->
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+
+
+                    <div class="form-group">
+                        <label class="form-label">Type <span class="text-red">*</span></label>
+                        <select id="ddlViewType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);ClearDataTable('tableAssignMCCEntryList');">
+                            <option value="0">Select Type</option>
+                        </select>
+                        <div class="invalid-feedback">Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label for="txtViewDate" class="form-label">Date <span class="text-red">*</span></label>
+                        <div class="row gutters-xs">
+                            <div class="col">
+                                <input type="datetime-local" id="txtMCCViewDate" class="form-control" autocomplete="off"
+                                    onchange="ClearInvalidState(this);ClearDataTable('tableAssignMCCEntryList');">
+                            </div>
+
+                            <span class="col-auto">
+                                @* <button id="btn_MCC_View" class="btn btn-primary" type="button"
+                                onclick="GetMilkRateView();">Go!</button> *@
+                                <button id="btn_MCC_View" class="btn btn-primary" type="button"
+                                    onclick="GetMMPIAssignMPPI_MCC();">Go!</button>
+                            </span>
+                            <div class="invalid-feedback">Date can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="divTabsMCCView">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    @* <li><a href="#tabview1" class="active" data-toggle="tab"
+                                    onclick="GetMilkRateView();"
+                                    >MCC Rate Table</a></li> *@
+
+                                    <li><a href="#tabassignmccview" class="active" data-toggle="tab"
+                                            onclick="GetMMPIAssignMPPI_MCC();">Rate Table</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-content">
+
+                        <!----    ----    ----    ----    Tab - Rate Table    ----    ----    ----    ---->
+
+                        <div class="tab-pane active" id="tabassignmccview">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Rate Table</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+
+
+                                        <div class="table-responsive">
+                                            <table id="tableAssignMCCEntryList"
+                                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">#</th>
+                                                        <th>MPPI Name</th>
+                                                        <th>MCC Name</th>
+                                                        <th>Applicable From</th>
+                                                        <th hidden></th>
+                                                        @* <th class="text-right" style="width: 50px;">Action</th> *@
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryAssignMCC">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryMCCCommissionAssignMCC" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditMCCCommissionAssignMCC">Assgin MCC</h5>
+                <span hidden id="lblActionMCCCommissionAssignMCC"></span>
+                <span hidden id="lblAssignAssignMCCVersion"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                </div>
+                <div class="row">
+
+                    <div class="col-sm-12 col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label-search">MMPI Type <span class="text-red">*</span></label>
+
+
+                            <select id="ddlEntryMPPITypeAssignMCC" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);ClearDataTable('tableAssignAssignMCCEntryModal');GetMMPIName();">
+                                <option value="0">Select MPPI Type</option>
+                            </select>
+                            <div class="invalid-feedback">MPPI Type must be selected.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label-search">MMPI Name <span class="text-red">*</span></label>
+
+
+                            <select id="ddlEntryMPPI" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);GetMMPIAssignMCC();">
+                                <option value="0">Select MPPI</option>
+                            </select>
+                            <div class="invalid-feedback">MPPI must be selected.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-12 col-lg-4 col-md-4">
+                        <div class="form-group">
+                            <label for="txtEntryApplicableDateMCC" class="form-label-search">Applicable From <span
+                                    class="text-red">*</span></label>
+                            <input type="datetime-local" id="txtEntryApplicableDateAssignMCC" class="form-control"
+                                onkeypress="ClearInvalidState(this);" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Applicable From Date can't be blank.</div>
+                        </div>
+                    </div>
+
+
+                    @* <div class="col-sm-12 col-lg-4 col-md-4">
+                    <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                    type="button" title="Search" onclick="GetMCCforMCCCommission();" id="btn_Search_AssignMCC">
+                    <i class="fa fa-search mr-2"></i> Search
+                    </button>
+                    </div> *@
+                </div>
+                <div class="table-responsive" style="height: 300px !important;">
+                    <!-- style="height: 300px !important;">-->
+                    <table id="tableAssignAssignMCCEntryModal"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;"></th>
+                                <th>MCC Code</th>
+                                <th>MCC Name</th>
+                                <th>Taluka</th>
+                                <th>Village</th>
+                                <th class="text-right" style="width: 50px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryModelAssignMCC">
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            @* <div id="divAssignedAssignMCCFooter" class="modal-footer" style="justify-content:flex-start">
+            <button type="button" class="btn btn-primary" id="btnSaveAssignMCC"
+            onclick="SaveMCCCommissionMCC();">Save</button>
+            </div> *@
+        </div>
+    </div>
+</div>

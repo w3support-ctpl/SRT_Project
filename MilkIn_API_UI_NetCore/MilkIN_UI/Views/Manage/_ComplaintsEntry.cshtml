@@ -1,0 +1,164 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Complaint Entry</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Date </label>
+                        <input type="text" id="txtEntryComplaintDate" class="form-control">
+                        <div class="invalid-feedback">Invalid Complaint Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Name </label>
+                        <input type="text" id="txtEntryUserName" class="form-control">
+                        <div class="invalid-feedback">Invalid User Name.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Type </label>
+                        <input type="text" id="txtEntryComplaintType" class="form-control">
+                        <div class="invalid-feedback">Invalid Complaint Type.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Remarks </label>
+                        <input type="text" id="txtEntryComplaintRemarks" class="form-control">
+                        <div class="invalid-feedback">Invalid Complaint Remarks.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">Complaint Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Updated Status List</div>
+                                    <div class="card-options">
+                                        <a href="#" id="btn_Add"  class="btn btn-primary btn-sm mr-2" onclick="OpenModal('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                                        <span id="lblEntryId" hidden></span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableEntry" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Action Date</th>
+                                                    <th>Action By</th>
+                                                    <th>Remarks</th>
+                                                    <th>Updated Status</th>
+                                                    <th class="text-right" style="width: 50px;">Display Flag</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryData">
+                                                <tr>
+                                                    <td style="width: 20px;">1</td>
+                                                    <td>13 Jul 2023 10:00 AM</td>
+                                                    <td>Farmer</td>
+                                                    <td>Problem in Cattle Feed bag received</td>
+                                                    <td>New</td>
+                                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">Yes </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="width: 20px;">2</td>
+                                                    <td>14 Jul 2023 12: 00 PM</td>
+                                                    <td>Admin</td>
+                                                    <td>We will check at our end and update you</td>
+                                                    <td>Open</td>
+                                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">Yes </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modelEntryComplaint" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditComplaint"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">Action Date </label>
+                        <input type="text" id="txtEntryActionDate" class="form-control" />
+                        <span hidden id="lblActionComplaint"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Action By </label>
+                        <input type="text" id="txtEntryActionBy" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Remarks <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRemarks" class="form-control" placeholder="Enter Remark" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Remarks can't be blank.</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Display Flag </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkDisplayFlag" class="custom-control-input" value="1">
+                            <label for="chkDisplayFlag" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">New Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryNewStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select New Status</option>
+                        </select>
+                        <div class="invalid-feedback">New Status must be selected.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save" onclick="SaveEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

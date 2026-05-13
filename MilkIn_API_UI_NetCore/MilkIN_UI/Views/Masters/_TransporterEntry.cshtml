@@ -1,0 +1,295 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Transporter Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Transporter Code </label>
+                        <input type="text" id="txtEntryTransporterCode" class="form-control" placeholder="" 
+                        maxlength="50" autocomplete="off" disabled><!--VALUE WILL BE GENERATED IN SAP-->
+                        <div class="invalid-feedback">Transporter Code can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Transporter Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryTransporterName" class="form-control" placeholder="Enter Transporter Name"
+                               maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Transporter Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Contact Person <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryContactPerson" class="form-control" placeholder="Enter Contact Person" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Contact Person can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No</label>
+                        <input type="tel" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No" maxlength="10" minlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Mobile No.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Withholding Tax Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryWithholdingTaxType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Withholding Tax Type</option>
+                        </select>
+                        <div class="invalid-feedback">Withholding Tax Type must be selected.</div>
+                    </div>
+                </div>
+            </div>
+            <!--ADDRESS DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Address Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">State <span class="text-red">*</span></label>
+                        <select id="ddlEntryState" class="form-control select2 w-100"
+                                required="" onchange="GetDistrict(); ClearInvalidState(this);">
+                            <option value="">Select State</option>
+                        </select>
+                        <div class="invalid-feedback">State must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">District <span class="text-red">*</span></label>
+                        <select id="ddlEntryDistrict" class="form-control select2 w-100"
+                                required="" onchange="GetTaluka(); ClearInvalidState(this);">
+                            <option value="">Select District</option>
+                        </select>
+                        <div class="invalid-feedback">District must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Taluka <span class="text-red">*</span></label>
+                        <select id="ddlEntryTaluka" class="form-control select2 w-100"
+                                required="" onchange="GetVillage(); ClearInvalidState(this);">
+                            <option value="">Select Taluka</option>
+                        </select>
+                        <div class="invalid-feedback">Taluka must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Village <span class="text-red">*</span></label>
+                        <select id="ddlEntryVillage" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Village</option>
+                        </select>
+                        <div class="invalid-feedback">Village must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Text</label>
+                        <input type="text" id="txtEntryAddress" class="form-control" placeholder="Enter Address Text" maxlength="100" autocomplete="off">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--BANK DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Bank Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Bank Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryBankName" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);GetBranch();">
+                            <option value="">Select Bank Name</option>
+                        </select>
+                        <div class="invalid-feedback">Bank Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Branch Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryBranchName" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this); SetIFSCCode();">
+                            <option value="">Select Branch Name</option>
+                        </select>
+                        <div class="invalid-feedback">Branch Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAccountName" class="form-control" placeholder="Enter Account Name" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Account Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAccountNo" class="form-control" placeholder="Enter Account No" maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Account No can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">IFSC Code</label>
+                        <label id="txtEntryIFSCCode" class="form-control" placeholder="Enter IFSC Code"
+                               maxlength="20" autocomplete="off" disabled></label>
+                        <div class="invalid-feedback">Unable to set IFSC Code.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!--OTHER DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Other Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Transporter Pan No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryCompanyPanNo" class="form-control" placeholder="Enter Company Pan No" maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Company Pan.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FSSAI License No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryFSSAILicenseNo" class="form-control" placeholder="Enter FSSAI License No" maxlength="14" minlength="14" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid FSSAI License.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">License Validity <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryLicenseValidity" class="form-control" placeholder="Enter License Validity" maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">FSSAI License validity can't be blank.</div>
+                    </div>
+                </div>
+            </div>
+            <!--PHOTO UPLOAD-->
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Transporter Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Company Pan Card Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">FSSAI License Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Owner Aadhar Card Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Owner Pan Card Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2" title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5" title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--FOOTER-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

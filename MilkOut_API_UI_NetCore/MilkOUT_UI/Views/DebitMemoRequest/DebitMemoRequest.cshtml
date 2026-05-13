@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "Debit Memo Request";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Debit Memo</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Debit Note</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Debit Memo List</div>
+                    <div class="card-options">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name <span class="text-red">*</span></label>
+                                <select id="ddlSearchDealer" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this); ClearDataTable('tableSearch');">
+                                    <option value="">Select Dealer Name</option>
+                                </select>
+                                <div class="invalid-feedback">Dealer Name must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Period <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchPeriod" name="datefilter"
+                                       placeholder="Enter Period" maxlength="50" autocomplete="off"
+                                       onkeypress="ClearDataTable('tableSearch'); ClearDataTable('tableSearch');">
+                                <div class="invalid-feedback">Invalid Period</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Debit Memo Request</th>
+                                    <th>Debit Memo Request Type</th>
+                                    <th>Sold To Party</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Currency</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+
+
+<!--MODAL Edit Targets-->
+<div class="modal fade" id="modelTargets" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add/Edit Targets</h5>
+                <span hidden id="lblEntryId"></span>
+                <span hidden id="lblAction"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Dealer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryDealer" class="form-control select2 w-100"
+                                    required="" onchange="ClearInvalidState(this);">
+                                <option value="">Select Dealer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Dealer Name must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Product Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryProduct" class="form-control select2 w-100"
+                                    required="" onchange="ClearInvalidState(this);">
+                                <option value="">Select Product</option>
+                            </select>
+                            <div class="invalid-feedback">Product must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Quantity <span class="text-red">*</span></label>
+                            <input type="number" id="txtEntryQuantity" class="form-control" placeholder="Enter Quantity"
+                                   maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Quantity.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save" onclick="SaveEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="~/tran_js/primary_debitmemorequest.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,99 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Agent Incentive Schemes Entry</div>
+            <div class="card-options">
+                <a href="#" id="btn_Calc_Incentive" class="btn btn-primary btn-sm mr-2" onclick="CalculateIncentive();" style="display:none;"><i class="fa fa-save mr-2"></i> Calculate Incentive</a>
+                <a href="#" id="btn_Stop_Incentive" class="btn btn-primary btn-sm mr-2" onclick="StopIncentive();" style="display:none;"><i class="fa fa-save mr-2"></i> Stop Incentive</a>
+                <a href="#" id="btn_Post_Incentive" class="btn btn-primary btn-sm mr-2" onclick="PostIncentive();" style="display:none;"><i class="fa fa-save mr-2"></i> Post Incentive</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Id </label>
+                        <label id="txtEntrySchemeId" class="form-control"></label>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Name </label>
+                        <label id="txtEntrySchemeName" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Start Date </label>
+                        <label id="txtEntrySchemeStartDate" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme End Date </label>
+                        <label id="txtEntrySchemeEndDate" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Type </label>
+                        <label id="txtEntrySchemeType" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Frequency </label>
+                        <label id="txtEntrySchemeFrequency" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Status </label>
+                        <label id="txtEntrySchemeStatus" class="form-control"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divAgentList">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Agent List</div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tableAgentList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th hidden>Agent Id</th>
+                                            <th>MCC Name</th>
+                                            <th>Agent Name</th>
+                                            <th>Eligibility</th>
+                                            <th hidden></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableEntryAgentList">
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

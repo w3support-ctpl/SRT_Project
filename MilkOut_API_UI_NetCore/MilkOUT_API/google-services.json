@@ -1,0 +1,243 @@
+{
+  "project_info": {
+    "project_number": "1096302228331",
+    "firebase_url": "https://srt-notifications-default-rtdb.firebaseio.com",
+    "project_id": "srt-notifications",
+    "storage_bucket": "srt-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:ebcd93401a354d43ea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.Dairylicious"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:1194196868ce7f4fea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.MeeShetkari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:43c25d99d0667f9eea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.QACheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:ae6023b8dfb48692ea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.RouteWise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:a2aad33a1126f5d0ea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.SankalanPoint"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:ec9a0191561e8a20ea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.agent_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:f15b64f6274fbddaea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.driver_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096302228331:android:1b83930e3f560ca7ea522e",
+        "android_client_info": {
+          "package_name": "com.milkin.farmer_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1bLG8FPwtXwQvr_T-OvSEH4xqkUtVXqg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096302228331-9l9tufnm0dp4io2j0pi5ash927aqv3l7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

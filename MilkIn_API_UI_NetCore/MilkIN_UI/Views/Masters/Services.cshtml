@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Services";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Service</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Service</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Service List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Service Name</label>
+                                <input type="text" class="form-control" id="txtSearchServiceName"
+                                       placeholder="Service Name"
+                                       maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Service Type</label>
+                                <select class="form-control select2" id="ddlSearchServiceType"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Service Type</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Service Name</th>
+                                    <th>Type</th>
+                                    <th id="thMaterial">Material</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/masters_services.js" asp-append-version="true"></script>
+}

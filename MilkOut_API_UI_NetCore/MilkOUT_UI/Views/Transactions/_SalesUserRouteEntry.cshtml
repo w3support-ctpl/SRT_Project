@@ -1,0 +1,108 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Sales Person Route Entry</div>
+            <div class="card-options">
+
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales User Name</label>
+                        <input type="text" id="txtEntrySalesUserName" class="form-control"
+                               placeholder="" maxlength="50" autocomplete="off" disabled
+                               onkeypress="ClearInvalidState(this)">
+                        <div class="invalid-feedback">Sales User Name can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblRouteId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblSalesUserId" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Day</label>
+                        <input type="text" id="txtEntryRouteDay" class="form-control"
+                               placeholder="Enter Day" maxlength="50" disabled
+                               autocomplete="off" onkeypress="ClearInvalidState(this)">
+                        <div class="invalid-feedback">Day can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <textarea id="txtEntryRemarks" class="form-control" placeholder="Enter Remarks" maxlength="200" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this)"></textarea>
+                        <div class="invalid-feedback">Remarks can't be blank.</div>
+                    </div>
+                </div>
+                <!-- nesting this checkbox to avoid it getting selected by accident even if the cursor isn't near the element-->
+                @*<div class="col-lg-3 col-md-4 col-sm-12">*@
+                  
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Sales Route Name</label>
+                       
+                        <select id="txtEntrySalesRouteName" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);" multiple>
+                            <option value="">Select Route Name</option>
+                              
+                        </select>
+                        <div class="invalid-feedback">Sales Route Can't Be Empty'</div>
+                    </div>
+                        </div>
+              
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Is Working? <span class="text-red">*</span></label>
+                                <label class="custom-control custom-checkbox mt-3">
+                                    <input type="checkbox" id="chkWorkingStatus" class="custom-control-input">
+                                    <label for="chkWorkingStatus" class="custom-control-label text-dark">Yes</label>
+                                </label>
+                                <div class="invalid-feedback">Invalid Input</div>
+                            </div>
+                        </div>
+                  
+                @*</div>*@
+            </div>
+
+            <div id="divRetailerList" class="row">
+                <h5 class="mb-4 font-weight-bold text-secondary">Retailers List</h5>
+                <div class="table-responsive">
+                    <table id="tableRetailerList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <label class="custom-control custom-checkbox" style="margin-bottom: 0;">
+                                        <input type="checkbox" id="selectAllRetailers" class="custom-control-input">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </th>
+                                <th hidden>Retailer ID</th>
+                                <th>Retailer Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryRetailerList">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/transaction_salespersonroute.js" asp-append-version="true"></script>
+}

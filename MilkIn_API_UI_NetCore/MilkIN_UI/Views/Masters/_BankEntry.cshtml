@@ -1,0 +1,168 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Bank Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Bank Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryBankName" class="form-control" placeholder="Enter Bank Name"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Bank Name can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!--BANK Branch-->
+            <div id="divEntryBankBranchTable" class="row">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Bank Branch List</div>
+                                    <div class="card-options">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            onclick="OpenModal('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                                    </div>
+                                </div>
+                                <div id="divItemSuccess" class="card-alert alert alert-success mb-0"
+                                    style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div id="divItemError" class="card-alert alert alert-danger mb-0"
+                                    style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableBankBranch"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Branch Name</th>
+                                                    <th>IFSC Code</th>
+                                                    <th>Address</th>
+                                                    <th>Status</th>
+                                                    <th class="text-right" style="width: 80px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntry">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--FOOTER DELETE-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--MODEL SECTION-->
+<div class="modal fade" id="modelEntryBank" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditBankBranch"></h5>
+                <div class="card-options">
+                    <label class="custom-switch" style="margin-right: 40px;">
+                        Active Status
+                        <input id="chkBranchEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                        <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                    </label>
+                    <span hidden id="lblActionBankBranch"></span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryBranchName" class="form-control-label">Branch Name <span
+                                    class="text-red">*</span></label>
+                            <input type="text" class="form-control" id="txtEntryBranchName"
+                                placeholder="Enter Branch Name" autocomplete="off"
+                                onkeypress="ClearInvalidState(this);">
+                            <span id="lblBankBranchId" style="display: none"></span>
+                            <span id="lblBankBranchAction" style="display: none"></span>
+                            <div class="invalid-feedback">Branch Name can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryIFSCCode" class="form-control-label">IFSC Code <span
+                                    class="text-red">*</span></label>
+                            <input type="text" class="form-control" id="txtEntryIFSCCode" placeholder="Enter IFSC Code"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid IFSC Code</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="txtEntryAddress" class="form-control-label">Address <span
+                                    class="text-red">*</span></label>
+                            <textarea class="form-control" id="txtEntryAddress" placeholder="Enter Address" rows="2"
+                                maxlength="250" autocomplete="off" onchange="ClearInvalidState(this);"></textarea>
+                            <div class="invalid-feedback">Address can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Item"
+                    onclick="SaveBankBranchEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

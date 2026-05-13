@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "User";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Office User</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Office User</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">User List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">User Name</label>
+                                <input type="text" class="form-control" id="txtSearchUserName" placeholder="User Name" maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Role</label>
+                                <select class="form-control select2" id="ddlSearchUserRole"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Role</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Email ID</th>
+                                    <th>User Role</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/users_user.js" asp-append-version="true"></script>
+}

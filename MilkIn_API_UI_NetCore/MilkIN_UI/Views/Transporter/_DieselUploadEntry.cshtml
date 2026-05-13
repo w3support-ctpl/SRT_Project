@@ -1,0 +1,106 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Diesel Upload Entry</div>
+            <div class="card-options">
+                @* <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                class="fa fa-save mr-2"></i> Save</a> *@
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU01241000007")
+                {
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="DeleteEntry();"
+                        id="DeleteEntry"><i class="fa fa-trash mr-2"></i> Remove</a>
+                }
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row" id="divUploadFile">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label-search">File <span class="text-red">*</span></label>
+                        <input id="txtEntryExcelUpload" class="form-control w-100" type="file" class="dropify" />
+                        <div class="invalid-feedback">Filecan't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                        title="Add" onclick="SaveExcelUploadEntry();">
+                        <i class="fa fa-upload mr-2"></i> Upload
+                    </button>
+                </div>
+            </div>
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab">Diesel Upload Data</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Diesel Upload List</div>
+                                    <div class="card-options">
+                                        <a href="#" id="excelDownload" class="btn btn-primary btn-sm mr-2"
+                                            onclick="ExcelDownload();"><i class="fa fa-file-excel-o mr-2"></i>
+                                            Template Download</a>
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableDieselUploadList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Transporter Code</th>
+                                                    <th>Vehicle No</th>
+                                                    <th>Entry Date</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>Status</th>
+                                                    <th hidden></th>
+                                            </thead>
+                                            <tbody id="tableDieselUploadData">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

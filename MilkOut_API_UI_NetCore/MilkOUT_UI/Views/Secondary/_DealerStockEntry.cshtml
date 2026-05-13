@@ -1,0 +1,137 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Dealer Stock Entry</div>
+            <div class="card-options">
+                <a id="btn_Save" style="display:none;" href="#" class="btn btn-primary btn-sm mr-2"
+                   onclick="SaveEntry()"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Dealer Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryDealer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this); ClearDataTable('tableProducts');">
+                            <option value="">Select Dealer Name</option>
+                        </select>
+                        <span hidden id="lblEntryId"></span>
+                        <span hidden id="lblAction"></span>
+                        <div class="invalid-feedback">Dealer Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Month & Year <span class="text-red">*</span></label>
+                        <input type="month" id="txtEntryMonthYear" class="form-control"
+                               onchange="ClearInvalidState(this);"                               onkeydown="return false" />
+                        <div class="invalid-feedback">Month & Year can't be blank.</div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-md-3">
+                    <button class="btn btn-sm btn-secondary mt-5" style="height: calc(1.47em + 1rem + 2px);"
+                            type="button" title="Search" onclick="GetSearchProductList(this);">
+                        <i class="fa fa-search mr-2"></i> Search
+                    </button>
+                </div>
+            </div>
+
+            @* <div id="divItemList" class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Dealer Stock Item List</div>
+                            <div class="card-options">
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive" style="height: 300px !important;">
+                                <table id="tableProducts" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product Id</th>
+                                            <th>Product Name</th>
+                                            <th>Quantity (Kg/Ltr)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableEntryProducts">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> *@
+
+            <div class="" id="divTabs">
+                <div class="row" id="divTabs">
+                    <div class="col-12">
+                        <div class="panel panel-primary">
+                            <div>
+                                <div class="user-tabs mb-4">
+                                    <!-- Tabs -->
+                                    <ul class="nav panel-tabs">
+                                        <li class=""><a href="#tab1" class="active" data-toggle="tab">Items Details</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Dealer Stock Item List</div>
+                                        <div class="card-options">
+
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="tableProducts_1"
+                                                   class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Product Id</th>
+                                                        <th>Product Name</th>
+                                                        <th>Quantity (Kg/Ltr)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryProducts_1">
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- FOOTER SECTION -->
+        <div id="divFooterDelete" class="card-footer text-right" style="display:none;">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                    class="fa fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>

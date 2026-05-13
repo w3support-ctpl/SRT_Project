@@ -1,0 +1,178 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Meta data -->
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="MilkIn - Milk Procurement System" name="description">
+    <meta content="W3Tech Works Private Limited" name="author">
+    <meta name="keywords" content="MilkIn - Premium milk procuremnt system, Milk Inward, Procurement" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/user_assets/logo/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/user_assets/logo/favicon.png" />
+
+    <!-- Title -->
+    <title>MilkIn - Milk Procurement System</title>
+
+    <!-- Bootstrap css -->
+    <link href="~/plugins/bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Sidemenu Css -->
+    <link href="~/css/sidemenu.css" rel="stylesheet" />
+
+    <!-- Dashboard css -->
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/admin-custom.css" rel="stylesheet" />
+
+    <!-- c3.js Charts Plugin -->
+    <link href="~/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+
+    <!---Font icons-->
+    <link href="~/css/icons.css" rel="stylesheet" />
+
+    <!-- Switcher css -->
+    <link href="~/switcher/css/switcher.css" rel="stylesheet" id="switcher-css" type="text/css" media="all" />
+
+    <!-- Notifications  Css -->
+    <link href="~/plugins/notify/css/jquery.growl.css" rel="stylesheet" />
+
+    <!-- Color Skin css -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/color-skins/color1.css"
+        asp-append-version="true" />
+
+</head>
+
+<body style="background: #203478; overflow-x: hidden;">
+
+    <!--Loader-->
+    <div id="global-loader">
+        <img src="~/images/loader.svg" class="loader-img" alt="">
+    </div>
+
+    <!--Page-->
+    <div class="page page-h">
+        <div class="row">
+            <div class="col-12">
+                <img class="ml-10" style="width: auto; height: 30px; position: absolute; top: -100px; left: 50px;"
+                    src="~/user_assets/logo/logosmall.png" alt="MilkIn">
+            </div>
+        </div>
+        <div class="page-content z-documentation-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6 col-sm-12 d-block mx-auto"
+                        style="text-align: center; margin-top: -50px;">
+                        <img class="br-tr-3 br-tl-3" style="width: auto; height: 100px;"
+                            src="~/user_assets/logo/srtlogo.png" alt="SRT Dairy">
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-xl-4 col-md-6 col-sm-12 d-block mx-auto">
+                        <div class="card mb-0">
+                            <!--LOGIN -->
+                            <div id="divLoginSection">
+                                <div class="card-header">
+                                    <h3 class="card-title">Login to your Account</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label text-dark">Employee ID</label>
+                                        <input type="text" id="txtLoginName" class="form-control"
+                                            placeholder="Enter Employee ID" value="">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label text-dark">Password</label>
+                                        <div class="input-group" id="show_hide_password">
+                                            <input type="password" id="txtLoginPassword" class="form-control"
+                                                placeholder="Password" value="">
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-icon btn-primary"><i
+                                                        class="fa fa-eye-slash"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group ">
+                                        <label class="custom-control custom-checkbox ">
+                                            <input type="checkbox" id="rememberMe" class="custom-control-input">
+                                            <span class="custom-control-label text-dark">Remember me</span>
+                                        </label>
+                                    </div>
+
+
+                                    <div id="loaderLogin" class="dimmer active"
+                                        style="display: none; margin-top: -170px; margin-bottom: 106px;">
+                                        <div class="lds-ring" style="margin: auto auto;">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-footer mt-2">
+                                        <a id="btnLogIn" href="javascript: void(0)" class="btn btn-primary btn-block"
+                                            onclick="ValidateLogin()">
+                                            <span id="lblLogin">Login</span>
+                                        </a>
+                                    </div>
+                                    <div class="form-group text-right mt-3">
+                                        <a id="btnForgotPassword" href="javascript: void(0)"
+                                            onclick="ShowForgotPasswordDiv();">Forgot Password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="divForgotPassword">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JQuery js-->
+    <script src="~/js/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="~/plugins/bootstrap-4.3.1/js/popper.min.js"></script>
+    <script src="~/plugins/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+
+    <!--JQuery Sparkline Js-->
+    <script src="~/js/jquery.sparkline.min.js"></script>
+
+    <!-- Circle Progress Js-->
+    <script src="~/js/circle-progress.min.js"></script>
+
+    <!-- Star Rating Js-->
+    <script src="~/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!-- Custom scroll bar Js-->
+    <script src="~/plugins/pscrollbar/pscrollbar.js"></script>
+    <script src="~/plugins/pscrollbar/pscroll.js"></script>
+
+    <!-- Fullside-menu Js-->
+    <script src="~/plugins/sidemenu/sidemenu.js"></script>
+
+    <!-- Notifications js -->
+    <script src="~/plugins/notify/js/jquery.growl.js"></script>
+
+    <!--Counters -->
+    <script src="~/plugins/counters/counterup.min.js"></script>
+    <script src="~/plugins/counters/waypoints.min.js"></script>
+
+    <!-- Custom Js-->
+    <script src="~/js/admin-custom.js"></script>
+
+    <script src="~/tran_js/login.js" asp-append-version="true"></script>
+    <script src="~/tran_js/common.js" asp-append-version="true"></script>
+</body>
+
+</html>

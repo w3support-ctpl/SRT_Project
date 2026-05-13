@@ -1,0 +1,622 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Milk Receipt Entry - Tanker</div>
+            <div class="card-options">
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="SaveRelease('Tanker');"
+                    id="btn_Release_Tanker"><i class="fa fa-save mr-2"></i> Release Vehicle</a>
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="SaveConfirm('Tanker');"
+                    id="btn_Confirm_Tanker"><i class="fa fa-save mr-2"></i> Confirm</a>
+                <span hidden id="lbl_Release_BulkSupplier"></span>
+                <span hidden id="lbl_Confirm_BulkSupplier"></span>
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="SaveRelease('BulkSupplier');"
+                    id="btn_Release_BulkSupplier"><i class="fa fa-save mr-2"></i> Release Vehicle</a>
+                <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="SaveConfirm('BulkSupplier');"
+                    id="btn_Confirm_BulkSupplier"><i class="fa fa-save mr-2"></i> Confirm</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry();">Close</a>
+            </div>
+        </div>
+
+
+
+        <!----    ----    ----    ----    Section - Success and Error Message for Data Entry    ----    ----    ----    ---->
+
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+
+
+
+
+        <div class="card-body">
+            <div class="row">
+                <!----    ----    ----    ----    Section - Input fields - MilkCollection Details    ----    ----    ----    ---->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No</label>
+                        <input type="text" id="txtEntryTankerVehicleNo" class="form-control"
+                            placeholder="Enter Vehicle No" maxlength="50" autocomplete="off" disabled>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryTankerRouteName">
+                    <div class="form-group">
+                        <label class="form-label">Route Name</label>
+                        <input type="text" id="txtEntryTankerRouteName" class="form-control"
+                            placeholder="Enter Route Name" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryTankerMCCName">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name</label>
+                        <input type="text" id="txtEntryTankerMCCName" class="form-control"
+                            placeholder="Enter Route Name" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryTankerShift">
+                    <div class="form-group">
+                        <label class="form-label">Shift</label>
+                        <input type="text" id="txtEntryTankerShift" class="form-control" placeholder="Enter Shift"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="text" id="txtEntryTankerTime" class="form-control" placeholder="Enter Time"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <!----    ----    ----    ----    Tabs - Milk Collection, Supervisor Entry, MCC Entry    ----    ----    ----    ---->
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab"
+                                            onclick="GetTankerQuantityList(); GetTankerQualityList();">Milk
+                                            Collection</a></li>
+                                    <li><a href="#tab2" data-toggle="tab" onclick="GetSupervisorList();">Chemist
+                                            Entry</a></li>
+                                    <li><a href="#tab3" data-toggle="tab" onclick="GetTankerMCCList();">MCC Entry</a>
+                                    </li>
+                                    @* <li><a href="#tab4" data-toggle="tab"
+                                    onclick="GetAnalystList();">Analysis</a></li> *@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!----    ----    ----    ----    Tab - Milk Collection    ----    ----    ----    ---->
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+
+                            <!----    ----    ----    ----    Table - Milk Quantity at Dairy    ----    ----    ----    ---->
+                            <div class="card" id="divTankerQuantityList">
+                                <div class="card-header">
+                                    <div class="card-title">Quantity at Dairy</div>
+                                    <div class="card-options">
+                                         <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            id="btnTankerRefresh" onclick="OpenTankerRefresh();"><i
+                                                class="fa fa-repeat mr-2"></i> Refresh</a>
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            id="btnTankerAddQuantity" onclick="OpenTankerQuantityModal('Add','');"><i
+                                                class="fa fa-plus mr-2"></i> Add</a>
+                                        <span id="lblTankerAddQuantity" hidden style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableTankerMilkQuantityList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    @* <th>Batch Id</th> *@
+                                                    <th>Cell No</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (kg)</th>
+                                                    <th>Quantity (ltr)</th>
+                                                    @* <th>Loss (ltr)</th> *@
+                                                    <th>Time</th>
+                                                    <th class="text-right" style="width: 70px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableTankerEntryQuantity">
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!----    ----    ----    ----    Table - Milk Quality at Dairy    ----    ----    ----    ---->
+                            <div class="card" id="divTankerQualityList">
+                                <div class="card-header">
+                                    <div class="card-title">Quality at Dairy</div>
+                                    <div class="card-options">
+                                        @* <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                        id="btnTankerAddQuality" onclick="OpenTankerQualityModal('Add','');"><i
+                                        class="fa fa-plus mr-2"></i> Add</a> *@
+
+                                        <span id="lblTankerQualityListMilkStatus" hidden style="display: none;"></span>
+                                        <span id="lblTankerQualityListCell" hidden style="display: none;"></span>
+                                        <span id="lblsetTankerQualityListCell" hidden style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableTankerMilkQualityList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    @* <th>Batch No</th> *@
+                                                    <th>Cell No</th>
+                                                    <th>Sample No</th>
+                                                    <th>Milk Status</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 50px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableTankerEntryQuality">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!----    ----    ----    ----    Tab - Supervisor Entry   ----    ----    ----    ---->
+                        <div class="tab-pane" id="tab2">
+                            <!----    ----    ----    ----    Details Entered by Route Chemist Agent    ----    ----    ----    ---->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Details Entered by Chemist</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableSupervisorEntryList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>MCC Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (kg)</th>
+                                                    <th>Quantity (ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+
+                                                    <th>Cell No</th>
+                                                    <th hidden></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableSupervisorEntryData">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!----    ----    ----    ----    Tab - Analysis Entry   ----    ----    ----    ---->
+                        @* <div class="tab-pane" id="tab4">
+                        <div class="card">
+                        <div class="card-header">
+                        <div class="card-title">Details Entered by Analyst</div>
+                        </div>
+                        <div class="card-body">
+                        <div class="table-responsive">
+                        <table id="tableRouteChemistEntryList"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                        <tr>
+                        <th>#</th>
+                        <th>MCC Name</th>
+                        <th>Weight Loss</th>
+                        <th>TS Loss</th>
+                        <th hidden></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableRouteChemistEntryData">
+                        </tbody>
+                        </table>
+                        </div>
+                        </div>
+                        </div>
+                        </div> *@
+
+                        <!----    ----    ----    ----    Tab - MCC Entry    ----    ----    ----    ---->
+                        <div class="tab-pane " id="tab3">
+
+                            <!----    ----    ----    ----    Table - MCC Details    ----    ----    ----    ---->
+
+                            <div id="divTankerMCCList" class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Milk Collection Center List</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableTankerMCCList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>MCC Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (kg)</th>
+                                                    <th>Quantity (ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+
+                                                    <th hidden></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableTankerMCCData">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!----    ----    ----    ----    Section - Delete    ----    ----    ----    ---->
+
+            <div class="card-footer text-right" style="display:none;">
+                <div class="d-flex">
+                    <button type="button" class="btn btn-gray ml-auto" title="Delete Entry"
+                        onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----    ----    ----    ----    Modal - Milk Quantity at Dairy    ----    ----    ----    ---->
+
+<div class="modal fade" id="modelEntryTankerQuantityMilkCollection" tabdocumentation="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditTankerQuantityMilkCollection"></h5>
+                <span hidden id="lblActionTankerQuantity"></span>
+                <span hidden id="lblTankerQuantityId"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    onclick="ResetInputFields();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    @* <div class="col-6" id="ddlEntryTankerQuantityBatchIdCheck">
+                    <div class="form-group">
+                    <label class="form-label">Batch No <span class="text-red">*</span></label>
+                    <select id="ddlEntryTankerQuantityBatchId" class="form-control select2 w-100"
+                    required="" onchange="ClearInvalidState(this);">
+                    <option value="">Select Batch No</option>
+                    </select>
+                    <div class="invalid-feedback">Batch No must be selected.</div>
+                    </div>
+                    </div> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Cell No <span class="text-red">*</span></label>
+                            <select id="ddlEntryTankerQuantityCellNo" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Cell No</option>
+                            </select>
+                            <div class="invalid-feedback">Cell No must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlEntryTankerQuantityMilkType" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Type must be selected.</div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryTankerQuantityMilkStatus" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);onChangeMilkType('Tanker');">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        @* <div class="form-group">
+                        <label class="form-label">Weight <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryTankerQuantityWeight" class="form-control"
+                        placeholder="Enter Weight" maxlength="50" autocomplete="off"
+                        onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Weight can't be blank.</div>
+                        </div> *@
+
+
+                        <div class="form-group" hidden>
+                            <label class="form-label">Weight <span class="text-red">*</span></label>
+                            <div class="row gutters-xs">
+                                <div class="col">
+                                    <input type="text" id="txtEntryTankerQuantityWeight" class="form-control"
+                                        placeholder="Enter Weight" maxlength="50" autocomplete="off"
+                                        onchange="ClearInvalidState(this);">
+                                </div>
+
+                                <span class="col-auto">
+                                    <button class="btn btn-primary" type="button"
+                                        onclick="GetMachineData('Tanker','')"><i
+                                            class="fa fa-balance-scale"></i></button>
+                                </span>
+                                <div class="invalid-feedback">Weight can't be blank.</div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Gross Weight <span class="text-red">*</span></label>
+                            <div class="row gutters-xs">
+                                <div class="col">
+                                    <input type="text" id="txtEntryTankerQuantityGrossWeight" class="form-control"
+                                        placeholder="Enter Weight" maxlength="50" autocomplete="off"
+                                        onchange="ClearInvalidState(this);">
+                                </div>
+
+                                <span class="col-auto">
+                                    <button id="btnTankerQuantityGrossWeight" class="btn btn-primary" type="button"
+                                        onclick="GetMachineData('Tanker','Gross')"><i
+                                            class="fa fa-balance-scale"></i></button>
+                                </span>
+                                <div class="invalid-feedback">Weight can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Tare Weight <span class="text-red">*</span></label>
+                            <div class="row gutters-xs">
+                                <div class="col">
+                                    <input type="text" id="txtEntryTankerQuantityTareWeight" class="form-control"
+                                        placeholder="Enter Weight" maxlength="50" autocomplete="off"
+                                        onchange="ClearInvalidState(this);">
+                                </div>
+
+                                <span class="col-auto">
+                                    <button id="btnTankerQuantityTareWeight" class="btn btn-primary" type="button"
+                                        onclick="GetMachineData('Tanker','Tare')"><i
+                                            class="fa fa-balance-scale"></i></button>
+                                </span>
+                                <div class="invalid-feedback">Weight can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12" id="divTankerReasons">
+                        <div class="form-group">
+                            <label class="form-label">Reasons</label>
+                            <textarea id="txtEntryTankerReasons" class="form-control" name="example-textarea-input"
+                                rows="4" placeholder="Reasons.." onchange="ClearInvalidState(this);"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnTankerQuantitySave"
+                    onclick="SaveTankerQuantity();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!----    ----    ----    ----    Modal - Milk Quality at Dairy    ----    ----    ----    ---->
+
+<div class="modal fade" id="modelEntryTankerQualityMilkCollection" tabdocumentation="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditTankerQualityMilkCollection"></h5>
+                <span hidden id="lblActionTankerQuality"></span>
+                <span hidden id="lblTankerQualityId"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-6" hidden>
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryTankerQualityMilkStatus" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    @* <div class="col-6" id="ddlEntryTankerQualityBatchIdCheck" >
+                    <div class="form-group" >
+                    <label class="form-label">Batch No <span class="text-red">*</span></label>
+                    <select id="ddlEntryTankerQualityBatchId" class="form-control select2 w-100"
+                    required="" onchange="ClearInvalidState(this);">
+                    <option value="">Select Batch No</option>
+                    </select>
+                    <div class="invalid-feedback">Batch No must be selected.</div>
+                    </div>
+                    </div> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Cell No <span class="text-red">*</span></label>
+                            <select id="ddlEntryTankerQualityCellNo" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Cell No</option>
+                            </select>
+                            <div class="invalid-feedback">Cell No must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntrySampleNo" class="form-control-label">Sample No <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryTankerQualitySampleNo" class="form-control"
+                                placeholder="Enter Sample No" maxlength="50" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Sample No can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6" hidden>
+                        <div class="form-group">
+                            <label for="txtEntryTankerQualityFat" class="form-control-label">FAT <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryTankerQualityFat" class="form-control"
+                                placeholder="Enter FAT" maxlength="50" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">FAT can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6" hidden>
+                        <div class="form-group">
+                            <label for="txtEntryTankerQualitySNF" class="form-control-label">SNF <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryTankerQualitySNF" class="form-control"
+                                placeholder="Enter SNF" maxlength="50" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">SNF can't be blank.</div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnTankerQualitySave"
+                    onclick="SaveTankerQuality();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryTankerSupervisorQuantityMilkCollection" tabdocumentation="-1" role="dialog"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditTankerSupervisorQuantityMilkCollection"></h5>
+                <span hidden id="lblActionTankerSupervisorQuantity"></span>
+                <span hidden id="lblTankerSupervisorQuantityCell"></span>
+                <span hidden id="lblTankerSupervisorQuantityId"></span>
+                <span hidden id="lblTankerSupervisorQuantityLoss"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @* <div class="row">
+
+
+
+
+                </div> *@
+
+                <div class="table-responsive">
+                    <table id="tableEntryTankerSupervisorMilkQuantityList"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">#</th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                @* <th>MCC Code</th> *@
+                                <th>MCC Name</th>
+                                <th>Chemist Quantity (ltr)</th>
+                                <th>Loss (ltr)</th>
+                                <th>Adjusted Quantity</th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryModelSupervisor">
+
+                        </tbody>
+                        <tfoot>
+                            @* <th colspan="3"></th> *@
+                            <th></th>
+
+                            <th class="text-center">
+                                <input type="text" class="form-control" maxlength="10" autocomplete="off"
+                                    id="lblTankerSupervisorQuantityLossSet" disabled value="">
+                            </th>
+                            <th></th>
+                            <th class="text-center">
+                                <input type="text" class="form-control" maxlength="10" autocomplete="off"
+                                    id="lblTankerAdjustedQuantityLoss" disabled value="">
+                            </th>
+                            <th></th>
+                            <th hidden></th>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnTankerSupervisorQuantitySave"
+                    onclick="SaveTankerSupervisorQuantity();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

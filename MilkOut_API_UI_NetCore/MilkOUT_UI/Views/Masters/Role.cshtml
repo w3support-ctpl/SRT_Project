@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Role";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Role</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Role</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Role List</div>
+                    <div class="card-options">
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                            onclick="ShowRoleBaseReportEntry();"><i class="fa fa-plus mr-2"></i>Role Base Report</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info" role="alert">
+                        <button type="button" style="color: white;" class="close" data-dismiss="alert"
+                            aria-hidden="true">×</button>MilkIn and MilkOut share common role and user masters. Hence
+                        below list will show all roles created from both the applications.
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Role Name</label>
+                                <input type="text" class="form-control" id="txtSearchRoleName" placeholder="Role Name"
+                                    maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Role Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntry" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document" style="width: 85% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Role Base Report List</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Role <span class="text-red">*</span></label>
+                            <select id="ddlEntryRole" class="form-control select2" required="*"
+                                onchange="ClearInvalidState(this); GetRoleBaseReportEntry();">
+                                <option value="">Select Role</option>
+                            </select>
+                            <div class="invalid-feedback">Role must be selected.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table id="tableRoleMenuReport"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">#</th>
+                                <th>Report Name</th>
+                                <th>Flag</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryReport"></tbody>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" onclick="SaveRoleBaseReportEntry();"
+                    id="btn_saves">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/masters_role.js" asp-append-version="true"></script>
+}

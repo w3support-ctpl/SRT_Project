@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Sales Group";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Sales Group</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sales Group</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Sales Group List</div>
+                    <div class="card-options">
+                        @* <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                            onclick="ShowDownloadUOM();"><i class="fa fa-download mr-2"></i> Download UOM</a> *@
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowDownloadEntry();"><i
+                                class="fa fa-download mr-2"></i> Download</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Group Code</label>
+                                <input type="text" class="form-control" id="txtSearchSalesAreaCode"
+                                    placeholder="Sales Group Code" required="" onchange="ClearDataTable('tableSearch')"
+                                    style="font-size: .8375rem;" />
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Group Name</label>
+                                <input type="text" class="form-control" id="txtSearchSalesAreaName"
+                                    placeholder="Sales Group Name" maxlength="50" autocomplete="off"
+                                    onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Sales Group Code</th>
+                                    <th>Sales Group Name</th>
+                                    <th>Status</th>
+                                    @*<th class="text-right" style="width: 50px;">Action</th>*@
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/master_salesgroup.js" asp-append-version="true"></script>
+}

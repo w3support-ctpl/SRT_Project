@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewData["Title"] = "Invoice";
+}
+
+@*<h1>PrimaryInvoice</h1>
+*@
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Invoice</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Invoice</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Invoice List</div>
+                    @*<div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>*@
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 col-lg-4">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name<span class="text-red">*</span></label>
+                                <select id="txtSearchDealerName" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this)">
+                                    <option value="">Dealer Name</option>
+                                </select>
+                                <div class="invalid-feedback">Dealer Name must be selected</div>
+                            </div>
+                        </div>
+                       @* 
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Invoice Date</label>
+                                <input type="text" class="form-control" id="txtSearchInvoiceDate" name="datefilter"
+                              
+                                       placeholder="Invoice Date"
+                                       maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                              
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>*@
+                        <div class="col-sm-4 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Invoice Date <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchInvoiceDate" name="datefilter"
+                                       placeholder="Invoice Date"
+                                       maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <button id="btn_Search" class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                    <i class="fa fa-search mr-2"></i> Search
+                                </button>
+                           </div>                            
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30px;">#</th>
+                                    <th>Invoice No</th>
+                                    <th>Document Type</th>
+                                    <th>Invoice Date</th>
+                                    <th>Payment Terms</th>
+                                    <th>Amount</th>
+                                    <th>Currency</th>
+                                    <th class="text-right" style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+
+
+
+<div class="modal fade" id="modelEntryItem" tabdocumentation="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRoute">Add Item</h5>
+                <span hidden id="lblAction"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+
+                                    <th style="width: 20px;">#</th>
+                                    <th style="width: 20px;">Item Id</th>
+                                    <th>Item Description</th>
+                                    <th>Billing Quality</th>
+                                    <th style="width: 100px;">
+                                    <input type="number" class="custom control-input select-all checkbox" />
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableInvoiceItemList">
+
+                                @*<tr>
+                                <td style="width: 20px;">1700000052</td>
+                                <td>INOVASOF SRW LIQUID</td>
+                                <td>3000</td>
+                                <td>KG</td>
+                                <td>1110</td>
+                                <td>81000</td>
+
+                                </tr>*@
+
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_SaveItemDetails"
+                        onclick="SaveEntryItemDetails();">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script src="~/tran_js/Primary_Invoice.js" asp-append-version="true"></script>
+}

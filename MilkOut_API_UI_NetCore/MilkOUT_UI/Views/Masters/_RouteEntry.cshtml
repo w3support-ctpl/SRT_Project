@@ -1,0 +1,114 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title" id="lblRouteHeader">Route Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <span id="lblEntryId" style="display: none;"></span>
+
+                <a id="btn_Save" href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();">
+                    <i class="fa fa-save mr-2"></i> Save
+                </a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Route saved successfully.
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Failed to save route.
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Group <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesArea" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this); changeEntrySalesArea();">
+                            <option value="">Select Sales Group</option>
+
+                        </select>
+                        <div class="invalid-feedback">Sales Group must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Dealer Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryDealerName" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this); GetRetailerList();">
+                            <option value="">Select Dealer Name</option>
+
+                        </select>
+                        <div class="invalid-feedback">Dealer Name must be selected.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRouteName" class="form-control"
+                               placeholder="Enter Route Name" maxlength="100"
+                               autocomplete="off" onkeypress="$(this).removeClass('is-invalid');">
+                        <div class="invalid-feedback">Route Name is required.</div>
+                    </div>
+                </div>
+
+              
+             
+              
+
+                <div class="col-lg-2 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Working Status</label>
+                        <label class="custom-control custom-checkbox mt-2">
+                            <input type="checkbox" id="chkWorkingStatus" class="custom-control-input" value="1" checked>
+                            <span class="custom-control-label text-dark">Is Working Day</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <textarea id="txtEntryRemarks" class="form-control" rows="1"
+                                  placeholder="Enter any additional notes..." maxlength="255"></textarea>
+                    </div>
+                </div>
+            </div>
+                <div id="divRetailerList" class="row">
+                    <h5 class="mb-4 font-weight-bold text-secondary">Retailers List</h5>
+                    <div class="table-responsive">
+                        <table id="tableRetailerList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Select</th>
+                                    <th hidden></th>
+                                    <th>Retailer Name</th>
+                                    @*  <th>Sales Group</th>*@
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryRetailerList">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
+        </div>
+
+
+        <div class="card-footer text-right" id="divFooterDelete" style="display:none;">
+            <div class="d-flex align-items-center">
+                <p class="text-muted small mb-0">To delete this route, ensure it has no active retailers assigned.</p>
+                <button type="button" class="btn btn-danger ml-auto" onclick="ShowDeleteEntry();">
+                    <i class="fa fa-trash mr-2"></i> Delete Route
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

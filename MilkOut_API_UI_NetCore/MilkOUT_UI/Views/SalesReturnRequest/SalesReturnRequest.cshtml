@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "SalesReturnRequest";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Sales Return Request</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sales Return Request</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="card-title">Sales Return Request List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name </label>
+                                <select id="ddlSearchDealerName" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this);">
+                                    <option value="">Select Dealer Name </option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Return Request Date</label>
+                                <input type="text" name="datefilter" class="form-control" id="txtSearchSalesReturnRequestDate"
+                                       placeholder="Delivery Date"
+                                       autocomplete="off">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                   
+                        <div class="table-responsive">
+                            <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20px;">#</th>
+                                        <th>Request ID</th>
+                                        <th>Type </th>
+                                        <th>Request Date</th>
+                                        <th>Amount</th>
+                                        <th>Currency</th>
+
+                                        <th class="text-right" style="width: 50px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+                                    <tr>
+                                        <td>1</td>
+                                        <td>D001</td>
+                                        <td>X Y Z</td>
+                                        <td>date</td>
+                                        <td>20000</td>
+                                        <td>INR</td>
+                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                            <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('1');">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>D002</td>
+                                        <td>X Y Z</td>
+                                        <td>date</td>
+                                        <td>40000</td>
+                                        <td>INR</td>
+                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                            <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('1');">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+        </div>
+
+     </div>
+
+    <div id="divContent" class="row"> </div>
+</div>
+
+    
+
+
+@section Scripts{
+    <script src="~/tran_js/salesreturnrequest.js" asp-append-version="true"></script>
+}

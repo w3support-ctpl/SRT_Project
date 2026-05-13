@@ -1,0 +1,531 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Sales Order Entry</div>
+            <div class="card-options">
+                <a id="btn_Save" href="javascript:void(0);" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"
+                    style="display: none;"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Order Date</label>
+                        <input type="date" id="txtEntryOrderDate" class="form-control" placeholder="Enter Order Date"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this)" />
+                        <div class="invalid-feedback">Order Date can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Select Dealer <span class="text-red">*</span></label>
+                        <select id="ddlDealerName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); ChangeDealer();">
+                            <option value="">Select Dealer</option>
+                        </select>
+                        <div class="invalid-feedback">Dealer Name must be selected</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Group <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesArea" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); GetSalesAreaName();">
+                            <option value="">Select Sales Group</option>
+                        </select>
+                        <div class="invalid-feedback">Sales Group must be selected</div>
+                    </div>
+                </div>
+
+
+
+
+                @* <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="form-group">
+                <label class="form-label">Destination <span class="text-red">*</span></label>
+                <input type="text" id="txtEntryDestination" class="form-control" placeholder="Enter Destination"
+                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this)">
+                <div class="invalid-feedback">Destination can't be blank.</div>
+                </div>
+                </div> *@
+                @* <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="form-group">
+                <label class="form-label">Customer Reference </label>
+                <input type="text" id="txtEntryCustomerReference" class="form-control" placeholder="Enter Customer
+                Reference" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this)">
+                <div class="invalid-feedback">Customer Reference can't be blank.</div>
+                </div>
+                </div> *@
+
+            </div>
+            <div class="row">
+
+
+                <div class="col-lg-5 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Area Name <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesAreaName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); changeSalesAreaname();">
+                            <option value="">Select Sales Area Name</option>
+                        </select>
+                        <div class="invalid-feedback">Sales Area Name must be selected</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Order Number </label>
+                        <input type="text" id="txtEntryOrderNumber" class="form-control" name="datefilter"
+                            placeholder="" maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')"
+                            disabled />
+                        <div class="invalid-feedback">Order Number can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Note </label>
+                        @* <textarea id="txtEntrySalesNote" class="form-control" placeholder="Enter Sales Note"
+                        maxlength="150" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this)"></textarea>
+                        <div class="invalid-feedback">Sales Note can't be blank.</div> *@
+                        <input type="text" id="txtEntryCustomerReference" class="form-control"
+                            placeholder="Enter Customer Reference" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this)">
+                        <div class="invalid-feedback">Sales Note can't be blank.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="" id="divTabs">
+                <div class="row" id="divTabs">
+                    <div class="col-12">
+                        <div class="panel panel-primary">
+                            <div>
+                                <div class="user-tabs mb-4">
+                                    <!-- Tabs -->
+                                    <ul class="nav panel-tabs">
+                                        <li class=""><a href="#tab1" class="active" data-toggle="tab"
+                                                onclick="GetItemDetailsList();">Items Details</a></li>
+                                        @* <li><a href="#tab2" data-toggle="tab" onclick="GetAdvanceDetails();">Advance
+                                        Details</a></li>
+                                        <li><a href="#tab3" data-toggle="tab" onclick="GetNotesList();">Notes</a></li>
+                                        <li><a href="#tab4" data-toggle="tab" onclick="GetAcknowledgementList();">View
+                                        Acknowledgement</a></li> *@
+                                        <li><a href="#tab5" data-toggle="tab" onclick="ShowSalesOrderItemPricingTable();">Pricing</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Manage Items</div>
+                                        <div class="card-options">
+                                            <span id="lblItemCount" hidden style="display: none;"></span>
+                                            <a href="#" class="btn btn-primary btn-sm mr-2" id="btn_itemsave"
+                                                data-toggle="modal" onclick="ShowItemDetailsModal('Add','');"><i
+                                                    class="fa fa-plus mr-2"></i> Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="tableItemDetailsList"
+                                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        @*                                                       <th >#</th>
+*@                                                       <th style="width: 85px;">Item Id</th>
+                                                        <th>Item Description</th>
+                                                        <th>Quantity</th>
+                                                        <th>UOM</th>
+                                                        <th>Taxable Amount</th>
+                                                        <th>Tax Amount</th>
+                                                        <th>Net Amount</th>
+                                                        <th class="text-right">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryItemDetails">
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                                <div class="card">
+                                    <div class="card-options">
+                                        <a id="btn_SaveAdvanceDetails" href="javascript:void(0);"
+                                            class="btn btn-primary btn-sm mr-2" onclick="SaveAdvanceDetails();"><i
+                                                class="fa fa-save mr-2"></i> Save Advance Details</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="">
+                                            <h6><b>Header Info</b></h6>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Ship to Party</label>
+                                                        <select id="ddlEntryShiptoParty"
+                                                            class="form-control select2 w-100" required=""
+                                                            onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Ship to Party </option>
+                                                        </select>
+                                                        <span id="lblAdvanceDetailsEntryId" hidden
+                                                            style="display: none;"></span>
+                                                        <span id="lblAdvanceDetailsAction" hidden
+                                                            style="display: none;"></span>
+                                                        <div class="invalid-feedback">Ship to Party Name can't be blank.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Buyer</label>
+                                                        <select id="ddlEntryBuyer" class="form-control select2 w-100"
+                                                            required="" onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Buyer </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Buyer can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Transport</label>
+                                                        <select id="ddlEntryTransport"
+                                                            class="form-control select2 w-100" required=""
+                                                            onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Transport </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Transport can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Payer</label>
+                                                        <select id="ddlEntryPayer" class="form-control select2 w-100"
+                                                            required="" onchange="ClearInvalidState(this);">
+                                                            <option value="">SelectPayer </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Payer can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Inco Term</label>
+                                                        <select id="ddlEntryIncoTerm" class="form-control select2 w-100"
+                                                            required="" onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Inco Term </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Inco Term can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Payment Term</label>
+                                                        <select id="ddlEntryPaymentTerm"
+                                                            class="form-control select2 w-100" required=""
+                                                            onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Payment Term </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Payment Term can't be blank.</div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Sales User</label>
+                                                        <select id="ddEntrylSalesUser"
+                                                            class="form-control select2 w-100" required=""
+                                                            onchange="ClearInvalidState(this);">
+                                                            <option value="">Select Sales User </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Sales User must be selected.</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <h6><b>Sales Group Info</b></h6>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Sales Org.</label>
+                                                        <input type="text" id="txtEntrySalesOrg" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Sales Org can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Distribution Chnl</label>
+                                                        <input type="text" id="txtEntryDistributionChnl"
+                                                            class="form-control" placeholder="" maxlength="50" disabled
+                                                            autocomplete="off" onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Distribution Chnl can't be blank.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Division</label>
+                                                        <input type="text" id="txtEntryDivision" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Division can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Order Type</label>
+                                                        <input type="text" id="txtEntryOrderType" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Order Type can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h6><b>User Info</b></h6>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">User Name</label>
+                                                        <input type="text" id="txtEntryUserName" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">User Name can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">User Role</label>
+                                                        <input type="text" id="txtEntryRole" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Destination can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Partner Name</label>
+                                                        <input type="text" id="txtEntryPartnerName" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Partner Name can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-2 col-sm-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Partner Type</label>
+                                                        <input type="text" id="txtEntryPartnerType" class="form-control"
+                                                            placeholder="" maxlength="50" autocomplete="off" disabled
+                                                            onkeypress="ClearInvalidState(this)">
+                                                        <div class="invalid-feedback">Partner Type can't be blank.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane " id="tab3">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Fat Deduction List</div>
+                                        <div class="card-options">
+                                            <a href="#" class="btn btn-primary btn-sm mr-2"
+                                                onclick="OpenModalFatDeduction('Add');"><i class="fa fa-plus mr-2"></i>
+                                                Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">Ver No</th>
+                                                        <th>Fat Slab</th>
+                                                        <th>Deduction per point</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th class="text-right" style="width: 50px;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryFatDeduction">
+                                                    <tr>
+                                                        <td style="width: 20px;">001</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>01 Jan 2023 10:00 AM</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td class="text-right"
+                                                            style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit"
+                                                                onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20px;">002</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td>31 Jul 2023 12:00 AM</td>
+                                                        <td class="text-right"
+                                                            style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit"
+                                                                onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane " id="tab4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Fat Deduction List</div>
+                                        <div class="card-options">
+                                            <a href="#" class="btn btn-primary btn-sm mr-2"
+                                                onclick="OpenModalFatDeduction('Add');"><i class="fa fa-plus mr-2"></i>
+                                                Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">Ver No</th>
+                                                        <th>Fat Slab</th>
+                                                        <th>Deduction per point</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th class="text-right" style="width: 50px;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryFatDeduction">
+                                                    <tr>
+                                                        <td style="width: 20px;">001</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>01 Jan 2023 10:00 AM</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td class="text-right"
+                                                            style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit"
+                                                                onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20px;">002</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td>31 Jul 2023 12:00 AM</td>
+                                                        <td class="text-right"
+                                                            style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit"
+                                                                onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane " id="tab5">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Pricing List</div>
+                                        <div class="card-options">
+                                            @* <a href="#" class="btn btn-primary btn-sm mr-2"
+                                                onclick="OpenModalFatDeduction('Add');"><i class="fa fa-plus mr-2"></i>
+                                                Add</a> *@
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="tableItemDetailsPricingList"
+                                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 85px;">Item Id</th>
+                                                        <th>Condition Type</th>
+                                                        <th>Condition Base Value</th>
+                                                        <th>Condition Rate Value</th>
+                                                        <th>Condition Amount</th>
+                                                        <th>Currency</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableItemDetailsPricing">
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-left" id="divFooterDelete">
+                @*<div class="d-flex">
+                    <button type="button" class="btn btn-gray ml-auto" title="Delete Entry"
+                        onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+                </div>*@
+
+                <h6 class="text-red">( Free Material not consider in total value.! ) </h6>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/tran_js/primary_salesorder.js" asp-append-version="true"></script>
+}

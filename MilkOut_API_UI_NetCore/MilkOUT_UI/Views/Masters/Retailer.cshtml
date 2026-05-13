@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Retailer";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Retailer</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Retailer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Retailer List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Retailer Name</label>
+                                <input type="text" class="form-control" id="txtSearchRetailerName"
+                                    placeholder="Retailer Name" maxlength="50" autocomplete="off"
+                                    onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Group <span class="text-red">*</span></label>
+                                <select id="ddlSearchSalesArea" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this); ClearDataTable('tableSearch'); chnageSalesArea();">
+                                    <option value="">Select Sales Group</option>
+
+                                </select>
+                                <div class="invalid-feedback">Select Sales Group</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-4 col-lg-4">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name </label>
+                                <select id="ddlSearchDealerName" class="form-control select2 w-100" required=""
+                                    onchnage="ClearDataTable('tableSearch'); ClearInvalidState(this)">
+                                    <option value="">Select Dealer Name</option>
+
+                                </select>
+                                <div class="invalid-feedback">Select Dealer Name</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-lg-2 col-md-2">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Retailer Name</th>
+                                    <th>Sales Group</th>
+                                    <th>Route Name </th>
+                                    <th>Dealer Code</th>
+                                    <th>Dealer Name</th>
+                                    <th>Monday User</th>
+                                    <th>Tuesday User</th>
+                                    <th>Wednesday User</th>
+                                    <th>Thursday User</th>
+                                    <th>Friday User</th>
+                                    <th>Saturday User</th>
+                                    <th>Sunday User</th>
+                                    <th>Mobile No</th>
+                                    <th>Landline No</th>
+                                    <th>Contact Person</th>
+                                    <th>Email Id</th>
+                                    <th>Address Line 1 Text</th>
+                                    <th>Address Line 2 Text</th>
+                                    <th>Address Line 3 Text</th>
+                                    <th>State Name</th>
+                                    <th>District Name</th>
+                                    <th>Taluka Name</th>
+                                    <th>Pincode</th>
+                                    <th>Pan No</th>
+                                    <th>ShopLatitude</th>
+                                    <th>ShopLongitude</th>
+                                    <th>Shop License No</th>
+                                    <th>Bank Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Account No</th>
+                                    <th>IFSC Code</th>
+                                    <th>Account Name</th>
+                                    <th>FSSAI License No</th>
+                                    <th>FSSAI LicenseValidity On</th>
+                                    <th>AgreementValidiy StartDate</th>
+                                    <th>AgreementValidity EndDate</th>
+                                    <th>SecurityDepositAmount</th>
+                                    <th>MSME</th>
+                                    <th>Aadhar No</th>
+                                    <th>ASME</th>
+                                    <th>GST No</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                @*<tr>
+                                    <td style="width: 20px;">1</td>
+                                    <td>Gurukrupa Stores</td>                                        
+                                    <td>XYZ</td>  
+                                    <td>Pune</td> 
+                                    <td>Active</td> 
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('1');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;">2</td>
+                                    <td>Panchavati Stores</td>   
+                                    <td>PQR</td> 
+                                    <td>Nashik</td> 
+                                    <td>Active</td> 
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('2');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/masters_retailer.js" asp-append-version="true"></script>
+}

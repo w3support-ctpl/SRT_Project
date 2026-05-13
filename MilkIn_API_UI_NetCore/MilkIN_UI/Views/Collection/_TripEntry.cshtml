@@ -1,0 +1,192 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Trip Entry</div>
+            <div class="card-options">
+                <a href="#" class="btn btn-primary btn-sm mr-2" id="btn_Litres" onclick="SaveLitres(this);"
+                    style="display:none;"><i class="fa fa-save mr-2"></i> Litres</a>
+                <a href="#" class="btn btn-primary btn-sm mr-2" id="btn_Save" onclick="SaveEntry(this);"
+                    style="display:none;"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Trip No </label>
+                        <input type="text" id="txtEntryTripNo" class="form-control" placeholder="Trip No" maxlength="30"
+                            autocomplete="off" disabled>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No </label>
+                        <input type="text" id="txtEntryVehicleNo" class="form-control" placeholder="Vehicle No"
+                            maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Name </label>
+                        <input type="text" id="txtEntryRouteName" class="form-control" placeholder="Route Name"
+                            maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver Name </label>
+                        <input type="text" id="txtEntryDriverName" class="form-control" placeholder="Driver Name"
+                            maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift </label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Shift" maxlength="30"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Duration </label>
+                        <input type="text" id="txtEntryDuration" class="form-control" placeholder="Duration"
+                            maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label for="txtViewDate" class="form-label">FleetX Id </label>
+                        <div class="row gutters-xs">
+                            <div class="col">
+                                <input type="text" id="txtEntryFleetXId" class="form-control" autocomplete="off"
+                                    onchange="ClearInvalidState(this);">
+                            </div>
+
+                            <span class="col-auto">
+                                <button id="btn_View" class="btn btn-primary" type="button"
+                                    onclick="GetFleetXDistance();">Go!</button>
+                            </span>
+                            <div class="invalid-feedback">FleetX Id can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Distance As Per FleetX </label>
+                        <input type="text" id="txtEntryDistanceAsPerFleetX" class="form-control"
+                            placeholder="Distance As Per FleetX" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Distance As Per Route</label>
+                        <input type="text" id="txtEntryDistanceAsPerDriverApp" class="form-control"
+                            placeholder="Distance As Per Route" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Quantity In Litres </label>
+                        <input type="text" id="txtEntryQuantityInLitres" class="form-control"
+                            placeholder="Quantity In Litres" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Diesel Base Rate </label>
+                        <input type="text" id="txtEntryDieselBaseRate" class="form-control"
+                            placeholder="Diesel Base Rate" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Current Diesel Rate </label>
+                        <input type="text" id="txtEntryCurrentDieselRate" class="form-control"
+                            placeholder="Current Diesel Rate" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        @* <label class="form-label">Rate Type </label>
+                        <input type="text" id="txtEntryRateType" class="form-control" placeholder="Rate Type"
+                        maxlength="30" autocomplete="off" disabled> *@
+
+                        <label for="ddlEntryRateType" class="form-control-label">Freight Rate Type <span
+                                class="text-red">*</span></label>
+                        <select id="ddlEntryRateType" class="form-control select2" placeholder="Enter Freight Rate Type"
+                            disabled>
+                            <option value="">Select Freight Rate Type</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Freight Rate </label>
+                        <input type="text" id="txtEntryRate" class="form-control" placeholder="Rate" maxlength="30"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+
+                @* <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="form-group">
+                <label class="form-label">Quantity In KG </label>
+                <input type="text" id="txtEntryQuantityInWeight" class="form-control"
+                placeholder="Quantity In Weight" maxlength="30" autocomplete="off" disabled>
+                </div>
+                </div> *@
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryFinalDistance">
+                    <div class="form-group">
+                        <label class="form-label">Final Distance <span class="text-red">*</span> </label>
+                        <input type="text" id="txtEntryFinalDistance" class="form-control" placeholder="Final Distance"
+                            maxlength="30" autocomplete="off" disabled onkeyup="GetAmount();"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Please Final Distance</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Amount </label>
+                        <input type="text" id="txtEntryAmount" class="form-control" placeholder="Amount" maxlength="30"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FOOTER-->
+        <!--
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+        -->
+    </div>
+</div>

@@ -1,0 +1,112 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Deductions Entry</div>
+            <div class="card-options">
+                 @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="DeleteEntry();"
+                        id="DeleteEntry"><i class="fa fa-trash mr-2"></i> Remove</a>
+                }
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Name </label>
+                        <input type="text" id="txtEntryRequestUserName" class="form-control" placeholder=""
+                               maxlength="30" autocomplete="off">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblRequestType" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">User Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Total Amount </label>
+                        <input type="text" id="txtEntryTotalAmount" class="form-control" placeholder=""
+                               maxlength="30" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Amount Deducted </label>
+                        <input type="text" id="txtEntryAmountDeducted" class="form-control" placeholder=""
+                               maxlength="30" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Balance </label>
+                        <input type="text" id="txtEntryBalance" class="form-control" placeholder=""
+                               maxlength="30" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Entry Date </label>
+                        <input type="text" id="txtEntryApprovalDate" class="form-control" placeholder=""
+                               maxlength="30" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                @* <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">No. Of Installments <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryNoOfInstallments" class="form-control" placeholder="Enter No. of Installments"
+                               maxlength="30" autocomplete="off">
+                        <div class="invalid-feedback">Invalid No. Of Installments can't be blank.</div>
+                    </div>
+                </div> *@
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                         <label class="form-label">No. Of Installments <span class="text-red">*</span></label>
+                        <div class="row gutters-xs">
+                            <div class="col">
+                                <input type="text" id="txtEntryNoOfInstallments" class="form-control" placeholder="Enter No. of Installments"
+                               maxlength="30" autocomplete="off">
+                            </div>
+                            <span class="col-auto">
+                                <button id="btn_MCC_View" class="btn btn-primary" type="button"
+                                    onclick="GetInstallments();">Go!</button>
+                            </span>
+                            <div class="invalid-feedback">Invalid No. Of Installments can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divDeductionsItemTable">
+                <h5 class="mb-4 font-weight-bold text-secondary">Menu</h5>
+                <div class="table-responsive">
+                    <table id="tableDeductionsItem" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Deduction Date</th>
+                                <th>Deduction Amount</th>
+                                <th>Deduction Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryDeductionsItem">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,205 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Milk Receipt";
+}
+
+<div class="side-app">
+    <!----    ----    ----    ----    Section - Page Header    ----    ----    ----    ---->
+    <div class="page-header">
+        <h4 class="page-title">Milk Receipt</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Milk Collection</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Milk Receipt</li>
+            <span id="lblSessionRoleId" hidden
+                style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+        </ol>
+    </div>
+
+
+
+
+    <!----    ----    ----    ----    Table - Milk Collection Tanker Data Extracted from the Database    ----    ----    ----    ---->
+
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Milk Receipt List</div>
+                    <span id="truckcollectionfirstqty"
+                        hidden>@Accessor.HttpContext!.Session.GetString("SessionTruckCollectionFirstQty")</span>
+                    <span id="tankercollectionfirstqty"
+                        hidden>@Accessor.HttpContext!.Session.GetString("SessionTankerCollectionFirstQty")</span>
+
+                    @* <span id="truckcollectionfirstqty" hidden>1</span>
+                    <span id="tankercollectionfirstqty" hidden>1</span> *@
+
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="OpenModal();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Entry Date </label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Entry Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Entry Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+
+
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Vehicle No</th>
+                                    <th>Route Name</th>
+                                    <th>Shift</th>
+                                    <th>Time</th>
+                                    <th>Net Quantity (kg)</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 200px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span hidden id="lblAction"></span>
+    <span hidden id="lblEntryId"></span>
+
+
+    <!----    ----    ----    ----    Section for Entry Page    ----    ----    ----    ---->
+
+    <div id="divContent" class="row">
+    </div>
+
+
+
+    <!----    ----    ----    ----    Section for MCC Entry Page    ----    ----    ----    ---->
+
+    <div id="divMCCEntry" class="row">
+    </div>
+
+
+</div>
+
+
+
+<!----    ----    ----    ----    Modal - To Select Vehicle No    ----    ----    ----    ---->
+<div class="modal fade" id="modelEntryVehicle" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Vehicle</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Vehicle <span class="text-red">*</span></label>
+                    <select id="ddlSearchVehicle" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this);">
+                        <option value="">Select Vehicle </option>
+                    </select>
+                    <div class="invalid-feedback">Vehicle must be selected.</div>
+                </div>
+                <div class="form-group" id="divddlSearchVehicleNo">
+                    <label class="form-label">Vehicle No. <span class="text-red">*</span></label>
+                    <select id="ddlSearchVehicleNo" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this);">
+                        <option value="">Select Vehicle No</option>
+                    </select>
+                    <div class="invalid-feedback">Vehicle No. must be selected.</div>
+                </div>
+
+                <div class="form-group" id="divtxtSearchVehicleNo">
+                    <label for="txtSearchVehicleNo" class="form-contsrol-label">Vehicle No <span
+                            class="text-red">*</span></label>
+                    <input type="text" id="txtSearchVehicleNo" class="form-control" placeholder="Enter Vehicle No"
+                        maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                    <div class="invalid-feedback">Vehicle No can't be blank.</div>
+                </div>
+
+                <div class="form-group" id="divddlSearchSupplierName">
+                    <label class="form-label">Supplier Name <span class="text-red">*</span></label>
+                    <select id="ddlSearchSupplierName" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this);">
+                        <option value="">Select Supplier Name</option>
+                    </select>
+                    <div class="invalid-feedback">Supplier Name must be selected.</div>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                    title="Add" onclick="ShowAddEntry();">
+                    <i class="fa fa-plus mr-2"></i> Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryKM" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trip KM</h5>
+                <span id="KMMilkCollectionDairy_id" hidden style="display: none;"></span>
+                <span id="KMTripDocument_Id" hidden style="display: none;"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="form-group col-6">
+                    <label class="form-label">Trip Out KM <span class="text-red">*</span></label>
+                    <input type="text" id="txtEntryOutKM" class="form-control" placeholder="Enter Out KM"
+                        maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                    <div class="invalid-feedback">Out KM can't be blank.</div>
+                </div>
+                <div class="form-group col-6">
+                    <label class="form-label">Trip IN KM <span class="text-red">*</span></label>
+                    <input type="text" id="txtEntryINKM" class="form-control" placeholder="Enter In KM"
+                        maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                    <div class="invalid-feedback">IN KM can't be blank.</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                    title="Add" onclick="ShowAddKMEntry();">
+                    <i class="fa fa-save mr-2"></i> Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!----    ----    ----    ----    Connected Javascript File    ----    ----    ----    ---->
+@section Scripts {
+    <script src="~/tran_js/collection_milkcollection.js" asp-append-version="true"></script>
+}

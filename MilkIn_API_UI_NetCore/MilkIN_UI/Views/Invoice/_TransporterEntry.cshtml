@@ -1,0 +1,110 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Transporter Invoice Entry</div>
+            <div class="card-options">
+                <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Generate</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 form-group">
+                    <label class="form-label-search" for="txtSearchEntryDuration">Entry Period </label>
+                    <input type="text" class="form-control" name="datefilter" id="txtSearchEntryDuration"
+                        onchange="ClearDataTable('tableTransporterShow'); ClearDataTable('tableTransporterHidden');" autocomplete="off" />
+                </div>
+                <div class="col-sm-6 col-lg-3 col-md-3">
+                    <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                        title="Search" onclick="GetSearchEntryList(this);">
+                        <i class="fa fa-search mr-2"></i> Search
+                    </button>
+                </div>
+                <div class="col-sm-6 col-lg-1 col-md-1">
+                    <div style="display: none" class="dimmer active mr-2" id="loader">
+                        <div class="lds-ring" style="margin: 0px !important">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divTransporterTable">
+                <h5 class="mb-4 font-weight-bold text-secondary">Transporter</h5>
+                <div class="table-responsive mb-4" style="height: 70vh; display: none;">
+                    <table id="tableTransporterHidden"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="selectAllHidden"
+                                            onclick="SelectAllCheckboxHidden();" />
+                                        <label for="selectAllHidden" class="custom-control-label text-dark"></label>
+                                    </label>
+                                </th>
+                                <th>Transporter Name</th>
+                                <th>Entry Type</th>
+                                <th>Entry Date</th>
+                                <th>Particulars</th>
+                                <th>Amount</th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryHidden">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive mb-4" style="height: 70vh;">
+                    <table id="tableTransporterShow"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="selectAllShow"
+                                            onclick="SelectAllCheckboxShow();" />
+                                        <label for="selectAllShow" class="custom-control-label text-dark"></label>
+                                    </label>
+                                </th>
+                                <th>Voucher Date</th>
+                                <th>Transporter Code</th>
+                                <th>Transporter Name</th>
+                                <th>Gross Amount</th>
+                                <th>Labour Charges</th>               
+                                <th>Recovery Amount</th>
+                                <th>Security Amount</th>
+                                <th>Cattle Feed</th>
+                                <th>Diesel Rate Diff</th>
+                                <th>Diesel Recovery (ltr)</th>
+                                <th>Diesel Recovery (amount)</th>
+                                <th>Dairy Advance</th>
+                                <th>Bank Loan Deduction</th>
+                                <th>Can Recovery</th>
+                                <th>Net Payable</th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryShow">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

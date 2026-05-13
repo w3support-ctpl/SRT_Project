@@ -1,0 +1,161 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Farmer Open Entry</div>
+            <div class="card-options">
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="#" class="btn btn-sm btn-link mr-2" onclick="MusterCycleSaveEntry();">
+                        Muster Cycle</a>
+
+                    <a href="#" id="btn_nSave" class="btn btn-sm btn-link mr-2" onclick="NegativeSaveEntry();">
+                        Generate
+                        (Negative value)</a>
+                }
+
+                <a href="#" id="btn_Save" class="btn btn-secondary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Generate</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link btn-secondary" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+                    <label class="form-label-search" for="txtSearchEntryDuration">Entry Period </label>
+                    <input type="text" class="form-control" name="datefilter" id="txtSearchEntryDuration"
+                        onchange="ClearDataTable('tableFarmer');ClearDataTable('tableFarmerShow');ClearInvalidState(this);"
+                        autocomplete="off" />
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12 form-group">
+                    <label class="form-label-search" for="txtSearchEntryMCCType">MCC Type <span
+                            class="text-red">*</span></label>
+                    <select id="txtSearchEntryMCCType" class="form-control select2" required=""
+                        onchange="ClearDataTable('tableFarmer');ClearDataTable('tableFarmerShow');GetMCCName();ClearInvalidState(this);">
+                        <option value="">All MCC Type</option>
+                    </select>
+                    <div class="invalid-feedback">Invalid MCC Type.</div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12 form-group">
+                    <label class="form-label-search" for="txtSearchEntryMCCWorkType">MCC Work Type <span
+                            class="text-red">*</span></label>
+                    <select id="txtSearchEntryMCCWorkType" class="form-control select2" required=""
+                        onchange="ClearDataTable('tableFarmer');ClearDataTable('tableFarmerShow');GetMCCName();ClearInvalidState(this);">
+                        <option value="">All MCC Work Type</option>
+                    </select>
+                    <div class="invalid-feedback">Invalid MCC Work Type.</div>
+                </div>
+
+
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <label for="txtSearchEntryMCC" class="form-label-search">MCC Name <span
+                                class="text-red">*</span></label>
+                        <div class="row gutters-xs">
+                            <div class="col">
+                                <select id="txtSearchEntryMCC" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableFarmer');ClearDataTable('tableFarmerShow');ClearInvalidState(this);">
+                                    <option value="">All MCC </option>
+                                </select>
+                            </div>
+
+                            <span class="col-auto">
+                                <button class="btn btn-primary" type="button"
+                                    onclick="GetSearchEntryList(this);">Go!</button>
+                            </span>
+                            <div class="invalid-feedback">Invalid MCC Name.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-1 col-md-1">
+                    <div style="display: none" class="dimmer active mr-2" id="loader">
+                        <div class="lds-ring" style="margin: 0px !important">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divFarmerTable">
+                <h5 class="mb-4 font-weight-bold text-secondary">Farmer</h5>
+                <div class="table-responsive" style="height: 70vh; display: none;">
+                    <table id="tableFarmer"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="selectAll"
+                                            onclick="SelectAllCheckbox();" />
+                                        <label for="selectAll" class="custom-control-label text-dark"></label>
+                                    </label>
+                                </th>
+                                <th>Farmer Name</th>
+                                <th>MCC Name</th>
+                                <th>Entry Type</th>
+                                <th>Entry Date</th>
+                                <th>Particulars</th>
+                                <th>Amount</th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntry">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive" style="height: 70vh;">
+                    <table id="tableFarmerShow"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="selectAllShow"
+                                            onclick="SelectAllShowCheckbox();" />
+                                        <label for="selectAllShow" class="custom-control-label text-dark"></label>
+                                    </label>
+                                </th>
+                                @* <th>Voucher Date</th> *@
+                                <th>Farmer Code</th>
+                                <th>Farmer Name</th>
+                                <th>MCC Name</th>
+                                <th>Muster Cycle</th>
+                                <th>Quantity (ltr)</th>
+                                <th>Milk Payment</th>
+                                <th>Dairy Anamat</th>
+                                <th>Bank EMI</th>
+                                <th>Product Sales</th>
+                                <th>TM Sales</th>
+                                <th>Milk Transport</th>
+                                <th>Dairy Adance</th>
+                                <th>MCC Advance</th>
+                                <th>Net Deduction</th>
+                                <th>Net Payable</th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryShow">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

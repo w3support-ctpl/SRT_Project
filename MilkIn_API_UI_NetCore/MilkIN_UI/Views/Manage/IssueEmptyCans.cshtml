@@ -1,0 +1,87 @@
+﻿@{
+    ViewData["Title"] = "Issue Empty Cans";
+}
+
+<div class="side-app">
+    <!----    ----    ----    ----    Section - Page Header    ----    ----    ----    ---->
+    <div class="page-header">
+        <h4 class="page-title">Issue Empty Cans</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Manage</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Issue Empty Cans</li>
+        </ol>
+    </div>
+
+    <!----    ----    ----    ----    Table - Issue Empty Cans Data Extracted from the Database    ----    ----    ----    ---->
+
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Issue Empty Cans List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>           
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Delivery Period </label>
+                                <input type="text" name="datefilter" id="txtSearchDeliveryPeriod" class="form-control" autocomplete="off" value=""
+                                       placeholder="">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Truck</label>
+                                <select class="form-control select2" id="ddlSearchTruck"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Truck</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Truck No</th>
+                                    <th>Route Name</th>
+                                    <th>Shift</th>
+                                    <!--<th>MCC Name</th>-->
+                                    <!--<th>Total Cans</th>-->
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----    ----    ----    ----    Section for Entry Page    ----    ----    ----    ---->
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<!----    ----    ----    ----    Connected Javascript File    ----    ----    ----    ---->
+@section Scripts{
+    <script src="~/tran_js/manage_issue_empty_cans.js" asp-append-version="true"></script>
+}

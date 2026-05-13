@@ -1,0 +1,664 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">MCC Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Code </label>
+                        <input type="text" id="txtEntryMCCCode" class="form-control" placeholder="" maxlength="50"
+                            autocomplete="off" disabled> <!--VALUE WILL COME FROM SAP-->
+                        <div class="invalid-feedback">Invalid input</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblType" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMCCName" class="form-control" placeholder="Enter MCC Name"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">MCC Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Category <span class="text-red">*</span></label>
+                        <select id="ddlEntryCategory" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="0">Select Category</option>
+                        </select>
+                        <div class="invalid-feedback">Category must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); SetMilkType(); GetCollectionShift(this);">
+                            <option value="0">Select Type</option>
+                        </select>
+                        <div class="invalid-feedback">Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryAgent" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="0">Select Agent</option>
+                        </select>
+                        <div class="invalid-feedback">Agent Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Work Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryMCCWorkType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select MCC Type</option>
+                        </select>
+                        <div class="invalid-feedback">MCC Work Type must be selected.</div>
+                    </div>
+                </div>
+                <div id="divMilkType" class="col-lg-6 col-md-6 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryMilkType" class="form-control select2 w-100" required="" multiple
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Milk Type</option>
+                        </select>
+                        <div class="invalid-feedback">Milk Type must be selected.</div>
+                    </div>
+                </div>
+                <div id="divCollectionShift" class="col-lg-6 col-md-6 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Collection Shift <span class="text-red">*</span></label>
+                        <select id="ddlEntryCollectionShift" class="form-control select2 w-100" required="" multiple
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Collection Shift</option>
+                        </select>
+                        <div class="invalid-feedback">Collection Shift must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divMusterType">
+                    <div class="form-group">
+                        <label class="form-label">Muster Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryMusterType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Muster Type</option>
+                        </select>
+                        <div class="invalid-feedback">Muster Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divPaymentCycle">
+                    <div class="form-group">
+                        <label class="form-label">Payment Cycle <span class="text-red">*</span></label>
+                        <select id="ddlEntryPaymentCycle" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Payment Cycle</option>
+                        </select>
+                        <div class="invalid-feedback">Payment Cycle must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No </label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Mobile Number.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Pan No </label>
+                        <input type="text" id="txtEntryPanNo" class="form-control" placeholder="Enter Pan No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[A-Z0-9]*">
+                        <div class="invalid-feedback">Invalid Pan No</div>
+                    </div>
+                </div>
+
+                <div id="divAnamat" class="col-lg-3 col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Anamat <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAnamat" class="form-control" placeholder="Enter Anamat"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Anamat.</div>
+                    </div>
+                </div>
+                <div id="divAnamatTDS" class="col-lg-3 col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Anamat For <span class="text-red">*</span></label>
+                        <select id="ddlEntryAnamatTDS" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Anamat For</option>
+                        </select>
+                        <div class="invalid-feedback">Anamat For must be selected.</div>
+                    </div>
+                </div>
+
+                <div id="divFreight" class="col-lg-3 col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Freight <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryFreight" class="form-control" placeholder="Enter Freight"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Freight.</div>
+                    </div>
+                </div>
+
+                <div id="divFreightTDS" class="col-lg-3 col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Freight For <span class="text-red">*</span></label>
+                        <select id="ddlEntryFreightTDS" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Freight For</option>
+                        </select>
+                        <div class="invalid-feedback">Freight For must be selected.</div>
+                    </div>
+                </div>
+
+                <div id="divRebate" class="col-lg-3 col-md-4 col-sm-12" style="display:none">
+                    <div class="form-group">
+                        <label class="form-label">Rebate Amount (ltr) <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRebate" class="form-control" placeholder="Enter Rebate"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Rebate.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Withholding Tax Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryWithholdingTaxType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Withholding Tax Type</option>
+                        </select>
+                        <div class="invalid-feedback">Withholding Tax Type must be selected.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Plant Code </label>
+                        <input type="text" id="txtEntryPlantCode" class="form-control" placeholder="Enter Plant Code"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Plant Code</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Allow Alternate Dispatch? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAllowAlternateDispatch" name="chkForFarmer"
+                                class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForAllowAlternateDispatch" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                @* <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                <div class="form-group">
+                <label class="form-label">Aadhar No </label>
+                <input type="text" id="txtEntryAadharNo" class="form-control" placeholder="Enter Aadhar No"
+                maxlength="12" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[0-9]*">
+                <div class="invalid-feedback">Invalid Aadhar No</div>
+                </div>
+                </div> *@
+            </div>
+            <!--ADDRESS DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Address Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">State <span class="text-red">*</span></label>
+                        <select id="ddlEntryState" class="form-control select2 w-100" required=""
+                            onchange="GetDistrict(); ClearInvalidState(this);">
+                            <option value="">Select State</option>
+                        </select>
+                        <div class="invalid-feedback">State must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">District <span class="text-red">*</span></label>
+                        <select id="ddlEntryDistrict" class="form-control select2 w-100" required=""
+                            onchange="GetTaluka(); ClearInvalidState(this);">
+                            <option value="">Select District</option>
+                        </select>
+                        <div class="invalid-feedback">District must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Taluka <span class="text-red">*</span></label>
+                        <select id="ddlEntryTaluka" class="form-control select2 w-100" required=""
+                            onchange="GetVillage(); ClearInvalidState(this);">
+                            <option value="">Select Taluka</option>
+                        </select>
+                        <div class="invalid-feedback">Taluka must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Village <span class="text-red">*</span></label>
+                        <select id="ddlEntryVillage" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Village</option>
+                        </select>
+                        <div class="invalid-feedback">Village must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Text</label>
+                        <input type="text" id="txtEntryAddress" class="form-control" placeholder="Enter Address Text"
+                            maxlength="100" autocomplete="off">
+                    </div>
+                    <div class="invalid-feedback">Invalid input</div>
+                </div>
+            </div>
+            <!--BANK DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Bank Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Bank Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryBankName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);GetBranch();">
+                            <option value="">Select Bank Name</option>
+                        </select>
+                        <div class="invalid-feedback">Bank Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Branch Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryBranchName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); SetIFSCCode();">
+                            <option value="">Select Branch Name</option>
+                        </select>
+                        <div class="invalid-feedback">Branch Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAccountName" class="form-control"
+                            placeholder="Enter Account Name" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Account Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account No <span class="text-red">*</span></label>
+                        <input type="number" id="txtEntryAccountNo" class="form-control" placeholder="Enter Account No"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Account No can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">IFSC Code </label>
+                        <label id="txtEntryIFSCCode" class="form-control" autocomplete="off" disabled></label>
+                        <div class="invalid-feedback">Unable to set IFSC Code.</div>
+                    </div>
+                </div>
+            </div>
+            <!--OTHER DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Other Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FSSAI License No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryFSSAILicenseNo" class="form-control"
+                            placeholder="Enter FSSAI License No" maxlength="14" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid FSSAI License No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FSSAI License Validity <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryFSSAILicenseValidity" class="form-control" placeholder=""
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">FSSAI License Validity can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Latitude <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryLatitude" class="form-control" placeholder="Enter Latitude"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Latitude can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Longitude <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryLongitude" class="form-control" placeholder="Enter Longitude"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Longitude can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Payment Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryPaymentType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Payment Type</option>
+                        </select>
+                        <div class="invalid-feedback">Payment Type must be selected.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Allow Manual Quantity? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAllowManualQuantity" name="chkForFarmer"
+                                class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForAllowManualQuantity" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Allow Manual Quality? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAllowManualQuality" name="chkForFarmer"
+                                class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForAllowManualQuality" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Allow Manual Shift End? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAllowManualShiftEnd" name="chkForFarmer"
+                                class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForAllowManualShiftEnd" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">PAN Card Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">MCC Name Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">FSSAI License Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- TABS SECTION -->
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <!--
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab" onclick="GetPaymentSettingsList();">Payment Settings</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Payment Settings</div>
+                                    <div class="card-options">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            onclick="OpenModalPaymentSettings('Add','');"
+                                            id="OpenModalPaymentSettings"><i class="fa fa-plus mr-2"></i> Add</a>
+                                    </div>
+                                </div>
+                                <div id="divItemSuccess" class="card-alert alert alert-success mb-0"
+                                    style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div id="divItemError" class="card-alert alert alert-danger mb-0"
+                                    style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablePaymentSettingsList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 50px;">Ver No</th>
+                                                    <th>Muster Type</th>
+                                                    <th>Payment Cycle</th>
+                                                    <th>Anamat</th>
+                                                    <th>Freight</th>
+                                                    <th>Rebate</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Collection Shift</th>
+                                                    <th>Applicable From</th>
+                                                    <th class="text-right" style="width: 50px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryPaymentSettings">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL Payment Settings-->
+<div class="modal fade" id="modelEntryPaymentSettings" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditPaymentSettings">Payment Details</h5>
+                <span hidden id="lblActionPaymentSettings"></span>
+                <span hidden id="lblEntryPaymentSettingsId"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Muster Type <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryMusterType" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Muster Type</option>
+                            </select>
+                            <div class="invalid-feedback">Muster Type must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Payment Cycle <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryPaymentCycle" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Payment Cycle</option>
+                            </select>
+                            <div class="invalid-feedback">Payment Cycle must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Anamat <span class="text-red">*</span></label>
+                            <input type="text" id="txtModalEntryAnamat" class="form-control" placeholder="Enter Anamat"
+                                maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Anamat.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Anamat For <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryAnamatTDS" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Anamat For</option>
+                            </select>
+                            <div class="invalid-feedback">Anamat For must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Freight <span class="text-red">*</span></label>
+                            <input type="text" id="txtModalEntryFreight" class="form-control"
+                                placeholder="Enter Freight" maxlength="10" autocomplete="off"
+                                onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Freight.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Freight For <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryFreightTDS" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Freight For</option>
+                            </select>
+                            <div class="invalid-feedback">Freight For must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryMilkType" class="form-control select2 w-100" required="" multiple
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Type must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Collection Shift <span class="text-red">*</span></label>
+                            <select id="ddlModalEntryCollectionShift" class="form-control select2 w-100" required=""
+                                multiple onchange="ClearInvalidState(this);">
+                                <option value="">Select Collection Shift</option>
+                            </select>
+                            <div class="invalid-feedback">Collection Shift must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Rebate Amount (ltr <span class="text-red">*</span></label>
+                            <input type="text" id="txtModalEntryRebate" class="form-control" placeholder="Enter Rebate"
+                                maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Rebate.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryPaymentSettingsFromDate" class="form-control-label">Applicable From
+                                <span class="text-red">*</span></label>
+                            <input type="datetime-local" id="txtEntryPaymentSettingsFromDate" class="form-control"
+                                autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Applicable From Date can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content:flex-start">
+                    <button type="button" class="btn btn-primary" id="btn_Save_Payment_Settings"
+                        onclick="SavePaymentSettingsEntry();">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

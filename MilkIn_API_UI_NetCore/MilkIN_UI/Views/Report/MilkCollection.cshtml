@@ -1,0 +1,208 @@
+﻿@{
+    ViewData["Title"] = "Milk Collection Report";
+
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 id="lblPageHeader" class="page-title">Milk Collection Report</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Report</a></li>
+            <li id="lblBreadCrumb" class="breadcrumb-item active" aria-current="page">Milk Collection</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Report Filters</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-secondary btn-sm" onclick="GetSearchList('');"><i
+                                class="fa fa-search mr-2"></i> Search</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="divError" class="row mb-3" style="display: none;">
+                        <div class="col-sm-12 ">
+                            <div class="alert alert-danger">
+                                <button type="button" class="close text-white" data-dismiss="alert"
+                                    aria-hidden="true">×</button>
+                                <strong>Error in filter selection</strong>
+                                <hr class="message-inner-separator">
+                                <p class="mb-0" id="lblErrorMessage">Change a few things up and try submitting again.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchReportType">
+                                Report Name <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchReportType" class="form-control select2 w-100"
+                                onchange="SetReportFilters();">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-2" id="divSearchPeriod">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="txtSearchPeriod">
+                                Entry Period <span class="text-red">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="datefilter" id="txtSearchPeriod" />
+                            <input type="text" class="form-control" id="txtSearchPeriodHidden" hidden
+                                style="display: none;" />
+                        </div>
+                    </div>
+                    <div class="row mt-2" id="divSearchDate" style="display: none;">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="txtSearchDate">
+                                Entry Period <span class="text-red">*</span>
+                            </label>
+                            <input type="datetime-local" id="txtSearchDate" class="form-control" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2" id="divMusterSearchDate" style="display: none;">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="txtSearchDate">
+                                Muster Start Date
+                            </label>
+                            <input type="date" id="txtMusterStartSearchDate" class="form-control" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                        </div>
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="txtSearchDate">
+                                Muster End Date
+                            </label>
+                            <input type="date" id="txtMusterEndSearchDate" class="form-control" autocomplete="off"
+                                onchange="ClearInvalidState(this);">
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div id="divSearchMCCType" class="col-lg-6 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchMCCType">
+                                MCC Type <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchMCCType" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                        <div id="divSearchCollectionShift" class="col-lg-6 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchShift">
+                                Milk Collection Shift <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchShift" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row mt-2">
+                        <div id="divSearchMilkType" class="col-lg-6 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchMilkType">
+                                Milk Type <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchMilkType" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                        <div id="divSearchMCCWorkType" class="col-lg-6 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchMCCWorkType">
+                                MCC Work Type <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchMCCWorkType" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div id="divSearchMPPIType" class="col-lg-6 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchMPPIType">
+                                MPPI Type <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchMPPIType" class="form-control select2 w-100">
+                            </select>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 form-group" hidden>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div id="divSearchMCCName" class="col-lg-12 col-md-12 form-group">
+                            <label class="form-label-search" for="ddlSearchMCCName">
+                                MCC Name
+                            </label>
+                            <select id="ddlSearchMCCName" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                        <div id="divSearchTransporterName" class="col-lg-12 col-md-12 form-group"
+                            style="display: none;">
+                            <label class="form-label-search" for="ddlSearchTransporterName">
+                                Transporter Name
+                            </label>
+                            <select id="ddlSearchTransporterName" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                        <div id="divSearchRouteName" class="col-lg-12 col-md-12 form-group" style="display: none;">
+                            <label class="form-label-search" for="ddlSearchRouteName">
+                                Route Name
+                            </label>
+                            <select id="ddlSearchRouteName" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                    </div>
+                    <span id="lblReportType" hidden style="display: none;">@ViewBag.ReportType</span>
+                    <span id="lblReportGroup" hidden style="display: none;">@ViewBag.ReportGroup</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntry" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document" style="width: 85% !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chart List</h5>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="table-responsive" style="height: 300px !important;overflow: auto !important;">
+                    <table id="tableEntryModal"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead id="tableEntryModelDataHeader">
+
+                        </thead>
+                        <tbody id="tableEntryModelData">
+
+                        </tbody>
+
+                    </table>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/report_milkcollection.js" asp-append-version="true"></script>
+}

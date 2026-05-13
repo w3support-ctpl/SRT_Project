@@ -1,0 +1,86 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Agent Data Correction</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remark</label>
+                        <input type="text" id="txtEntryRemark" class="form-control" placeholder="Enter Remark" maxlength="100" autocomplete="off">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <!--AGENT DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Agent Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Name </label>
+                        <input type="text" id="txtEntryAgentName" class="form-control" placeholder="Enter Agent Name" 
+                        maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Agent Name can't be blank.</div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No </label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No" 
+                        maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name </label>
+                        <select id="ddlEntryMCCName" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);" disabled>
+                            <option value="">Select MCC Name</option>
+                        </select>
+                        <div class="invalid-feedback">MCC Name must be selected.</div>
+                    </div>
+                </div>                
+            </div>
+            <!--New Mobile Number-->
+            <div id="divNewMobileNumber">
+                <h5 class="mb-4 font-weight-bold text-secondary">Contact Details</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">New Mobile No <span class="text-red">*</span></label>
+                            <input type="tel" id="txtEntryNewMobileNo" class="form-control" placeholder="Enter New Mobile No" 
+                                    maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Mobile No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

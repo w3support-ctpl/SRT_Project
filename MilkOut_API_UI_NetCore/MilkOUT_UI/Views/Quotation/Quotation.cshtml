@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Quotation";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Quotation</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quotation</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Quotation List</div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name <span class="text-red">*</span></label>
+                                <select id="ddlSearchDealerName" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this)">
+                                    <option value="">Select Dealer Name</option>
+
+                                </select>
+                                <div class="invalid-feedback"> Please Select Dealer Name</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Quotations Date <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchQuotationDeliveryDate" name="datefilter"
+                                       placeholder="Quotations Date"
+                                       maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch');ClearInvalidState(this)" onchange="ClearInvalidState(this)">
+                                <div class="invalid-feedback">Invalid Quotations Date</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Sales Quotation</th>
+                                    <th>Quotation Type</th>
+                                    <th>Creation Date</th>
+                                    <th>Validity End Date</th>
+                                    <th>Purchase Order By Customer</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Currency</th>
+                                    <th class="text-right" style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                @* <tr>
+                                    <td style="width: 20px;">1</td>
+                                    <td>1200024</td>
+                                    <td>ZQTN</td>
+                                    <td>date</td>
+                                    <td>date</td>
+                                    <td></td>
+                                    <td>Open</td>
+                                    <td>517500</td>
+                                    <td>INR</td>
+                                    <td class="text-right" style="width: 40px; padding:8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="EditQuotation" onclick="ShowEditEntry('1');">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;">2</td>
+                                    <td>1200014</td>
+                                    <td>ZQTN</td>
+                                    <td>date</td>
+                                    <td>date</td>
+                                    <td></td>
+                                    <td>Open</td>
+                                    <td>1550</td>
+                                    <td>INR</td>
+                                    <td class="text-right" style="width: 40px; padding:8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="EditQuotation" onclick="ShowEditEntry('2');">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr> *@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/tran_js/quotation.js" asp-append-version="true"></script>
+    }

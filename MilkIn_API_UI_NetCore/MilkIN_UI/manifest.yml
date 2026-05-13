@@ -1,0 +1,10 @@
+---
+applications:
+  - name: SRTAPP
+    buildpacks:
+      - https://github.com/cloudfoundry/dotnet-core-buildpack.git
+    memory: 2048M
+    services:
+      - destination-app-09
+      - xsuaa-app-09
+      - connectivity-app-09

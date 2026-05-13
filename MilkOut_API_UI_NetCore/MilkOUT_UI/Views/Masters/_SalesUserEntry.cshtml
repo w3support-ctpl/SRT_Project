@@ -1,0 +1,319 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Sales User Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+
+
+
+            <!-----     -----   -----   -----   Entry Fields   -----   -----   -----   ----->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">SAP BP Partner Code <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntrySAPBPPartnerCode" class="form-control" placeholder=""
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);"
+                            onchange="ClearInvalidState(this);">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Invalid SAP BP Partner Code.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales User Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntrySalesUserName" class="form-control"
+                            placeholder="Enter Sales User Name" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Sales User Name.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Group <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesArea" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                            <option value="">Select Sales Group</option>
+                        </select>
+                        <div class="invalid-feedback">Sales Group must be selected</div>
+                    </div>
+                </div>
+               
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No <span class="text-red">*</span></label>
+                        <input type="tel" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[0-9]{10}">
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Joining Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryJoiningDate" class="form-control"
+                            placeholder="Enter Joining Date" maxlength="50" autocomplete="off"
+                            onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Joining Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Email ID </label>
+                        <input type="email" id="txtEntryEmailID" class="form-control" placeholder="Enter Email ID"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Email Id</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales User Role <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesUserRole" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Sales User Role</option>
+                        </select>
+                        <div class="invalid-feedback">Reporting To Sales User must be selected.</div>
+                    </div>
+                </div>
+                <div id="divReportingTo" class="col-lg-3 col-md-4 col-sm-12" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Reporting To <span class="text-red">*</span></label>
+                        <select id="ddlEntryReportingTo" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Sales User</option>
+                        </select>
+                        <div class="invalid-feedback">Reporting To Sales User must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Pan No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryPanNo" class="form-control" placeholder="Enter Pan No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[A-Z0-9]*">
+                        <div class="invalid-feedback">Invalid Pan No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Aadhar No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAadharNo" class="form-control" maxlength="12"
+                            placeholder="Enter Aadhar No" autocomplete="off" onkeypress="ClearInvalidState(this);"
+                            pattern="[0-9]*">
+                        <div class="invalid-feedback">Invalid Aadhar No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Employee Code</label>
+                        <input type="text" id="txtEntrySalesEmployee" class="form-control" maxlength="12"
+                            placeholder="Enter Sales Employee Code" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" pattern="[0-9]*">
+                        <div class="invalid-feedback">Sales Employee Code.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="text" id="txtEntryPassword" class="form-control" placeholder="Enter Password"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Password.</div>
+                    </div>
+                </div>
+
+                <!-- nesting this checkbox to avoid it getting selected by accident even if the cursor isn't near the element-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Online App Flag </label>
+                                <label class="custom-control custom-checkbox mt-3">
+                                    <input type="checkbox" id="chkOnlineAppFlag" class="custom-control-input" value="1">
+                                    <label for="chkOnlineAppFlag" class="custom-control-label text-dark">Active</label>
+                                </label>
+                                <div class="invalid-feedback">Invalid Input</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-----     -----   -----   -----   Address Details   -----   -----   -----   ----->
+            <h5 class="mb-4 font-weight-bold text-secondary">Address Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">State <span class="text-red">*</span></label>
+                        <select id="ddlEntryState" class="form-control select2 w-100" required=""
+                            onchange="GetDistrict(); ClearInvalidState(this);">
+                            <option value="">Select State</option>
+                        </select>
+                        <div class="invalid-feedback">State must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">District <span class="text-red">*</span></label>
+                        <select id="ddlEntryDistrict" class="form-control select2 w-100" required=""
+                            onchange="GetTaluka(); ClearInvalidState(this);">
+                            <option value="">Select District</option>
+                        </select>
+                        <div class="invalid-feedback">District must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Taluka <span class="text-red">*</span></label>
+                        <select id="ddlEntryTaluka" class="form-control select2 w-100" required=""
+                            onchange="GetVillage(); ClearInvalidState(this);">
+                            <option value="">Select Taluka</option>
+                        </select>
+                        <div class="invalid-feedback">Taluka must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">City <span class="text-red">*</span></label>
+                        @*<select id="ddlEntryVillage" class="form-control select2 w-100"
+                        required="" onchange="ClearInvalidState(this);">
+                        <option value="">Select City</option>
+                        </select>*@
+                        <input type="text" id="ddlEntryVillage" class="form-control" placeholder="City" maxlength="100"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Village must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Text <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAddress" class="form-control" placeholder="Enter Address Text"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Address Text</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <!--
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab" onclick="GetPaymentSettingsList();">Payment Settings</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                  @*   <div class="tab-content" id="divSalesPersonRouteList">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Sales Person Route</div>
+                                    <div class="card-options">
+
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableSearchEntry"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Route Name</th>
+                                                    <th>Day</th>
+                                                    <th>Working Status</th>
+                                                    <th>No of Retailers</th>
+                                                    <th class="text-right" style="width: 50px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableDataEntry">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> *@
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-----     -----   -----   -----   Delete Section   -----   -----   -----   ----->
+        <div class="card-footer text-right" id="divFooterDelete">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* 
+<div class="modal fade" id="modelEntrySalesPersonRoute" tabdocumentation="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modelEntrySalesPersonRoute" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document" style="width: 85% !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sales Person Route List</h5>
+                <span hidden id="lblActionSalesPersonRoute"></span>
+
+                <span hidden id="lblActionSalesPersonRouteRoute_Id"></span>
+                <span hidden id="lblActionSalesPersonRouteSalesUser_Id"></span>
+                <span hidden id="lblActionSalesPersonRouteSalesUser_Name"></span>
+                <span hidden id="lblActionSalesPersonRouteWorking_Status"></span>
+                <span hidden id="lblActionSalesPersonRouteRouteDay_Name"></span>
+                <span hidden id="lblActionSalesPersonRouteRouteDay_id"></span>
+                <span hidden id="lblActionSalesPersonRouteRemarks"></span>
+                <span hidden id="lblActionSalesPersonRouteRoute_Name"></span>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="height: 300px !important; overflow: auto !important">
+                    <table id="tableSalesPersonRouteEntryModal"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Select</th>
+                                <th hidden></th>
+                                <th>Retailer Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableDataSalesPersonRouteEntry"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="divSalesPersonRouteFooter" class="modal-footer" style="justify-content: flex-start">
+                <button type="button" class="btn btn-primary" onclick="SaveSalesPersonRoute();">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div> *@

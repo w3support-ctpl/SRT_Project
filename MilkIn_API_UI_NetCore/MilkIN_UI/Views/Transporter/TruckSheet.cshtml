@@ -1,0 +1,110 @@
+﻿@{
+    ViewData["Title"] = @ViewBag.VehicleType + " Sheet";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+<span hidden id="lblVehicleType">@ViewBag.VehicleType</span>
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">@ViewBag.VehicleType Sheet</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Transporter</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@ViewBag.VehicleType Sheet</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">@ViewBag.VehicleType Sheet List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Route <span class="text-red">*</span></label>
+                                <select class="form-control select2" id="ddlSearchRoute"
+                                        onchange="SetDate(); ClearDataTable('tableSearch'); ClearInvalidState(this);" style="font-size: .8375rem;">
+                                    <option value="" selected>Select Route</option>
+                                </select>
+                                <div class="invalid-feedback">Route must be selected</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3" id="divSearchStartDate" style="display:none;">
+                            <div class="form-group">
+                                <label class="form-label">Route Start Date <span class="text-red">*</span></label>
+                                <input type="date" id="txtSearchStartDate" class="form-control" placeholder="Start Date"
+                                       maxlength="50" autocomplete="off" disabled>
+                                <div class="invalid-feedback">Start Date can't be blank.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3" id="divSearchEndDate" style="display:none;">
+                            <div class="form-group">
+                                <label class="form-label">Route End Date <span class="text-red">*</span></label>
+                                <input type="date" id="txtSearchEndDate" class="form-control" placeholder="End Date"
+                                       maxlength="50" autocomplete="off" disabled>
+                                <div class="invalid-feedback">End Date can't be blank.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <label class="form-label"> .</label>
+                                <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                        type="button" title="Search" onclick="GetSearchList(this);">
+                                    <i class="fa fa-search mr-2"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Sheet No</th>
+                                    <th>Vehicle No</th>
+                                    <th>Driver Name</th>
+                                    <th>Shift Type</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/transporter_truck_sheet.js" asp-append-version="true"></script>
+}

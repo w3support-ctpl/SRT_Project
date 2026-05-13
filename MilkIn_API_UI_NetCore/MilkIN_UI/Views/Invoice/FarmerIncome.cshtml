@@ -1,0 +1,123 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+@{
+    ViewData["Title"] = "Farmer Income";
+}
+
+<div class="side-app">
+    <!----    ----    ----    ----    Section - Page Header    ----    ----    ----    ---->
+    <div class="page-header">
+        <h4 class="page-title">Farmer Income</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Farmer Income</li>
+        </ol>
+    </div>
+
+
+
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Farmer Income List</div>
+
+                    <div class="card-options">
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info" role="alert">
+                        <button type="button" style="color: white;" class="close" data-dismiss="alert" aria-hidden="true">×</button>For Bulk & Offline Supplier Milk Invoice & MPPI Invoice will be generated on Dairy Quantity & Quality.  Hence Farmer Income Entry is not required.
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Entry Date <span
+                                        class="text-red">*</span></label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Entry Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Entry Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="ddlSearchMCCType">MCC Type <span
+                                        class="text-red">*</span></label>
+                                <select id="ddlSearchMCCType" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this);ClearDataTable('tableSearch');">
+                                    <option value="0">Select MCC Type</option>
+                                </select>
+                                <div class="invalid-feedback">Invalid Entry Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive text-center">
+
+
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;" rowspan="2" class="align-middle">#</th>
+                                    <th rowspan="2" style="text-align: left;">MCC Name</th>
+                                    <th rowspan="2" class="align-middle">Shift</th>
+                                    <th colspan="3">Agent Collection</th>
+                                    <th colspan="3">Dairy Collection</th>
+                                    <th rowspan="2" class="align-middle">Status</th>
+                                    <th rowspan="2" class="align-middle" style="width: 100px;">Action</th>
+                                </tr>
+                                <tr>
+                                    <th>Qty(ltr)</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                    <th>Qty(ltr)</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <span hidden id="lblAction"></span>
+    <span hidden id="lblEntryId"></span>
+
+
+    <!----    ----    ----    ----    Section for Entry Page    ----    ----    ----    ---->
+
+    <div id="divContent" class="row">
+    </div>
+
+
+
+    <!----    ----    ----    ----    Section for MCC Entry Page    ----    ----    ----    ---->
+
+    <div id="divMCCEntry" class="row">
+    </div>
+
+
+</div>
+
+
+
+<!----    ----    ----    ----    Modal - To Select Vehicle No    ----    ----    ----    ---->
+
+
+
+<!----    ----    ----    ----    Connected Javascript File    ----    ----    ----    ---->
+@section Scripts {
+    <script src="~/tran_js/invoice_farmerincome.js" asp-append-version="true"></script>
+}

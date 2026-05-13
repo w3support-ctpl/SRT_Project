@@ -1,0 +1,348 @@
+﻿<style>
+    .dropbtn {
+        background-color: white;
+        color: blue;
+        /*  padding: 16px;
+                font-size: 16px;*/
+        border: none;
+        border-color: black;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 200px;
+        box-shadow: 2px 2px 2px 2px rgba(0.1,0.1,0.1,0.1);
+        z-index: 1;
+        color: blue;
+        right: 10px;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 7px 7px;
+            text-decoration: none;
+            display: block;
+            text-align: right;
+        }
+
+    /* .dropdown-content a:hover {
+                        background-color: #ddd;
+                    }*/
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content:before {
+        position: absolute;
+        top: -7px;
+        right: 9px;
+        display: inline-block;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid #ccc;
+        border-right: 7px solid transparent;
+        border-bottom-color: rgba(0, 0, 0, 0.2);
+        content: '';
+    }
+
+    .dropdown-content:after {
+        position: absolute;
+        top: -6px;
+        right: 10px;
+        display: inline-block;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid #ffffff;
+        border-right: 6px solid transparent;
+        content: '';
+    }
+
+    .text-left {
+        text-align: left !important;
+    }
+</style>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">View Invoice Details </div>
+            <div class="card-options">
+                @*  <a class="btn btn-sm btn-link" onclick="CloseEntry()">More</a>*@
+               @* <div class="dropdown" style="text-align:left">
+                    <button class="dropbtn">More</button>
+                    <div class="dropdown-content">
+                        <a href="#">View flow</a><br />
+                        <a href="#">Place Credit Memo Request</a><br />
+                        <a href="#">Place Customer Return</a>
+                    </div>
+                </div>*@
+               
+                 <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="PlaceReturn('CreditMemo')">Credit Memo Request</a>
+
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="PlaceReturn('SalesReturn')">Sales Return Request</a>
+
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Invoice Id</label>
+                        <input type="text" id="txtEntryInvoiceId" class="form-control" placeholder="" maxlength="50" autocomplete="off" disabled onkeypress="ClearInvalidState(this)" />
+                        <div class="invalid-feedback">Invoice Id can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                      
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Invoice Amount</label>
+                        <input type="text" id="txtEntryInvoiceAmount" class="form-control" placeholder="" maxlength="50" autocomplete="off" disabled onkeypress="ClearInvalidState(this)">
+                        <div class="invalid-feedback">Invoice Amount can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Invoice Date</label>
+                        <input type="text" id="txtEntryInvoiceDate" class="form-control" placeholder="" maxlength="50" autocomplete="off" disabled onkeypress="ClearInvalidState(this)">
+                        <div class="invalid-feedback">Invoice Date can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Payment Term</label>
+                        @* <input type="text" id="txtEntryPaymentTerm" class="form-control" name="datefilter" placeholder="" maxlength="50" disabled autocomplete="off" onchange="ClearDataTable('tableSearch')" />
+                        <div class="invalid-feedback">Payment Term can't be blank.</div> *@
+                        @* <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span> *@
+
+                        <select id="txtEntryPaymentTerm" class="form-control select2 w-100"
+                                        required="" onchange="ClearInvalidState(this)" disabled>
+                                    <option value="">Payment Term</option>
+                                </select>
+                    </div>
+                </div>
+            </div>
+        
+                <div class="row" id="divTabs">
+                    <div class="col-12">
+                        <div class="panel panel-primary">
+                            <div>
+                                <div class="user-tabs mb-4">
+                                    <!-- Tabs -->
+                                    <ul class="nav panel-tabs">
+                                        <li class=""><a href="#tab1" class="active" data-toggle="tab">Order Details</a></li>
+                                        @*<li><a href="#tab2" data-toggle="tab">View PDF</a></li>
+                                        <li><a href="#tab2" data-toggle="tab">View COA</a></li>*@
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Billing Items</div>
+                                        <div class="card-options">
+                                            @*                                            <a href="#" class="btn btn-primary btn-sm mr-2" id="" data-toggle="modal" data-target="#modelEntryRoute"><i class="fa fa-plus mr-2"></i> Add</a>
+                                            *@
+                                            @*                                            <a href="#" class="btn btn-primary btn-sm mr-2" id="modelEntryRouteadd"><i class="fa fa-plus mr-2"></i> Add</a>
+                                            *@
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table id="tableBaseRateList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Material Id</th>
+                                                        <th>Item Description</th>
+                                                        <th>Billing Quality</th>
+                                                        <th>Billing UOM</th>
+                                                        <th>Plant</th>
+
+                                                        <th>Rate</th>
+                                                        <th>Amount</th>
+                                                        <th>Taxable Value</th>
+                                                        <th>CGST</th>
+                                                        <th>SGST </th>
+                                                        <th>IGST</th>
+                                                        <th>Rounding Off</th>
+                                                        <th>Net Amount </th>
+
+
+
+                                                        @* <th></th>
+                                                        <th>Gross Amount</th> *@
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableInvoiceItem">
+
+                                                    @*<tr>
+                                                        <td style="width: 20px;">1700000052</td>
+                                                        <td>INOVASOF SRW LIQUID</td>
+                                                        <td>3000</td>
+                                                        <td>KG</td>
+                                                        <td>1110</td>
+                                                        <td>81000</td>
+                                                        
+                                                    </tr>*@
+
+
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab2">
+                              
+                            </div>
+                            <div class="tab-pane " id="tab3">
+                                
+                            </div>
+                         @*   <div class="tab-pane " id="tab4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Fat Deduction List</div>
+                                        <div class="card-options">
+                                            <a href="#" class="btn btn-primary btn-sm mr-2" onclick="OpenModalFatDeduction('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">Ver No</th>
+                                                        <th>Fat Slab</th>
+                                                        <th>Deduction per point</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th class="text-right" style="width: 50px;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryFatDeduction">
+                                                    <tr>
+                                                        <td style="width: 20px;">001</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>01 Jan 2023 10:00 AM</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit" onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20px;">002</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td>31 Jul 2023 12:00 AM</td>
+                                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit" onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane " id="tab5">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-title">Fat Deduction List</div>
+                                        <div class="card-options">
+                                            <a href="#" class="btn btn-primary btn-sm mr-2" onclick="OpenModalFatDeduction('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 20px;">Ver No</th>
+                                                        <th>Fat Slab</th>
+                                                        <th>Deduction per point</th>
+                                                        <th>From Date</th>
+                                                        <th>To Date</th>
+                                                        <th class="text-right" style="width: 50px;">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableEntryFatDeduction">
+                                                    <tr>
+                                                        <td style="width: 20px;">001</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>01 Jan 2023 10:00 AM</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit" onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 20px;">002</td>
+                                                        <td>3.0 - 3.4</td>
+                                                        <td>0.50</td>
+                                                        <td>31 Mar 2023 04:00 PM</td>
+                                                        <td>31 Jul 2023 12:00 AM</td>
+                                                        <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                                            <a href="javascript:void(0);" title="Edit" onclick="OpenModalFatDeduction('Edit','1');">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+*@
+                        </div>
+
+
+
+                    </div>
+                </div>
+          
+            <div class="card-footer text-right" id="divFooterDelete">
+                <div class="d-flex">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script src="~/tran_js/Primary_Invoice.js" asp-append-version="true"></script>
+    }

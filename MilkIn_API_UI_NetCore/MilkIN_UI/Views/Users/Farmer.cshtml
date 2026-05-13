@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Farmer";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Farmer</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Farmer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Farmer List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0)" id="btn_Add" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Search Text</label>
+                                <input type="text" class="form-control" id="txtSearchText"
+                                       placeholder="Enter Search Text"
+                                       maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">MCC Name </label>
+                                <select id="ddlSearchMCCName" class="form-control select2 w-100"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select MCC Name</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Farmer Code</th>
+                                    <th>MCC Farmer Code</th>
+                                    <th>Farmer Name</th>
+                                    <th>Mobile No</th>
+                                    <th>MCC Name</th>
+                                    <th>Status</th>
+                                    <th>
+                                        District
+                                    </th>
+                                    <th>
+                                        Taluka
+                                    </th>
+                                    <th>
+                                        Village
+                                    </th>
+                                    <th>
+                                        Address
+                                    </th>
+                                    <th>
+                                        PinCode
+                                    </th>
+                                    <th>
+                                        Pan No
+                                    </th>
+                                    <th>
+                                        Aadhar No
+                                    </th>
+                                    <th>
+                                        Bank Name
+                                    </th>
+                                    <th>
+                                        Account Name
+                                    </th>
+                                    <th>
+                                        Account No
+                                    </th>
+                                    <th>
+                                        IFSC Code
+                                    </th>
+                                    <th>
+                                        Nominee Name
+                                    </th>
+                                    <th>
+                                        Nominee Relation
+                                    </th>
+                                    <th>
+                                        Nominee Mobile No
+                                    </th>
+                                    <th>Nominee Aadhar No</th>
+
+                                    <th>
+                                        Gov Farmer Id
+                                    </th>
+                                    <th>Gov Farmer Name</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/users_farmer.js" asp-append-version="true"></script>
+}

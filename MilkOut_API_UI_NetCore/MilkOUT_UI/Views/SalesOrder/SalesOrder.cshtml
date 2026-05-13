@@ -1,0 +1,198 @@
+﻿@{
+    ViewData["Title"] = "Sales Order";
+}
+
+@*<h1>PrimaryInvoice</h1>
+*@
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Sales Orders</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sales Order</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Sales Orders List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry('ADD','','','');">
+                            <i class="fa fa-plus mr-2"></i> Add
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Group <span class="text-red">*</span></label>
+                                <select id="ddlSearchSalesArea" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this); ClearDataTable('tableSearch'); chnageSalesArea();">
+                                    <option value="">Select Sales Group</option>
+
+                                </select>
+                                <div class="invalid-feedback">Please Select Sales Group</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Order Date <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchOrderDate" name="datefilter"
+                                    placeholder="Sales Order Date" maxlength="50" autocomplete="off"
+                                    onkeypress="ClearDataTable('tableSearch');ClearInvalidState(this);"
+                                    onchange="ClearInvalidState(this)">
+                                <div class="invalid-feedback">Invalid Sales Order Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                    style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                    onclick="GetSearchList();">
+                                    <i class="fa fa-search mr-2"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Order Number</t>
+                                    <th>Order Date</th>
+                                    <th>Dealer Name</th>
+                                    @* <th>Amount</th> *@
+                                    <th>Currency</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 100px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                @* <tr>
+                                <td style="width: 20px;">1</td>
+                                <td>91000005567</td>
+                                <td>June 14, 2023 18:15:56</td>
+                                <td>Open</td>
+                                <td>Cust</td>
+                                <td>794.44</td>
+                                <td>INR</td>
+                                <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit"
+                                onclick="ShowEditEntry('1');">
+                                <i class="fa fa-pencil"></i>
+                                </a>
+                                </td>
+                                </tr> *@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryItem" tabdocumentation="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRoute">Add Item</h5>
+                <span hidden id="lblAction"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Item<span class="text-red">*</span> </label>
+                    <select id="ddlEntryItemCode" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this); OnChnageSelectSalesUser();GetProductUOMtList();GetRate();">
+                        <option value="">Select Item</option>
+                    </select>
+                    <span id="lblItemDetailsEntryId" hidden style="display: none;"></span>
+                    <span id="lblItemDetailsAction" hidden style="display: none;"></span>
+                    <div class="invalid-feedback">Item Code must be selected</div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+
+                                <label for="txtModalUOM" class="form-control-label">Select UOM <span
+                                        class="text-red">*</span></label>
+                                <select id="txtModalUOM" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this);OnChnageUOM();">
+                                    <option value="">Select UOM</option>
+
+                                </select>
+                                <div class="invalid-feedback">Invalid UOM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryQuantity" class="form-control-label">
+                                Quantity <span class="text-red">*</span>
+                            </label>
+                            <input type="number" class="form-control" id="txtEntryQuantity" placeholder="Enter Quantity"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);"
+                                onkeyup="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Invalid Quantity</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+
+                                <label for="txtModalRate" class="form-control-label">Rate </label>
+                                <input type="text" class="form-control" id="txtModalRate" placeholder="Enter Rate"
+                                    maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+
+                                <label for="txtModalCheckUOM" class="form-control-label">UOM </label>
+                                <input type="text" class="form-control" id="txtModalCheckUOM" placeholder="Enter UOM"
+                                    maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_SaveItemDetails"
+                    onclick="SaveEntryItemDetails();">
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script src="~/tran_js/primary_salesorder.js" asp-append-version="true"></script>
+}

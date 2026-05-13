@@ -1,0 +1,129 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Service Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Service Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryServiceName" class="form-control" placeholder="Enter Service Name" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Service Name can't be blank</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Service Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryServiceType" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Service Type</option>
+                        </select>
+                        <div class="invalid-feedback">Service Type must be selected.</div>
+                    </div>
+                </div>
+                <div id="divEntryMaterial" class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Material </label>
+                        <select id="ddlEntryMaterial" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Material</option>
+                        </select>
+                        <div class="invalid-feedback">Service Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Service Description <span class="text-red">*</span></label>
+                        <textarea id="txtEntryServiceDescription" class="form-control" placeholder="Enter Service Description" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Service Description can't be blank.</div>
+                    </div>
+                </div>
+                </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">For Farmer? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForFarmer" name="chkForFarmer" class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForFarmer" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">For Agent? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAgent" name="chkForAgent" class="custom-control-input" maxlength="50" autocomplete="off">
+                            <label for="chkForAgent" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Long Description</label>
+                        <textarea id="txtEntryCondition1" class="form-control" placeholder="Enter Long Description" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Long Description can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Condition 2 <span class="text-red">*</span></label>
+                        <textarea id="txtEntryCondition2" class="form-control" placeholder="Enter Condition 2" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Condition 2 can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Condition 3 <span class="text-red">*</span></label>
+                        <textarea id="txtEntryCondition3" class="form-control" placeholder="Enter Condition 3" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Condition 3 can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Condition 4 <span class="text-red">*</span></label>
+                        <textarea id="txtEntryCondition4" class="form-control" placeholder="Enter Condition 4" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Condition 4 can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Condition 5 <span class="text-red">*</span></label>
+                        <textarea id="txtEntryCondition5" class="form-control" placeholder="Enter Condition 5" rows="1" autocomplete="off" onkeypress="ClearInvalidState(this);"></textarea>
+                        <div class="invalid-feedback">Condition 5 can't be blank.</div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!--FOOTER-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

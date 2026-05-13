@@ -1,0 +1,222 @@
+﻿@{
+    ViewData["Title"] = "Farmer Voucher Posting";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+@using System.Web;
+@inject IHttpContextAccessor Accessor
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Farmer Voucher Posting</h4>
+        <span id="SessionRoleId" hidden style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Farmer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Farmer Voucher List</div>
+                     
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="#" class="btn btn-secondary btn-sm  mr-2" onclick="ShowDummyPostEntry();">
+                                <i class="fa fa-fire mr-2"></i> Dummy Posting
+                            </a>
+                        }
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="#" class="btn btn-secondary btn-sm  mr-2" onclick="ShowPostEntry();">
+                                <i class="fa fa-paper-plane mr-2"></i> Post in SAP</a>
+                        }
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0)" class="btn btn-secondary btn-sm  mr-2" onclick="ShowAddEntry();"><i
+                                    class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Voucher Date </label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Voucher Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Voucher Date</div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchEntryMCCType">MCC Type </label>
+                                <select id="dllSearchEntryMCCType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();">
+                                    <option value="">All MCC Type</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchEntryMCC">MCC Name </label>
+                                <select id="dllSearchEntryMCC" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch')">
+                                    <option value="">All MCC </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label for="ddlSearchSAPPostedStatus" class="form-label-search">Posting Status </label>
+                                <div class="row gutters-xs">
+                                    <div class="col">
+                                        <select class="form-control select2" id="ddlSearchSAPPostedStatus" required=""
+                                            onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                            <option value="">Select Posting Status</option>
+                                        </select>
+                                    </div>
+
+                                    <span class="col-auto">
+                                        <button id="btn_MCC_View" class="btn btn-primary" type="button"
+                                            onclick="GetSearchList();">Go!</button>
+                                    </span>
+                                    <div class="invalid-feedback">Posting Status must be selected.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive" style="height: 70vh;">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="selectAllInvoice"
+                                                onclick="SelectAllInvoiceCheckbox();" />
+                                            <label for="selectAllInvoice"
+                                                class="custom-control-label text-dark"></label>
+                                        </label>
+                                    </th>
+                                    <th>Voucher Date</th>
+                                    <th>Farmer Name</th>
+                                    <th>MCC Name</th>
+                                    <th>Muster Cycle</th>
+                                    <th>Amount</th>
+                                    <th>Income Document No.</th>
+                                    <th>Deduction Document No.</th>
+                                    <th>Income Status</th>
+                                    <th>Deduction Status</th>
+                                    <th class="text-right" style="width: 150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryFarmer" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmer">Error Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12" id="divEntryIncomeErrorMessage">
+                        <label class="col-form-label">Income Error Message</label>
+                        <textarea class="form-control" id="txtEntryIncomeErrorMessage" name="example-textarea-input"
+                            rows="4" placeholder="Income Error Message"></textarea>
+                    </div>
+                    <div class="col-12" id="divEntryDeductionErrorMessage">
+                        <label class="col-form-label">Deduction Error Message</label>
+                        <textarea class="form-control" id="txtEntryDeductionErrorMessage" name="example-textarea-input"
+                            rows="4" placeholder="Deduction Error Message"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryFarmerMCCAdvance" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmerMCCAdvance">MCC Advance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryMCCAdvanceFarmer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);" disabled>
+                                <option value="">Select Farmer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Farmer Name must be selected.</div>
+                            <span id="lblDeductionsIdMCCAdvance" hidden style="display: none;"></span>
+                            <span id="lblEntryIdMCCAdvance" hidden style="display: none;"></span>
+                            <span id="lblAmountMCCAdvance" hidden style="display: none;"></span>
+                            <span id="lblActionMCCAdvance" hidden style="display: none;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label">Amount <span class="text-red">*</span></label>
+                                <input type="text" id="txtEntryMCCAdvanceAmount" class="form-control"
+                                    placeholder="Enter Amount" maxlength="50" autocomplete="off"
+                                    onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Amount can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnMCCAdvanceSave"
+                    onclick="SaveMCCAdvanceEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/invoice_farmer.js" asp-append-version="true"></script>
+}

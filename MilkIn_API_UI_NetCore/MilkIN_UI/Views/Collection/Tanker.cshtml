@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Milk Collection - Tanker";
+}
+
+<div class="side-app">
+    <!----    ----    ----    ----    Section - Page Header    ----    ----    ----    ---->
+    <div class="page-header">
+        <h4 class="page-title">Milk Collection - Tanker</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Milk Collection</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tanker</li>
+        </ol>
+    </div>
+
+
+
+    <!----    ----    ----    ----    Table - Milk Collection Tanker Data Extracted from the Database    ----    ----    ----    ---->
+
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Today's Milk Collection - Tanker</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="OpenModal();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Tanker No</th>
+                                    <th>Route Name</th>
+                                    <th>Shift</th>
+                                    <th>Time</th>
+                                    <th>Net Weight</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                <tr>
+                                    <td style="width: 20px;">1</td>
+                                    <td>MH15FS4912</td>
+                                    <td>Loni Phata</td>
+                                    <td>Morning</td>
+                                    <td>10:45 AM</td>
+                                    <td>387.00</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEntry('1','','','');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;">2</td>
+                                    <td>MH15FT4912</td>
+                                    <td>Pimpari Phata</td>
+                                    <td>Morning</td>
+                                    <td>11:02 AM</td>
+                                    <td>680.00</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEntry('1','','','');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!----    ----    ----    ----    Section for Entry Page    ----    ----    ----    ---->
+    <div id="divContent" class="row">
+    </div>
+
+
+
+    <!----    ----    ----    ----    Section for MCC Entry Page    ----    ----    ----    ---->
+
+    <div id="divMCCEntry" class="row">
+    </div>
+
+</div>
+
+
+
+<!----    ----    ----    ----    Modal - To Select Vehicle No    ----    ----    ----    ---->
+<div class="modal fade" id="modelEntryVehicle" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Tanker</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Tanker No <span class="text-red">*</span></label>
+                    <select id="ddlSearchVehicleNo" class="form-control select2 w-100"
+                            required="">
+                        <option value="">Select Tanker No</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Add" onclick="ShowEntry('Add','','','');">
+                    <i class="fa fa-plus mr-2"></i> Add
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----    ----    ----    ----    Connected Javascript File    ----    ----    ----    ---->
+@section Scripts{
+    <script src="~/tran_js/collection_tanker.js" asp-append-version="true"></script>
+}

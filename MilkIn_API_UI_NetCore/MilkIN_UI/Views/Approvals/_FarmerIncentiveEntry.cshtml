@@ -1,0 +1,69 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Farmer Incentive Scheme</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRemarks" class="form-control" placeholder="Enter Remarks" maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Remarks</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryFarmerName" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Scheme Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntrySchemeName" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

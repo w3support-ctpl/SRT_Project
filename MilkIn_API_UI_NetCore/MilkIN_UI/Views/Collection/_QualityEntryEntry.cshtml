@@ -1,0 +1,133 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Quality Entry</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No </label>
+                        <input type="text" id="txtEntryVehicleNo" class="form-control" placeholder="Enter Vehicle No"
+                            maxlength="30" autocomplete="off" disabled>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblSessionRoleId" hidden style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle Type </label>
+                        <input type="text" id="txtEntryVehicleType" class="form-control"
+                            placeholder="Enter Vehicle Type" maxlength="30" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Shift </label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Collection Shift"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divChkForAllowManualQuality">
+                    <div class="form-group">
+                        <label class="form-label">Allow Machine Quality? </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkForAllowManualQuality" name="chkForFarmer"
+                                class="custom-control-input" maxlength="50" autocomplete="off"
+                                onclick="ManualQuality();" checked>
+                            <label for="chkForAllowManualQuality" class="custom-control-label text-dark">Yes</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="divEntryQualityEntryItemTable" class="row">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Quality Entry Item List</div>
+                                    <div class="card-options">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            id="btnRefresh" onclick="OpenRefresh();"><i
+                                                class="fa fa-repeat mr-2"></i> Refresh</a>
+
+                                    </div>
+                                </div>
+                                <div id="divItemSuccess" class="card-alert alert alert-success mb-0"
+                                    style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div id="divItemError" class="card-alert alert alert-danger mb-0"
+                                    style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tablequalityentryitems"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th class="text-center">Accept</th>
+                                                    <th>Sample No</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th>Protein</th>
+                                                    <th>Ash</th>
+                                                    <th>Sodium</th>
+                                                    <th>Adulteration</th>
+                                                    <th class="text-right" style="width: 50px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntry">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FOOTER-->
+        <!--
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+        -->
+    </div>
+</div>

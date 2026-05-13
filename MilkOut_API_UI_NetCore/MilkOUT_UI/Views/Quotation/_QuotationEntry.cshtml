@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "EditQuotation";
+}
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">View Quotation Details</div>
+                    <div class="card-options">
+                      <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+                   </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Sales Quotation</label>
+                                <input type="text" class="form-control" id="txtEntrySalesQuotation"
+                                       placeholder="Sales Quotation" disabled
+                               maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid Sales Quotation</div>
+                            </div>
+                        </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Sales Quotation Type</label>
+                                <input type="text" class="form-control" id="txtEntryQuotationType"
+                                       placeholder="Sales Quotation Type" disabled
+                                       maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid Sales Quotation Type</div>
+                            </div>
+                        </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="text" class="form-control" id="txtEntryQuotationDate" disabled
+                                       placeholder="Date"
+                                       maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')" />
+                                <div class="invalid-feedback">Invalid Delivery Date</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="divTabs">
+                        <div class="col-12">
+                           @* <div class="panel panel-primary">
+                                <div>
+                                    <div class="user-tabs mb-4">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs">
+                                            <li class=""><a href="#tab1" class="active" data-toggle="tab">Order Details</a></li>
+                                            <li class=""><a href="#tab2" data-toggle="tab">View PDF</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="tab-content">
+                                <div class="tab-pane active " id="tab1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">Quotation Item</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="tableItemDetailsList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 20px;">#</th>
+                                                            @* <th>Sales Quotation</th> *@
+                                                            <th>Item</th>
+                                                    <th>Category</th>
+                                                            <th>Discription</th>
+                                                            @* <th>Material</th> *@
+                                                            <th>Quantity</th>
+                                                            @*<th>Weight</th>*@
+                                                            <th>UOM</th>
+                                                            <th>Taxable Amount</th>
+                                                            <th>Currency</th>
+                                                            <th hidden></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tableEntryItemDetails">
+                                                        @* <tr>
+                                                            <td style="width: 20px;">1</td>
+                                                            <td>1200024</td>
+                                                            <td>10</td>
+                                                            <td>ZQTN</td>
+                                                            <td>EGG VIT 250-25 kg</td>
+                                                            <td>170000000009</td>
+                                                            <td>100</td>
+                                                            <td>2530</td>
+                                                            <td>$17500</td>
+                                                            <td>INR</td>
+                                                        </tr> *@
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+       </div>
+      </div>
+
+
+        <div id="divContent" class="row">
+        </div>
+
+
+@section Scripts{
+    <script src="~/tran_js/quotation.js" asp-append-version="true"></script>
+    }

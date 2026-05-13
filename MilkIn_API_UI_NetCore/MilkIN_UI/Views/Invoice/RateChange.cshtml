@@ -1,0 +1,189 @@
+﻿@{
+    ViewData["Title"] = "Rate Change";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Rate Change</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Rate Change</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Rate Change List</div>
+                    <div class="card-options">
+                        <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                                class="fa fa-save mr-2"></i> Generate</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Voucher Date <span
+                                        class="text-red">*</span></label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Voucher Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Voucher Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchEntryMCCType">MCC Type </label>
+                                <select id="dllSearchEntryMCCType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();GetRate();">
+                                    <option value="">All MCC Type</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-2 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryMCCWorkType">MCC Work Type
+                                </label>
+                                <select id="dllSearchEntryMCCWorkType" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch');GetSearchMCCName();GetRate();">
+                                    <option value="">All MCC Work Type</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryMCC">MCC Name<span
+                                        class="text-red">*</span></label>
+                                <select id="dllSearchEntryMCC" class="form-control select2" required=""
+                                    onchange="ClearDataTable('tableSearch'); GetRateList();">
+                                    <option value="">All MCC Name</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="dllSearchEntryChartName">Chart Name <span
+                                        class="text-red">*</span></label>
+                                <div class="row gutters-xs">
+                                    <div class="col">
+                                        <select id="dllSearchEntryChartName" class="form-control select2" required=""
+                                            onchange="ClearDataTable('tableSearch')">
+                                            <option value="">All Chart Name </option>
+                                        </select>
+                                    </div>
+
+                                    <span class="col-auto">
+                                        <button class="btn btn-primary" type="button"
+                                            onclick="GetSearchNewRateList();">Go!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="table-responsive" style="height: 70vh;">
+                            <table id="tableSearch"
+                                class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20px;">#</th>
+                                        <th>Income No.</th>
+                                        <th>Farmer Name</th>
+                                        @* <th>Rate</th> *@
+                                        <th>Milk Amount</th>
+                                        <th>New Rate</th>
+                                        <th>New Milk Amount</th>
+                                        <th>Amount Differce</th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                        <th hidden></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableData">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="divContent" class="row">
+        </div>
+
+
+    </div>
+
+
+    <!----    ----    ----    ----    Modal - Assigned MCC    ----    ----    ----    ---->
+
+    <div class="modal fade" id="modalEntry" tabdocumentation="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document" style="width: 85% !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddEdit"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="table-responsive" style="height: 500px !important;overflow: auto !important;">
+                        <table id="tableEntryModal"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Collection Date</th>
+                                    @* <th>Farmer Code</th>
+                                    <th>Farmer Name</th> *@
+                                    @* <th>MCC Code</th>
+                                    <th>MCC Name</th> *@
+                                    <th>Milk Type</th>
+                                    <th>Quantity (Ltr)</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                    <th>Rate</th>
+                                    <th>Milk Amount</th>
+                                    <th>New Rate</th>
+                                    <th>New Milk Amount</th>
+                                    <th>Amount Differce</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryModalData">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script src="~/tran_js/invoice_ratechange.js" asp-append-version="true"></script>
+    }

@@ -1,0 +1,85 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">@ViewBag.VehicleType Sheet Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id ="btn_MasterSave" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveMasterEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a id ="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No <span class="text-red">*</span></label>
+                        <select id="ddlEntryVehicleNo" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Vehicle No</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblSessionRoleId" hidden style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+                        <div class="invalid-feedback">Vehicle No must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryDriver" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Driver</option>
+                        </select>
+                        <div class="invalid-feedback">Driver Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divRouteChemist" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Route Chemist <span class="text-red">*</span></label>
+                        <select id="ddlEntryRouteChemist" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Route Chemist</option>
+                        </select>
+                        <div class="invalid-feedback">Route Chemist must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Start Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryStartDate" class="form-control" maxlength="50"
+                               autocomplete="off" onchange="ClearInvalidState(this); SetEndDateRange();">
+                        <div class="invalid-feedback">Invalid Start Date.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEndDate" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">End Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryEndDate" class="form-control" maxlength="50"
+                               autocomplete="off" onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid End Date.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--FOOTER-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

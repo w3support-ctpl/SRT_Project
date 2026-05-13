@@ -1,0 +1,237 @@
+﻿@{
+	ViewData["Title"] = "Dashboard";
+}
+@using System.Web;
+@inject IHttpContextAccessor Accessor
+
+<div class="side-app">
+	<div class="page-header">
+		<h4 class="page-title">Dashboard</h4>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="#">Home</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+		</ol>
+	</div>
+	<!--/Page-Header-->
+
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+			<div class="card overflow-hidden">
+				<div class="card-header">
+					<h3 class="card-title">RMRD Morning</h3>
+					<div class="card-options"> <a class="btn btn-sm btn-primary" href="/Report/MilkCollection/R1"
+							target=”_blank”>View</a> </div>
+				</div>
+				<div class="card-body ">
+					<h2 id="lblRMRDMorningTotal" class="text-dark  mt-0 font-weight-bold">0</h2>
+					<div class="progress progress-sm mt-0 mb-2">
+						<div id="pbarRMRDMorning" class="progress-bar bg-primary" role="progressbar"></div>
+					</div>
+					<div class=""><span id="lblGRNPendingRMRDMorning"></span> Ltr Pending for GRN</div>
+				</div>
+			</div>
+		</div>
+		<div class=" col-sm-12 col-md-6 col-lg-6 col-xl-3">
+			<div class="card overflow-hidden">
+				<div class="card-header">
+					<h3 class="card-title">RMRD Evening</h3>
+					<div class="card-options"> <a class="btn btn-sm btn-secondary" href="/Report/MilkCollection/R2"
+							target=”_blank”>View</a> </div>
+				</div>
+				<div class="card-body ">
+					<h2 id="lblRMRDEveningTotal" class="text-dark  mt-0 font-weight-bold">0</h2>
+					<div class="progress progress-sm mt-0 mb-2">
+						<div id="pbarRMRDEvening" class="progress-bar bg-secondary" role="progressbar"></div>
+					</div>
+					<div class=""><span id="lblGRNPendingRMRDEvening"></span> Ltr Pending for GRN</div>
+				</div>
+			</div>
+		</div>
+		<div class=" col-sm-12 col-md-6 col-lg-6 col-xl-3">
+			<div class="card overflow-hidden">
+				<div class="card-header">
+					<h3 class="card-title">BMC & Bulk Supplier</h3>
+					<div class="card-options"> <a class="btn btn-sm btn-warning" href="/Report/MilkCollection/R3"
+							target=”_blank”>View</a> </div>
+				</div>
+				<div class="card-body ">
+					<h2 id="lblBMCTotal" class="text-dark  mt-0 font-weight-bold">0</h2>
+					<div class="progress progress-sm mt-0 mb-2">
+						<div id="pbarBMC" class="progress-bar bg-warning" role="progressbar"></div>
+					</div>
+					<div class=""><span id="lblGRNPendingBMC"></span> Ltr Pending for GRN</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 ">
+			<div class="card overflow-hidden">
+				<div class="card-header">
+					<h3 class="card-title">Total Collection</h3>
+					<div class="card-options"></div>
+				</div>
+				<div class="card-body ">
+					<h2 id="lblCollectionTotal" class="text-dark  mt-0  font-weight-bold">0</h2>
+					<div class="progress progress-sm mt-0 mb-2">
+						<div id="pbarTotal" class="progress-bar bg-info" role="progressbar"></div>
+					</div>
+					<div class=""><span id="lblGRNPendingTotal"></span> Ltr Pending for GRN</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+	{
+		<div class="row row-deck">
+			<div class="col-xl-6 col-lg-6 col-md-12">
+				<div class="card shadow">
+					<div class="card-header">
+						<h3 class="card-title">Rate Mismatch</h3>
+					</div>
+					<div class="card-body">
+						<div class="dash5" id="rateMismatch" style="height: 50vh; overflow-y: scroll;">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-6 col-lg-6 col-md-12">
+				<div class="card shadow">
+					<div class="card-header">
+						<div class="card-title">Payment Pending</div>
+					</div>
+					<div class="card-body">
+						<div class="dash5" id="paymentPending" style="height: 50vh; overflow-y: scroll;">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+	<div class="row">
+		<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 ">
+			<div class="card overflow-hidden">
+				<div class="card-header">
+					<h3 class="card-title">MCC Bloked in last 10 days</h3>
+				</div>
+				<div class="card-body ">
+					<div class="table-responsive">
+						<table id="tableSearchBlock"
+							class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+							<thead>
+								<tr>
+									<th style="width: 20px;">#</th>
+									<th>Date</th>
+									<th>MCC Code</th>
+									<th>MCC Name</th>
+									<th>MCC Type</th>
+									<th>MCC Work Type</th>
+									<th hidden></th>
+								</tr>
+							</thead>
+							<tbody id="tableDataBlock">
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalEntry" tabdocumentation="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document" style="width: 85% !important;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="AddEdit">Rate Mismatch</h5>
+				<span hidden id="lblActionMCC_Id"></span>
+				<span hidden id="lblActionDate"></span>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<div class="table-responsive" style="height: 500px !important;overflow: auto !important;">
+					<table id="tableEntryModal"
+						class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+						<thead>
+							<tr>
+								<th style="width: 20px;">#</th>
+								<th>Farmer Code</th>
+								<th>Farmer Name</th>
+								<th>Qty (ltr)</th>
+								<th>Fat</th>
+								<th>SNF</th>
+								<th>Old Rate</th>
+								<th>Old Milk Amount</th>
+								<th>New Rate</th>
+								<th>New Milk Amount</th>
+								<th>Amount Differce</th>
+								<th>Collection Shift</th>
+								<th hidden></th>
+							</tr>
+						</thead>
+						<tbody id="tableEntryModalData">
+
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+			@if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+			{
+				<div class="modal-footer" style="justify-content:flex-start">
+					<button type="button" class="btn btn-primary" id="btn_Save" onclick="SaveEntry();">Save</button>
+				</div>
+			}
+
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modalEntryPending" tabdocumentation="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-xl" role="document" style="width: 85% !important;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="ViewPending"></h5>
+				@* <span hidden id="lblActionMCC_Id"></span>
+				<span hidden id="lblActionDate"></span> *@
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+
+				<div class="table-responsive" style="height: 500px !important;overflow: auto !important;">
+					<table id="tableEntryModalPending"
+						class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+						<thead>
+							<tr>
+								<th style="width: 20px;">#</th>
+								<th>Voucher Date </th>
+								<th>Code</th>
+								<th>Name</th>
+								<th>Muster Cycle</th>
+								<th>Amount</th>
+								<th hidden></th>
+							</tr>
+						</thead>
+						<tbody id="tableEntryModalDataPending">
+
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/tran_js/dashboard.js" asp-append-version="true"></script>
+}

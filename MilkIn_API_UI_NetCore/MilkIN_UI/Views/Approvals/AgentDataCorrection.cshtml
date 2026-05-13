@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Agent Data Correction";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Agent Data Correction</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Approvals L1</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Agent Data Correction</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Agent Data Correction List</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Request Period </label>
+                                <input type="text" name="datefilter" id="txtSearchRequestPeriod" class="form-control" autocomplete="off" value=""
+                                       placeholder="">
+                                <div class="invalid-feedback">Invalid Request Period</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Approval Status </label>
+                                <select class="form-control select2" id="ddlSearchApprovalStatus"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Approval Status</option>
+                                </select>
+                                <div class="invalid-feedback">Approval Status must be selected.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Request Date</th>
+                                    <th>Request Type</th>
+                                    <th>Agent Name</th>
+                                    <th>Mobile No</th>
+                                    <th>MCC Name</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 90px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divContent" class="row">
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/tran_js/approvals_agent_data_correction.js" asp-append-version="true"></script>
+}

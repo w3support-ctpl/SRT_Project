@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Debit Memo";
+}
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Debit Memo Details</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <!--SEARCH FIELDS-->
+            <div class="row">
+                <span id="lblEntryId" hidden style="display: none;"></span>
+                <span id="lblAction" hidden style="display: none;"></span>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Debit Memo</label>
+                        <input type="text" class="form-control" id="txtEntryDebitmemo"
+                               placeholder="Debit Memo" disabled
+                               maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                        <div class="invalid-feedback">Invalid</div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Dealer <span class="text-red">*</span></label>
+                        <select id="ddlDealerName" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this); ChangeDealer();">
+                            <option value="">Select Dealer</option>
+                        </select>
+                        <div class="invalid-feedback">Dealer Name must be selected</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="text" class="form-control" id="txtEntryDate" disabled
+                               placeholder="Date"
+                               maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')" />
+                        <div class="invalid-feedback">Invalid Delivery Date</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <input type="text" class="form-control" id="txtDebitmemoStatus"
+                               placeholder="" disabled
+                               maxlength="50" autocomplete="off" onkeypress="ClearDataTable('tableSearch')">
+                        <div class="invalid-feedback">Invalid</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                  
+                    <div class="tab-content">
+                        <div class="tab-pane active " id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Debit Memo Item</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableItemDetailsList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    @* <th>Sales Quotation</th> *@
+                                                    <th>Item</th>
+                                                    <th>Discription</th>
+                                                    <th>Material</th>
+                                                    <th>Material Group </th>
+                                                    <th>Quantity</th>
+                                                    <th>Amount</th>
+                                                    <th>UOM</th>@*
+                                                    <th>Currency</th>
+                                                    <th hidden></th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryItemDetails">
+                                               
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="divContent" class="row">
+</div>
+
+
+@section Scripts{
+    <script src="~/tran_js/primary_debitmemorequest.js" asp-append-version="true"></script>
+    }

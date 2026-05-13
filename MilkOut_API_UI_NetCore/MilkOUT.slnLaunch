@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "MilkOUT_API\\MilkOUT_API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "MilkOUT_UI\\MilkOUT_UI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

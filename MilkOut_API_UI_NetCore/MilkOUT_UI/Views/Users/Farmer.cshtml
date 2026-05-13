@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Farmer";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Farmer</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Users</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Farmer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Farmer List</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Farmer Name</label>
+                                <input type="text" class="form-control" id="txtSearchFarmerName"
+                                       placeholder="Farmer Name"
+                                       maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Agent</label>
+                                <select class="form-control select2" id="ddlSearchAgent"
+                                        required="" onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Agent</option>
+                                    <option value="1" selected>All</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Farmer Code</th>
+                                    <th>Farmer Name</th>
+                                    <th>Mobile No</th>
+                                    <th>Agent Name</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                <tr>
+                                    <td style="width: 20px;">1</td>
+                                    <td>F001</td>
+                                    <td>Virat Kohali</td>
+                                    <td>9999999999</td>
+                                    <td>Sachin Tendulkar</td>
+                                    <td>Active</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('1');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20px;">2</td>
+                                    <td>F002</td>
+                                    <td>Rohit Sharma</td>
+                                    <td>8888888888</td>
+                                    <td>Sachin Tendulkar</td>
+                                    <td>Active</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('2');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/users_farmer.js" asp-append-version="true"></script>
+}

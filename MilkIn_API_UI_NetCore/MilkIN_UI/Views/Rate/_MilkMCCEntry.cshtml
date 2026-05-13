@@ -1,0 +1,181 @@
+﻿@{
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowEditButton = false;
+    bool ShowDelButton = false;
+    if (AccessString.Substring(2, 1) == "1")
+    {
+        ShowEditButton = true;
+    }
+    if (AccessString.Substring(3, 1) == "1")
+    {
+        ShowDelButton = true;
+    }
+}
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Milk Rate MCC Entry</div>
+            <div class="card-options">
+                <a href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccessMCC" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryErrorMCC" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Rate Chart Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRateChartNameMCC" class="form-control" placeholder="Enter Rate Chart Name" maxlength="50" autocomplete="off">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                        <span id="lblEntryIdMCC" hidden style="display: none;"></span>
+                        <span id="lblActionMCC" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryMilkTypeMCC" class="form-control select2" required="">
+                            <option value="">Select Milk Type</option>
+                        </select>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryMilkStatusMCC" class="form-control select2 w-100"
+                                required="">
+                            <option value="">Select Milk Status</option>
+                        </select>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Base Unit <span class="text-red">*</span></label>
+                        <select id="ddlEntryBaseUnitMCC" class="form-control select2 w-100"
+                                required="">
+                            <option value="">Select Base Unit</option>
+                        </select>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Collection Shift <span class="text-red">*</span></label>
+                        <select id="ddlEntryMilkCollectionShiftMCC" class="form-control select2 w-100"
+                                required="">
+                            <option value="">Select Shift</option>
+                        </select>
+                        <div class="invalid-feedback">Invalid feedback</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Milk MCC List</div>
+                                    <div class="card-options">
+                                        <a href="#" class="btn btn-primary btn-sm mr-2" onclick="OpenModalAssignMCC('Add');"><i class="fa fa-plus mr-2"></i> Add</a>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 90px;">Ver No</th>
+                                                    <th>From Date</th>
+                                                    <th>To Date</th>
+                                                    <th class="text-right" style="width: 100px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryAssignMCC">
+                                              
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modelEntryAssignMCC" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditAssignMCC"></h5>
+                <span hidden id="lblActionAssignMCC"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryFromDateTime" class="form-control-label">From Date with Time <span class="text-red">*</span></label>
+                            <input type="datetime-local" id="txtEntryFromDateTimeMCC" class="form-control" onkeydown="return false">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryToDateTime" class="form-control-label">To Date with Time <span class="text-red">*</span></label>
+                            <input type="datetime-local" id="txtEntryToDateTimeMCC" class="form-control" onkeydown="return false">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">#</th>
+                                <th>MCC Code</th>
+                                <th>MCC Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryModelMCC">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btnNameMCC">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

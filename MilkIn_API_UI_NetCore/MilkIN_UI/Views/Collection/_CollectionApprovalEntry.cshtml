@@ -1,0 +1,234 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Collection Approval</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" id="btn_Reverse" class="btn btn-primary btn-sm mr-2"
+                    onclick="SetReverse();"><i class="fa fa-backward mr-2"></i> Reverse</a>
+                <a href="javascript:void(0)" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SavePost();"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row" id="divDetails">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks</label>
+                        <input type="text" id="txtEntryRemark" class="form-control" placeholder="Enter Remark"
+                            maxlength="100" autocomplete="off">
+                        <div class="invalid-feedback">Remarks can't be blank.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryVehicleNo" class="form-control" placeholder="Vehicle No"
+                            maxlength="50" autocomplete="off" disabled>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label"><span id="txtRouteName"></span> Name <span
+                                class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRouteName" class="form-control" placeholder="RouteName"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Shift" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Time <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryTime" class="form-control" placeholder="Time" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Net Weight <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryNetWeight" class="form-control" placeholder="Net Weight"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle Type <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryVehicleType" class="form-control" placeholder="Vehicle Type"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                @* <span id="lblQuantity" hidden style="display: none;"></span>
+                <span id="lblQuality" hidden style="display: none;"></span> *@
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Labor Charge </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkEntryQuantity" class="custom-control-input" disabled>
+                            <label for="chkEntryQuantity" class="custom-control-label text-dark">Applicable</label>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" hidden>
+                    <div class="form-group">
+                        <label class="form-label">Quality </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkEntryQuality" class="custom-control-input" disabled>
+                            <label for="chkEntryQuality" class="custom-control-label text-dark">Applicable</label>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="divQuantityList">
+                <div class="card-header">
+                    <div class="card-title">Quantity at Dairy</div>
+                    <div class="card-options">
+                    </div>
+                </div>
+                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none">
+                    Save action was successful
+                </div>
+                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none">
+                    Save action failed
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableMilkQuantityList"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px">#</th>
+                                    <th>Batch Id</th>
+                                    <th>Milk Type</th>
+                                    <th>Milk Status</th>
+                                    <th>Weight</th>
+                                    <th>Liters</th>
+                                    <th>Time</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryQuantity"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="divQualityList">
+                <div class="card-header">
+                    <div class="card-title">Quality at Dairy</div>
+                    <div class="card-options">
+
+                    </div>
+                </div>
+                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none">
+                    Save action was successful
+                </div>
+                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none">
+                    Save action failed
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="tableMilkQualityList"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px">#</th>
+                                    @* <th>Batch Id</th> *@
+                                    <th>Sample No</th>
+                                    <th>Milk Status</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntryQuality"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div class="table-responsive text-center mt-2" id="divGRN">
+                <table id="tableMilkGRNList"
+                    class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px" rowspan="2" class="align-middle">#</th>
+                            <th rowspan="2" class="align-middle">Cell No.</th>
+                            <th rowspan="2" class="align-middle">MCC</th>
+                            <th rowspan="2" class="align-middle">Milk Type</th>
+                            <th colspan="3">Agent Data</th>
+                            <th colspan="3">Chemist Data</th>
+                            <th colspan="2">Lab Data</th>
+                            <th colspan="3">Composite Data</th>
+                            <th colspan="6">Final Data</th>
+                            <th hidden rowspan="2"></th>
+
+                            <th hidden rowspan="2"></th>
+                            <th hidden rowspan="2"></th>
+                            <th hidden rowspan="2"></th>
+                            <th hidden rowspan="2"></th>
+                        </tr>
+                        @* <tr><th colspan="3">Aent Data</th> *@
+                        <th>Qty(ltr)</th>
+                        <th>FAT</th>
+                        <th>SNF</th>
+                        @* <th colspan="3">Chemist Data</th> *@
+                        <th>Qty(ltr)</th>
+                        <th>FAT</th>
+                        <th>SNF</th>
+                        @* <th colspan="3">Lab Data</th> *@
+                        <th>FAT</th>
+                        <th>SNF</th>
+                        @* <th colspan="3">Composite Data</th> *@
+                        <th>Qty(ltr)</th>
+                        <th>FAT</th>
+                        <th>SNF</th>
+                        @* <th colspan="3">Find Data</th> *@
+                        <th>Qty(ltr)</th>
+                        <th>FAT</th>
+                        <th>SNF</th>
+                        <th>Protein</th>
+                        <th>Ash</th>
+                        <th>Sodium</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableEntryGRN"></tbody>
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

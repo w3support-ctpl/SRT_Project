@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Goods Inward Posting";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Goods Inward Posting</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Milk Collection</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Goods Inward Posting</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Goods Inward Posting List</div>
+
+                    <div class="card-options">
+                        <a href="#" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Post</a>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 form-group">
+                            <label class="form-label-search" for="txtSearchDuration">Entry Period </label>
+                            <input type="text" class="form-control" name="datefilter" id="txtSearchDuration"
+                                onchange="ClearDataTable('tableSearch')" autocomplete="off" />
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" style="height: 70vh;">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    @* <th style="width: 20px;">#</th> *@
+                                    <th class="text-center">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="selectAll"
+                                                onclick="SelectAllCheckbox();" />
+                                            <label for="selectAll" class="custom-control-label text-dark"></label>
+                                        </label>
+                                    </th>
+                                    <th>Date</th>
+                                    <th>Batch ID</th>
+                                    @* <th>Status</th> *@
+                                    
+                                    <th>Milk Type</th>
+                                    <th>Qty Ltr</th>
+                                    <th>Qty Kg</th>
+
+
+                                    <th>Milk Price</th>
+                                    <th>Rate</th>
+                                    <th>Agent Cost</th>
+                                    <th>Transport Cost</th>
+                                    
+                                    <th>Total Landed Cost</th>
+
+                                    <th hidden>FAT</th>
+                                    <th hidden>FAT KG</th>
+
+                                    <th hidden>SNF</th>
+                                    <th hidden>SNF KG</th>
+                                    <th>Material Document</th>
+                                    <th>STATUS</th>
+                                    <th class="text-right" style="width: 150px;">Action</th>
+                                    <th hidden>FEQ</th>
+
+                                    <th hidden>FAT Rate</th>
+                                    <th hidden>SNF Rate</th>
+
+
+                                    <th hidden>FAT Value</th>
+                                    <th hidden>SNF Value</th>
+
+
+
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryGRN" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Goods Inward Posting</h5>
+                <span hidden id="lblActionmilkcollectiondairy_id"></span>
+                <span hidden id="lblAction_Is_Locked"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tableEntryModelGRN" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">#</th>
+                                <th>Batch ID</th>
+                                <th>Material Document</th>
+                                <th hidden>Locked</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntryModelGRNData">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" id="btnNameGRNDelete"  onclick="ShowDeleteGRNEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/collection_goods_inward_posting.js" asp-append-version="true"></script>
+}

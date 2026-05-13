@@ -1,0 +1,63 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Role Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Role Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRoleName" class="form-control" placeholder="Enter Role Name" maxlength="30" autocomplete="off">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Role Name can't be blank.</div>
+                    </div>
+                </div>
+            </div>
+            <div id="divMenuTable">
+                <h5 class="mb-4 font-weight-bold text-secondary">Menu</h5>
+                <div class="table-responsive" style="height: 370px !important;">
+                    <table id="tableRoleMenu" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th hidden></th>
+                                <th>Menu Name</th>
+                                <th class="text-center">Display Flag</th>
+                                <th class="text-center">Add Flag</th>
+                                <th class="text-center">Modify Flag</th>
+                                <th class="text-center">Delete Flag</th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntry">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!--FOOTER-->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

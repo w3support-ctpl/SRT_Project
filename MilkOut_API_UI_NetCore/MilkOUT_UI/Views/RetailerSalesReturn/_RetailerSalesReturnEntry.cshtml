@@ -1,0 +1,152 @@
+﻿
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Modify Retailer Sales Return</div>
+            <div class="card-options">
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry()"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <span id="lblEntryId" hidden style="display: none;"></span>
+                <span id="lblAction" hidden style="display: none;"></span>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Retailer Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryRetailerName" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Retailer Name</option>
+
+                        </select>
+                        <div class="invalid-feedback">Retailer Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Dealer Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryDealerName" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Dealer Name</option>
+
+                        </select>
+                        <div class="invalid-feedback">Dealer Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Person Name </label>
+                        <select id="ddlEntrySalesPersonName" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Sales Person Name</option>
+
+                        </select>
+                        <div class="invalid-feedback">Sales Person Name can't be blank.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Entry No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryNo" disabled class="form-control" placeholder="Enter Entry No" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Entry No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Return Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryReturnDate" disabled class="form-control" placeholder="Enter Return Date" maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Return Date.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Remarks <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRemarks" class="form-control" placeholder="Enter Remarks" maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Remarks.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-options">
+                                <a id="btn_Add" href="#" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#modelEntryRoute" onclick="ShowModalEntry()"><i class="fa fa-plus mr-2"></i> Add</a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20px;">#</th>
+                                            <th>Item Code</th>
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableEntry">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<div id="divContent" class="row">
+</div>
+
+<div class="modal fade" id="modelEntryRoute" tabdocumentation="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRoute">Add Item</h5>
+                <span hidden id="lblAction"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="txtModalItem" class="form-control-label">Item <span class="text-red">*</span></label>
+                        <select id="ddlModalItem" class="form-control select2 w-100" required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Item</option>
+
+                        </select>
+                        <div class="invalid-feedback">Invalid Item</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-2 col-sm-12">
+                            <div class="form-group">
+                                <label for="txtModalQuantity" class="form-control-label">Quantity <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtModalQuantity" placeholder="Enter Quantity">
+                                <div class="invalid-feedback">Invalid Quantity</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            @*<div class="modal-footer" style="justify-content:flex-end">
+            <button type="button" class="btn btn-primary" id="btnName" onclick="">Save</button>
+            </div>*@
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,106 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">MCC Open Entry</div>
+            <div class="card-options">
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="#" class="btn btn-sm btn-link mr-2" onclick="MusterCycleSaveEntry();">
+                        Muster Cycle</a>
+                }
+                <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Generate</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-12  form-group">
+                    <label class="form-label-search" for="txtSearchEntryDuration">Entry Period </label>
+                    <input type="text" class="form-control" name="datefilter" id="txtSearchEntryDuration"
+                        onchange="ClearDataTable('tableMCC');ClearInvalidState(this);" autocomplete="off" />
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12  form-group">
+                    <label class="form-label-search" for="txtSearchEntryMCCType">MCC Type </label>
+                    <select id="txtSearchEntryMCCType" class="form-control select2" required=""
+                        onchange="ClearDataTable('tableMCC');GetMCCName();">
+                        <option value="">All MCC Type</option>
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12  form-group">
+                    <label class="form-label-search" for="txtSearchEntryMCC">MCC Name </label>
+                    <select id="txtSearchEntryMCC" class="form-control select2" required=""
+                        onchange="ClearDataTable('tableMCC')">
+                        <option value="">All MCC </option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-lg-2 col-md-2">
+                    <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);" type="button"
+                        title="Search" onclick="GetSearchEntryList(this);">
+                        <i class="fa fa-search mr-2"></i> Search
+                    </button>
+                </div>
+                <div class="col-sm-6 col-lg-1 col-md-1">
+                    <div style="display: none" class="dimmer active mr-2" id="loader">
+                        <div class="lds-ring" style="margin: 0px !important">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="divMCCTable">
+                <h5 class="mb-4 font-weight-bold text-secondary">MCC</h5>
+                <div class="table-responsive" style="height: 70vh;">
+                    <table id="tableMCC"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                        <thead>
+                            <tr>
+                                @* <th style="display: flex;justify-content: center;"> *@
+                                <th class="text-center">
+                                    @* <td class="text-center"> *@
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="selectAll"
+                                            onclick="SelectAllCheckbox();" />
+                                        <label for="selectAll" class="custom-control-label text-dark"></label>
+                                    </label>
+                                    @* </td> *@
+                                </th>
+                                <th>MCC Name</th>
+                                <th>Entry Type</th>
+                                <th>Entry Date</th>
+                                <th>Particulars</th>
+                                @* <th>Milk Type</th>
+                                <th>Quantity</th>
+                                <th>Rate</th> *@
+                                <th>Amount</th>
+                                @* <th>Muster Type</th> *@
+                                @* <th>Muster Cycle</th> *@
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableEntry">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

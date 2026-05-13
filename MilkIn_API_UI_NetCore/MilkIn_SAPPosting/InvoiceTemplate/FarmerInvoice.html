@@ -1,0 +1,419 @@
+<!DOCTYPE  html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <title>Farmer Invoice</title>
+      <meta name="author" content="MilkIn"/>
+      <style type="text/css"> * {margin:0; padding:0; text-indent:0; }
+         .s1 { color: black; font-family:"Arial", serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 10pt; }
+         h1 { color: black; font-family:"Arial", serif; font-style: normal; font-weight: bold; text-decoration: none; font-size: 12pt; }
+         .p, p { color: black; font-family:"Arial", serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 12pt; margin:0pt; }
+         .s2 { color: black; font-family:"Arial", serif; font-style: normal; font-weight: normal; text-decoration: none; font-size: 9pt; }
+         table, tbody {vertical-align: top; overflow: visible; }
+      </style>
+   </head>
+   <body>
+      <table style="border-collapse:collapse; margin-left:5.35pt" cellspacing="0">
+         <tr style="height:21pt">
+            <td style="width:100px;">
+               <img src="https://milkin.srthoratmilk.in/user_assets/logo/srtlogo.png" style="height: 80px; padding-bottom: 3px;"/>
+            </td>
+            <td style="text-align: center; width: 600px;">
+               <h1 class="s2" style="margin-top: 20px; font-size: 21pt; font-weight: bold;">S R Thorat Milk Products Pvt. Ltd.</h1>
+               <h6 class="s1" style="margin-top: 10px;">#InvoiceTitle</h6>
+            </td>
+            <td style="width:100px;">
+               
+            </td>
+         </tr>
+      </table>
+      
+      <table style="border-collapse:collapse; margin-left:5.35pt; border-top: solid; border-top-width: thin; margin-top: 10px" cellspacing="0">
+         <tr>
+            <td style="width: 825px; padding-top: 10px;">
+               <table style="margin-left:5pt; border-style: none;" cellspacing="0">
+                  <tr>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">MCC :</p>
+                     </td>
+                     <td style="width: 425px;">
+                         <p class="s1">#MCCCode | #MCCName</p>        
+                     </td>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">Invoice No :</p>
+                     </td>
+                     <td style="width: 200px;">
+                         <p class="s1">#InvoiceNo</p>        
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">Agent :</p>
+                     </td>
+                     <td style="width: 425px;">
+                         <p class="s1">#AgentName | #AgentMobileNo</p>        
+                     </td>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">Invoice Date :</p>
+                     </td>
+                     <td style="width: 200px;">
+                         <p class="s1">#InvoiceDate</p>        
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="width: 100px; display: #FarmerRowDisplay" >
+                        <p class="s1" style="font-weight: bold;">Farmer :</p>
+                     </td>
+                     <td style="width: 425px; display: #FarmerRowDisplay">
+                         <p class="s1">#FarmerCode | #FarmerName | #FarmerMobileNo</p>        
+                     </td>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">Milk Type :</p>
+                     </td>
+                     <td style="width: 200px;">
+                         <p class="s1">#MilkType</p>        
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="width: 100px;">
+                        <p class="s1" style="font-weight: bold;">A/c Details :</p>
+                     </td>
+                     <td style="width: 725px;" colspan="3">
+                         <p class="s1">#FarmerAccountNo | #FarmerBankName | #FarmerIFSCCode</p>        
+                     </td>
+                  </tr>
+               </table>
+            </td>
+            
+            
+         </tr>
+      </table>
+      
+
+      <table style="padding-top: 10px;">
+         <tr>
+            <td style="width: 830px;">
+                <table style="margin-left:5pt;" cellspacing="0">
+                    <tr style="height:20pt; vertical-align: middle;">
+                        <td style="width:70px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left; font-weight: bold;">Date</p>
+                        </td>
+                        <td style="width:50px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left; font-weight: bold;">Shift</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Qty Lts</p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">FAT%</p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">SNF%</p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Rt/Ltr</p>
+                        </td>
+                        <td style="width:100px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Base Amt</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Qlty Inc</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">AB Inc</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Other Inc</p>
+                        </td>
+                        <td style="width:100px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Total Amt</p>
+                        </td>
+                    </tr>
+                    <template>
+                        <tr style="height:15pt; vertical-align: middle;">
+                            <td style="width: 70px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">#CollectionDate</p>
+                            </td>
+                            <td style="width:50px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">#CollectionShift</p>
+                            </td>
+                            <td style="width:80px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#QtyLts</p>
+                            </td>
+                            <td style="width:60px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#FAT</p>
+                            </td>
+                            <td style="width:60px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#SNF</p>
+                            </td>
+                            <td style="width:60px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#Rate</p>
+                            </td>
+                            <td style="width:100px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#BaseAmt</p>
+                            </td>
+                            <td style="width:80px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                            </td>
+                            <td style="width:80px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                            </td>
+                            <td style="width:80px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                            </td>
+                            <td style="width:100px; border-top-style: none; border-top-width: 1px;">
+                                <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#BaseAmt</p>
+                            </td>
+                        </tr>
+                    </template>
+                    <tr style="height:20pt; vertical-align: middle;">
+                        <td style="width: 70px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Total</p>
+                        </td>
+                        <td style="width:50px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;"></p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalMilkQty</p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;"></p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;"></p>
+                        </td>
+                        <td style="width:60px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;"></p>
+                        </td>
+                        <td style="width:100px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#SumMilkPaymentBasic</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                        </td>
+                        <td style="width:80px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>
+                        </td>
+                        <td style="width:100px; border-top-style: solid; border-top-width: 1px; border-bottom-style: solid; border-bottom-width: 1px;">
+                            <p class="s2" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">#SumMilkPaymentTotal</p>
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+         </tr>
+      </table>
+      
+      <table style="border-collapse:collapse; margin-left:5.35pt;" cellspacing="0">
+         <tr>
+            <td style="width: 550px;">
+               <table style="margin-left:0pt;" cellspacing="0">
+                  <tr style="height:20pt; vertical-align: middle;">
+                     <td colspan="5" style="text-align: center; border-style: none; border-width: thin; vertical-align: middle;">
+                        <p class="s2" style="font-weight: bold;">Deduction Description</p>  
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left; font-weight: bold;">Deduction Head</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Open.Bal.</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Debit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Credit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right; font-weight: bold;">Balance</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Dairy Anamat</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#DairyAnamtOpenBal</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#DairyAnamtDebit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#DairyAnamtCredit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#DairyAnamtBal</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Dairy Bank EMI</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#BankEMICredit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Dairy Products Sales</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#ProductSalesCredit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Dairy Trading Material</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TMSalesCredit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Milk Transport</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TransportChargesCredit</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">TDS</p>
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalTDS</p>        
+                     </td>
+                     <td style="width: 90px; border-top-style: none; border-top-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+                  
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">MCC Advance</p>
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#MCCAdvanceCredit</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+
+                  <tr style="height:15pt; vertical-align: middle;">
+                     <td style="width: 190px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-left: 4pt; text-indent: 0pt;line-height: 13pt;text-align: left;">Total</p>
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalDeductions</p>        
+                     </td>
+                     <td style="width: 90px; border-bottom-style: solid; border-bottom-width: 1px;">
+                        <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">0.00</p>        
+                     </td>
+                  </tr>
+               </table>
+            </td>
+            <td style="width: 270px;">
+               <table style="margin-left:5pt; margin-top: 6px; border-style: solid; border-width: 1px;" cellspacing="0">
+                  <tr style="height:34pt; vertical-align: middle;">
+                     <td style="padding-left: 4pt; width: 150px;">
+                        <p class="s2" style="font-weight: bold;">Milk Payment</p>
+                     </td>
+                     <td style="width: 120px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalMilkPayment</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:34pt; vertical-align: middle;">
+                     <td style="padding-left: 4pt; width: 150px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="font-weight: bold;">Incentive</p>
+                     </td>
+                     <td style="width: 120px; border-top-style: solid; border-top-width: 1px">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalIncentive</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:34pt; vertical-align: middle;">
+                     <td style="padding-left: 4pt; width: 150px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="font-weight: bold;">Deductions</p>
+                     </td>
+                     <td style="width: 120px; border-top-style: solid; border-top-width: 1px;">
+                         <p class="s2" style="padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalDeductions</p>        
+                     </td>
+                  </tr>
+                  <tr style="height:34pt; vertical-align: middle;">
+                     <td style="padding-left: 4pt; width: 150px; border-top-style: solid; border-top-width: 1px;">
+                        <p class="s2" style="font-weight: bold;">Net Payment</p>
+                     </td>
+                     <td style="width: 120px; border-top-style: solid; border-top-width: 1px;">
+                         <p class="s2" style="font-weight: bold; padding-right: 4pt; text-indent: 0pt;line-height: 13pt;text-align: right;">#TotalNetPayment</p>        
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <!--<p class="s2" style="padding-top: 5pt;padding-left: 8pt;text-indent: 0pt;text-align: left;">महत्वाची सूचना : सर्व दूध उत्पादकांना कळविण्यात येत आहे कि दिनांक ०१ एप्रिल २०१९ पासून प्रतिजैविके अंश विरहित दूध नियम लागू झालेला आहे. तरी अँटिबायोटिक्स अथवा औषधोपचार दिलेल्या आजारी जनावराचे दूध डेअरीस पुरवठा करू नये. </p>-->
+      <p class="s2" style="padding-top: 5pt;padding-left: 8pt;text-indent: 0pt;text-align: left;">Any errors and omissions subject to verification with Accounts Department.</p>
+      <p class="s2" style="padding-top: 5pt;padding-left: 8pt;text-indent: 0pt;text-align: left;">This is a computer generated document and does not require further authorization.</p>
+   </body>
+</html>

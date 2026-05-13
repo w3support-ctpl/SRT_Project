@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Transporter Voucher Posting";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Transporter Voucher Posting</h4>
+        <span id="SessionRoleId" hidden
+            style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Voucher</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Transporter</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Transporter Voucher List</div>
+                    <div class="card-options">
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="#" class="btn btn-primary btn-sm  mr-2" onclick="ShowPostEntry();"><i
+                                    class="fa fa-plus mr-2"></i> Post</a>
+                        }
+                        @if (ShowAddButton == true)
+                        {
+                            <a href="javascript:void(0)" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                    class="fa fa-plus mr-2"></i> Add</a>
+                        }
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search" for="txtSearchDuration">Voucher Date </label>
+                                <input type="date" id="txtSearchDuration" class="form-control"
+                                    placeholder="Enter Voucher Date" maxlength="50" autocomplete="off"
+                                    onchange="OnDurationChnage()">
+                                <div class="invalid-feedback">Invalid Voucher Date</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Posting Status </label>
+                                <select class="form-control select2" id="ddlSearchSAPPostedStatus" required=""
+                                    onchange="ClearDataTable('tableSearch')" style="font-size: .8375rem;">
+                                    <option value="">Select Posting Status</option>
+                                </select>
+                                <div class="invalid-feedback">Posting Status must be selected.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div class="table-responsive" style="height: 70vh;">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="selectAllInvoice"
+                                                onclick="SelectAllInvoiceCheckbox();" />
+                                            <label for="selectAllInvoice"
+                                                class="custom-control-label text-dark"></label>
+                                        </label>
+                                    </th>
+                                    <th>Voucher Date</th>
+                                    <th>Transporter Name</th>
+                                    <th>Muster Cycle</th>
+                                    <th>Amount</th>
+                                    <th>Document No.</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 150px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<div class="modal fade" id="modelEntryTransporter" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditTransporter">Error Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12" id="divEntryIncomeErrorMessage">
+                        <label class="col-form-label">Error Message</label>
+                        <textarea class="form-control" id="txtEntryIncomeErrorMessage" name="example-textarea-input"
+                            rows="4" placeholder="Error Message"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/invoice_transporter.js" asp-append-version="true"></script>
+}

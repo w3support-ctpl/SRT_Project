@@ -1,0 +1,99 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    ViewData["Title"] = "Crate Report";
+
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 id="lblPageHeader" class="page-title">Crate Report</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Report</a></li>
+            <li id="lblBreadCrumb" class="breadcrumb-item active" aria-current="page">Crate Report</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Report Filters</div>
+                    <div class="card-options">
+                        <a href="#" class="btn btn-secondary btn-sm" onclick="GetSearchList('');"><i class="fa fa-search mr-2"></i> Search</a>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div id="divError" class="row mb-3" style="display: none;">
+                        <div class="col-sm-12 ">
+                            <div class="alert alert-danger">
+                                <button type="button" class="close text-white" data-dismiss="alert" aria-hidden="true">×</button>
+                                <strong>Error in filter selection</strong>
+                                <hr class="message-inner-separator">
+                                <p class="mb-0" id="lblErrorMessage">Change a few things up and try submitting again.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="ddlSearchReportType">
+                                Report Name <span class="text-red">*</span>
+                            </label>
+                            <select id="ddlSearchReportType" class="form-control select2 w-100" onchange="SetReportFilters();">
+                            </select>
+                        </div>
+                    </div>
+
+                  <div class="row mt-2">
+                        <div class="col-lg-4 col-md-6 form-group">
+                            <label class="form-label-search" for="txtSearchPeriod">
+                                Entry Period <span class="text-red">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="datefilter" id="txtSearchPeriod" />
+                            <input type="text" class="form-control" id="txtSearchPeriodHidden" hidden style="display: none;" />
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-2">
+                        <div id="SearchDealerNameDiv" class="col-lg-12 col-md-12 form-group" style="display: none;">
+                            <label class="form-label-search" for="ddlSearchDealerName">
+                               Dealer Name
+                            </label>
+                            <select id="ddlSearchDealerName" class="form-control select2 w-100" multiple>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div id="SearchDealerNameDiv2" class="col-lg-12 col-md-12 form-group" style="display: none;">
+                            <label class="form-label-search" for="ddlSearchDealerName2">
+                               Dealer Name
+                            </label>
+                            <select id="ddlSearchDealerName2" class="form-control select2 w-100">
+                            </select>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts{
+    <script src="~/tran_js/report_cratestock.js" asp-append-version="true"></script>
+}

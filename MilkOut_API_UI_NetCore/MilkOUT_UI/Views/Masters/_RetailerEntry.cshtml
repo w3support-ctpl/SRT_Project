@@ -1,0 +1,522 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Retailer Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a id="btn_Save" href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Retailer Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRetailerName" class="form-control"
+                            placeholder="Enter Retailer Name" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Invalid Retailer Name.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Sales Group <span class="text-red">*</span></label>
+                        <select id="ddlEntrySalesArea" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); changeEntrySalesArea();">
+                            <option value="">Select Sales Group</option>
+
+                        </select>
+                        <div class="invalid-feedback">Sales Group must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Dealer Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryDealerName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); ChnageDealerName();">
+                            <option value="">Select Dealer Name</option>
+
+                        </select>
+                        <div class="invalid-feedback">Dealer Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Contact Person<span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryContactPersonName" class="form-control" placeholder="Enter Name"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Contact Person.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Mobile Number.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Landline No</label>
+                        <input type="text" id="txtEntryLandlineNo" class="form-control" placeholder="Enter Landline No"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Landline Number.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Email Id <span class="text-red"></span></label>
+                        <input type="text" id="txtEntryEmailId" class="form-control" placeholder="Enter Email Id"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Email Id.</div>
+                    </div>
+                </div>
+            </div>
+            <!--ADDRESS DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Address Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 1 <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAddress1" class="form-control" placeholder="Enter Address Line 1"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Address Line 1 can't be blank.</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 2 <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAddress2" class="form-control" placeholder="Enter Address Line 2"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Address Line 2 can't be blank.</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Address Line 3 <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAddress3" class="form-control" placeholder="Enter Address Line 3"
+                            maxlength="100" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Address Line 3 can't be blank.</div>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">State <span class="text-red">*</span></label>
+                        <select id="ddlEntryState" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); GetDistrict()">
+                            <option value="">Select State</option>
+
+                        </select>
+                        <div class="invalid-feedback">State must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">District <span class="text-red">*</span></label>
+                        <select id="ddlEntryDistrict" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); GetTaluka();">
+                            <option value="">Select District</option>
+
+                        </select>
+                        <div class="invalid-feedback">District must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">City/Taluka <span class="text-red">*</span></label>
+                        <select id="ddlEntryTaluka" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select City/Taluka</option>
+                            <option value="1">Palava</option>
+
+                        </select>
+                        <div class="invalid-feedback">City/Taluka must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Pin Code <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryPinCode" class="form-control" placeholder="Enter Pin code"
+                            maxlength="6" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Pin Code.</div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!--BANK DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Bank Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Bank Name </label>
+                        <select id="ddlEntryBankName" class="form-control select2 w-100" required=""
+                            onchange="GetBranch(); ClearInvalidState(this);">
+                            <option value="">Select Bank Name</option>
+                        </select>
+                        <div class="invalid-feedback">Bank Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Branch Name </label>
+                        <select id="ddlEntryBranchName" class="form-control select2 w-100" required=""
+                            onchange="SetIFSCCode(''); ClearInvalidState(this);">
+                            <option value="">Select Branch Name</option>
+                        </select>
+                        <div class="invalid-feedback">Branch Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account Name </label>
+                        <input type="text" id="txtEntryAccountName" class="form-control"
+                            placeholder="Enter Account Name" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Account Name.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Account No </label>
+                        <input type="text" id="txtEntryAccountNo" class="form-control" placeholder="Enter Account No"
+                            maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Account No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">IFSC Code</label>
+                        <label id="txtEntryIFSCCode" class="form-control"> </label>
+                        <div class="invalid-feedback">Invalid IFSC Code.</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <h5 class="mb-4 font-weight-bold text-secondary">Other Details</h5>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shop License No </label>
+                        <input type="text" id="txtEntryShopLicenseNo" class="form-control"
+                            placeholder="Enter Shop License No" maxlength="10" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Shop License Number.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">PAN No </label>
+                        <input type="text" id="txtEntryPanNo" class="form-control" placeholder="Enter Pan No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Pan Number.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MSME </label>
+                        <input type="text" id="txtEntryMSME" class="form-control" placeholder="Enter MSME"
+                            autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid MSME.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shop Latitude</label>
+                        <input type="text" id="txtEntryShopLatitude" class="form-control"
+                            placeholder="Enter Shop Latitude " maxlength="10" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Shop Latitude.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shop Longitude</label>
+                        <input type="text" id="txtEntryShopLongitude" class="form-control"
+                            placeholder="Enter Shop Longitude" maxlength="10" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Shop Longitude.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FSSAI License No <!--<span class="text-red">*</span>--></label>
+                        <input type="text" id="txtEntryFSSAILicenseNo" class="form-control"
+                            placeholder="Enter FSSAI License No" maxlength="14" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid FSSAI License No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">FSSAI License Validity Date
+                            <!--<span class="text-red">*</span>--></label>
+                        <input type="date" id="txtEntryFSSAIValidityDate" class="form-control" value=""
+                            onchange="ClearInvalidState(this);" onkeydown="return false">
+                        <div class="invalid-feedback">Invalid FSSAI Validity Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">GST No <!--<span class="text-red">*</span>--></label>
+                        <input type="text" id="txtEntryGSTNo" class="form-control" placeholder="Enter GST No"
+                            maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid GST No.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">ASME </label>
+                        <input type="text" id="txtEntryASME" class="form-control" placeholder="Enter ASME"
+                            maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid ASME.</div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Aadhar No</label>
+                        <input type="text" id="txtEntryAadharNo" class="form-control" placeholder="Enter Aadhar No"
+                            maxlength="20" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Aadhar No.</div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agreement Validity Period
+                            <!--<span class="text-red">*</span>--></label>
+                        <input type="text" name="datefilter" id="txtEntryAgreementValidityPeriod" class="form-control"
+                            autocomplete="off" value="" placeholder="">
+                        <div class="invalid-feedback">Invalid Agreement Validity Period</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Security Deposit Amount </label>
+                        <input type="text" id="txtEntrySecurityDepositAmount" class="form-control" placeholder=""
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Security Deposit Amount.</div>
+                    </div>
+                </div>
+                <!-- nesting this checkbox to avoid it getting selected by accident even if the cursor isn't near the element-->
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label">Agreement Done <!--<span class="text-red">*</span>--></label>
+                                <label class="custom-control custom-checkbox mt-3">
+                                    <input type="checkbox" id="chkAgreementDoneFlag" class="custom-control-input"
+                                        value="1">
+                                    <label for="chkAgreementDoneFlag" class="custom-control-label text-dark">Yes</label>
+                                </label>
+                                <div class="invalid-feedback">Invalid Input</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--OTHER DETAILS-->
+            <h5 class="mb-4 font-weight-bold text-secondary">Image Upload</h5>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">PAN Card Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Shop License Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Cheque Leaf Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Shop Name Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Aadhar Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">Udyam Aadhar(MSME) Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">FSSAI License Photo</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <div class="p-2 border mb-4">
+                            <div class="upload-images d-flex">
+                                <div>
+                                    <img src="/images/users/male/25.jpg" alt="img" class="w73 h73 border p-0">
+                                </div>
+                                <div class="ml-3 mt-2">
+                                    <h6 class="mb-0 mt-3 font-weight-bold">GST Certificate</h6>
+                                </div>
+                                <div class="float-right ml-auto">
+                                    <a href="#" class="float-right btn btn-icon btn-gray btn-sm mt-5 ml-2"
+                                        title="Remove"><i class="fa fa-trash-o"></i></a>
+                                    <a href="#" class="float-right btn btn-icon btn-danger btn-sm mt-5"
+                                        title="Change"><i class="fa fa-cloud-upload"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-right" id="divFooterDelete">
+            <div class="d-flex">
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

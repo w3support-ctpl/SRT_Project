@@ -1,0 +1,416 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Goods Inward Posting</div>
+            <div class="card-options">
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="SAPReverseEntry();"
+                        id="SAPReverseEntry"><i class="fa fa-backward mr-2"></i> SAP Reverse</a>
+                }
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Date </label>
+                        <input type="text" id="txtEntryDate" class="form-control" placeholder="Date" maxlength="50"
+                            autocomplete="off" disabled>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblSessionRoleId" hidden
+                            style="display: none;">@Accessor.HttpContext!.Session.GetString("SessionRoleId")</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Batch Id </label>
+                        <input type="text" id="txtEntryBatchId" class="form-control" placeholder="BATCH ID"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Type </label>
+                        <input type="text" id="txtEntryType" class="form-control" placeholder="Type" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div id="divEntryMCC" class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC </label>
+                        <input type="text" id="txtEntryMCC" class="form-control" placeholder="MCC" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div id="divEntryShift" class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Collection Shift </label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Collection Shift"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Type </label>
+                        <input type="text" id="txtEntryMilkType" class="form-control" placeholder="Milk Type"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Qty (Kg) </label>
+                        <input type="text" id="txtEntryQtyKg" class="form-control" placeholder="Milk Price"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Qty (Ltr) </label>
+                        <input type="text" id="txtEntryQtyLtr" class="form-control" placeholder="Agent Cost"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Price </label>
+                        <input type="text" id="txtEntryMilkPrice" class="form-control" placeholder="Milk Price"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Gain Loss </label>
+                        <input type="text" id="txtEntryGainLoss" class="form-control" placeholder="Gain Loss"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Agent Cost </label>
+                        <input type="text" id="txtEntryAgentCost" class="form-control" placeholder="Agent Cost"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Transport Cost </label>
+                        <input type="text" id="txtEntryTransportCost" class="form-control" placeholder="Transport Cost"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Total Landed Cost </label>
+                        <input type="text" id="txtEntryTotalLandedCost" class="form-control"
+                            placeholder="Total Landed Cost" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+
+            <div class="table-responsive mt-2">
+                <table id="tableOtherList"
+                    class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th>FAT</th>
+                            <th>SNF</th>
+                            <th>FAT KG</th>
+                            <th>SNF KG</th>
+                            <th>FEQ</th>
+                            <th>FAT Rate</th>
+                            <th>SNF Rate</th>
+                            <th>FAT Value</th>
+                            <th>SNF Value</th>
+                            <th hidden></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableOtherData">
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab"
+                                            onclick="GetFarmerCollectionList();">Farmer
+                                            Collection</a>
+                                    </li>
+                                    <li><a href="#tab2" data-toggle="tab" onclick="GetDairyCollectionList();">Dairy
+                                            Collection</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!----    ----    ----    ----    Tab - Milk Collection    ----    ----    ----    ---->
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+
+                            <!----    ----    ----    ----    Table - Milk Quantity at Dairy    ----    ----    ----    ---->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Farmer Milk Collection</div>
+                                    <div class="card-options">
+                                    </div>
+                                </div>=
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableFarmerCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Farmer Code</th>
+                                                    <th>Farmer Name</th>
+                                                    <th>Qty (kg)</th>
+                                                    <th>Qty (ltr)</th>
+                                                    <th>Fat</th>
+                                                    <th>SNF</th>
+                                                    <th>Rate</th>
+                                                    <th>Amount</th>
+                                                    <th hidden></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableFarmerCollection">
+                                            </tbody>
+                                            <tfoot>
+                                                <th colspan="8"></th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalAmount" disabled value="">
+                                                </th>
+                                                <th hidden></th>
+                                            </tfoot>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <!----    ----    ----    ----    Tab - Supervisor Entry   ----    ----    ----    ---->
+                        <div class="tab-pane" id="tab2">
+                            <!----    ----    ----    ----    Details Entered by Route Chemist Agent    ----    ----    ----    ---->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Dairy Milk Collection</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableDairyCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>MCC Code</th>
+                                                    <th>MCC Name</th>
+                                                    <th>Qty (kg)</th>
+                                                    <th>Qty (ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th>Protein</th>
+                                                    <th>Ash</th>
+                                                    <th>Sodium</th>
+                                                    <th>FAT KG</th>
+                                                    <th>SNF KG</th>
+                                                    <th>Rate</th>
+                                                    <th>Milk Price</th>
+                                                    <th>Gain Loss</th>
+                                                    @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") ==
+                                                    "MU001")
+                                                    {
+                                                        <th class="text-center" style="width: 50px;">Action</th>
+                                                    }
+                                                    else
+                                                    {
+                                                        <th hidden></th>
+                                                    }
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableDairyCollection">
+                                            </tbody>
+                                            <tfoot>
+                                                <th colspan="3"></th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalQtyKg" disabled value="">
+                                                </th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalQtyLtr" disabled value="">
+                                                </th>
+                                                <th colspan="5"></th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalFATKG" disabled value="">
+                                                </th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalSNFKG" disabled value="">
+                                                </th>
+                                                <th></th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalMilkPrice" disabled value="">
+                                                </th>
+                                                <th>
+                                                    <input type="text" class="form-control" maxlength="10"
+                                                        autocomplete="off" id="lblTotalGainLoss" disabled value="">
+                                                </th>
+                                                <th hidden></th>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryGoodsInwardPosting" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEdit"></h5>
+                <span hidden id="lblActionEntry_Id"></span>
+                <span hidden id="lblEntryMilkCollectionDairy_Id"></span>
+                <span hidden id="lblEntryMCC_Id"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @* <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryQuantityKG" class="form-control-label">Quantity (Kg) <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQuantityKG" class="form-control" placeholder="Enter Quantity"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Quantity can't be blank.</div>
+                        </div>
+                    </div> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryQuantityLTR" class="form-control-label">Quantity (Ltr) <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryQuantityLTR" class="form-control"
+                                placeholder="Enter Quantity" maxlength="50" autocomplete="off"
+                                onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Quantity can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryFat" class="form-control-label">FAT <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryFat" class="form-control" placeholder="Enter FAT"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">FAT can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntrySNF" class="form-control-label">SNF <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntrySNF" class="form-control" placeholder="Enter SNF"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">SNF can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryProtein" class="form-control-label">Protein <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryProtein" class="form-control" placeholder="Enter Protein"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Protein can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntryAsh" class="form-control-label">Ash <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntryAsh" class="form-control" placeholder="Enter Ash"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Ash can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="txtEntrySodium" class="form-control-label">Sodium <span
+                                    class="text-red">*</span></label>
+                            <input type="text" id="txtEntrySodium" class="form-control" placeholder="Enter Sodium"
+                                maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                            <div class="invalid-feedback">Sodium can't be blank.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save" onclick="SaveEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

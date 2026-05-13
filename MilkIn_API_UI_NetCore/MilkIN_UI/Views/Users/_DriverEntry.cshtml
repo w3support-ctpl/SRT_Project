@@ -1,0 +1,145 @@
+﻿@{
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowEditButton = false;
+    bool ShowDelButton = false;
+    if (AccessString.Substring(2, 1) == "1")
+    {
+        ShowEditButton = true;
+    }
+    if (AccessString.Substring(3, 1) == "1")
+    {
+        ShowDelButton = true;
+    }
+}
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Driver Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                
+                    <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+              
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver Code </label>
+                        <input type="text" id="txtEntryDriverCode" class="form-control" placeholder="" maxlength="10"
+                            autocomplete="off" disabled>
+                        <div class="invalid-feedback">Driver Code can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryDriverName" class="form-control" placeholder="Enter Driver Name"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Driver Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Birth Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryBirthDate" class="form-control" value=""
+                            onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Birth Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Joining Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryJoiningDate" class="form-control" value=""
+                            onchange="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Joining Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No <span class="text-red">*</span></label>
+                        <input type="tel" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryDriverType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Driver Type</option>
+                        </select>
+                        <div class="invalid-feedback">Driver Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driving License No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryLicenseNo" class="form-control"
+                            placeholder="Enter Driving License No" maxlength="16" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid License No.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Pan No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryPanNo" class="form-control" placeholder="Enter Pan No"
+                            maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[A-Z0-9]*">
+                        <div class="invalid-feedback">Invalid Pan No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Aadhar No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAadharNo" class="form-control" placeholder="Enter Aadhar No"
+                            maxlength="12" autocomplete="off" onkeypress="ClearInvalidState(this);" pattern="[0-9]*">
+                        <div class="invalid-feedback">Invalid Aadhar No</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Online App Flag </label>
+                        <label class="custom-control custom-checkbox mt-3">
+                            <input type="checkbox" id="chkOnlineAppFlag" class="custom-control-input" value="1">
+                            <label for="chkOnlineAppFlag" class="custom-control-label text-dark">Active</label>
+                        </label>
+                        <div class="invalid-feedback">Invalid Input</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- FOOTER -->
+        <div id="divFooterDelete" class="card-footer text-right">
+            <div class="d-flex">
+                
+                <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i
+                        class="fa fa-trash"></i></button>
+                
+            </div>
+        </div>
+    </div>
+</div>

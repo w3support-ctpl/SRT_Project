@@ -1,0 +1,262 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Goods Inward Posting</div>
+            <div class="card-options">
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2" onclick="SAPReverseEntry();"
+                        id="SAPReverseEntry"><i class="fa fa-backward mr-2"></i> SAP Document No. Reverse</a>
+                }
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Date <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryDate" class="form-control" placeholder="Date" maxlength="50"
+                            autocomplete="off" disabled>
+
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Batch Id <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryBatchId" class="form-control" placeholder="BATCH ID"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Type <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryType" class="form-control" placeholder="Type" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMCC" class="form-control" placeholder="MCC" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Shift" maxlength="50"
+                            autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMilkType" class="form-control" placeholder="Milk Type"
+                            maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Details Entered by <span class="lblbmcmcc"></span> Agent</div>
+
+                </div>
+                <div class="card-body">
+
+
+                    <div class="table-responsive">
+                        <table id="tableMCCAgentEntryList"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th hidden></th>
+                                    <th hidden></th>
+                                    <th>Milk Type</th>
+                                    <th>Milk Status</th>
+                                    @* <th>Weight</th> *@
+                                    <th>Quantity (ltr)</th>
+                                    <th>FAT</th>
+                                    <th>SNF</th>
+                                    <th>Total Cans</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableMCCAgentEntryData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab"
+                                            onclick="GetTankerQuantityList(); GetTankerQualityList();">Milk
+                                            Collection</a></li>
+                                    <li><a href="#tab2" data-toggle="tab" onclick="GetSupervisorList();">Chemist
+                                            Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!----    ----    ----    ----    Tab - Milk Collection    ----    ----    ----    ---->
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+
+                            <!----    ----    ----    ----    Table - Milk Quantity at Dairy    ----    ----    ----    ---->
+                            <div class="card" id="divTankerQuantityList">
+                                <div class="card-header">
+                                    <div class="card-title">Quantity at Dairy</div>
+                                    <div class="card-options">
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                            id="btnTankerAddQuantity" onclick="OpenTankerQuantityModal('Add','');"><i
+                                                class="fa fa-plus mr-2"></i> Add</a>
+                                        <span id="lblTankerAddQuantity" hidden style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableTankerMilkQuantityList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    @* <th>Batch Id</th> *@
+                                                    <th>Cell No</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (kg)</th>
+                                                    <th>Quantity (ltr)</th>
+                                                    <th>Loss (ltr)</th>
+                                                    <th>Time</th>
+                                                    <th class="text-right" style="width: 70px;">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableTankerEntryQuantity">
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!----    ----    ----    ----    Table - Milk Quality at Dairy    ----    ----    ----    ---->
+                            <div class="card" id="divTankerQualityList">
+                                <div class="card-header">
+                                    <div class="card-title">Quality at Dairy</div>
+                                    <div class="card-options">
+                                        @* <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                                        id="btnTankerAddQuality" onclick="OpenTankerQualityModal('Add','');"><i
+                                        class="fa fa-plus mr-2"></i> Add</a> *@
+
+                                        <span id="lblTankerQualityListMilkStatus" hidden style="display: none;"></span>
+                                        <span id="lblTankerQualityListCell" hidden style="display: none;"></span>
+                                        <span id="lblsetTankerQualityListCell" hidden style="display: none;"></span>
+                                    </div>
+                                </div>
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableTankerMilkQualityList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    @* <th>Batch No</th> *@
+                                                    <th>Cell No</th>
+                                                    <th>Sample No</th>
+                                                    <th>Milk Status</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 50px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableTankerEntryQuality">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!----    ----    ----    ----    Tab - Supervisor Entry   ----    ----    ----    ---->
+                        <div class="tab-pane" id="tab2">
+                            <!----    ----    ----    ----    Details Entered by Route Chemist Agent    ----    ----    ----    ---->
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Details Entered by Chemist</div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableSupervisorEntryList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>MCC Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Milk Status</th>
+                                                    <th>Quantity (kg)</th>
+                                                    <th>Quantity (ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+
+                                                    <th>Cell No</th>
+                                                    <th hidden></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableSupervisorEntryData">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>

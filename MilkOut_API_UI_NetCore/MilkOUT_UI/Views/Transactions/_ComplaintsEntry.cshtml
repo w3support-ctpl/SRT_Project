@@ -1,0 +1,173 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Complaint</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry();">Close</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Date</label>
+                        <label id="txtEntryComplaintsDate" class="form-control"></label>
+                         <span id="lblEntryId" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Type</label>
+                        <label id="txtEntryUserType" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Name</label>
+                        <label id="txtEntryUserName" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Type</label>
+                        <label id="ddlEntryComplaintType" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Complaint Status</label>
+                        <label id="ddlEntryComplaintStatus" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Open Days</label>
+                        <label id="txtEntryOpenDays" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Latitude</label>
+                        <label id="txtEntryLatitude" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Longitude</label>
+                        <label id="txtEntryLongitude" class="form-control"></label>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label" style="visibility: hidden;">hi</label>
+                        <div class="row gutters-xs">
+                            <div class="col">
+
+                            </div>
+                            <span class="col-auto">
+                                <button class="btn btn-secondary" type="button" onclick="generateGoogleMapsURL();"><i
+                                        class="fa fa-map-marker"></i></button>
+                                <button class="btn btn-secondary" type="button" onclick="openImages();"><i
+                                        class="fa fa-camera"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            @* <div class="row"> *@
+                @* <h5 class="mb-4 font-weight-bold text-secondary">Complaint Progress</h5>
+                <div class="table-responsive">
+                    <table id="tableComplaintList"
+                        class="hover table table-bordered table-hover table-striped w-100 border-top-1 border-bottom-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Action Date</th>
+                                <th>Action By</th>
+                                <th>Remarks</th>
+                                <th>Updated Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableComplaintListBody">
+                             <tr>
+                                <td>1</td>
+                                <td>13 Jul 2023 10:00 AM</td>
+                                <td>A B C</td>
+                                <td>Problem in quality of curd received</td>
+                                <td>New</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>14 Jul 2023 10:00 AM</td>
+                                <td>P Q R</td>
+                                <td>We will check at our end and update you</td>
+                                <td>Open</td>
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div> *@
+
+                <div class="tab-content">
+                     <div class="tab-pane active" id="tab1">
+                        <div class="card">
+                           <div class="card-header">
+                              <div class="card-title">Complaint Progress</div>
+                              <div class="card-options">
+                                 <span id="lblItemCount" hidden style="display: none;"></span>
+                                 <a href="#" class="btn btn-primary btn-sm mr-2" id="btn_itemsave"
+                                    data-toggle="modal" onclick="ShowDetailsModal();"><i
+                                    class="fa fa-plus mr-2"></i> Add</a>
+                              </div>
+                           </div>
+                           <div class="card-body">
+                              <div class="table-responsive">
+                                 <table id="tableComplaintList"
+                                    class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                    <thead>
+                                       <tr>
+                                          <th>#</th>
+                                          <th>Action Date</th>
+                                          <th>Action By</th>
+                                          <th>Remarks</th>
+                                          <th>Updated Status</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody id="tableComplaintListBody">
+                                    </tbody>
+                                 </table>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+            @* </div> *@
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="modelEntry" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Images</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" id="cImages" style="height: 70vh; overflow: scroll;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/transaction_complaints.js" asp-append-version="true"></script>
+}

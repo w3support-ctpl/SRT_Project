@@ -1,0 +1,96 @@
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Milk Collection Entry</div>
+            <div class="card-options">
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry();">Close</a>
+            </div>
+        </div>
+
+
+
+        <!----    ----    ----    ----    Section - Success and Error Message for Data Entry    ----    ----    ----    ---->
+
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+
+
+
+        <div class="card-body">
+            <!----    ----    ----    ----    Section - Input fields - Tanker Details    ----    ----    ----    ---->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Tanker No</label>
+                        <input type="text" id="txtEntryTankerNo" class="form-control" placeholder="Enter Tanker No " maxlength="50" autocomplete="off" disabled>
+                        <span hidden id="lblAction"></span>
+                        <span hidden id="lblEntryId"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Route Name</label>
+                        <input type="text" id="txtEntryRouteName" class="form-control" placeholder="Enter Route Name" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Shift</label>
+                        <input type="text" id="txtEntryShift" class="form-control" placeholder="Enter Shift" maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Time</label>
+                        <input type="text" id="txtEntryTime" class="form-control" placeholder="Enter Time " maxlength="50" autocomplete="off" disabled>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!----    ----    ----    ----    Table - MCC Details    ----    ----    ----    ---->
+
+            <div id="divMCCList" class="card">
+                <div class="card-header">
+                    <div class="card-title">Milk Collection Center List</div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>BMC Name</th>
+                                    <th>Net Weight</th>
+                                    <th>SNF</th>
+                                    <th>FAT</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableEntry">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!----    ----    ----    ----    Section - Delete    ----    ----    ----    ---->
+
+            <div class="card-footer text-right" style="display:none;">
+                <div class="d-flex">
+                    <button type="button" class="btn btn-gray ml-auto" title="Delete Entry" onclick="ShowDeleteEntry();"><i class="fa fa-trash"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

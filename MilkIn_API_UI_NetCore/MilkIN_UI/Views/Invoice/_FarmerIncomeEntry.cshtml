@@ -1,0 +1,367 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Farmer Income Entry</div>
+            <div class="card-options">
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" id="btn_GainLossApprove" class="btn btn-primary btn-sm mr-2"
+                        onclick="SetGainLossApprove();"><i class="fa fa-check-circle mr-2"></i>Gain Loss Approve Entries</a>
+                }
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" id="btn_Approve" class="btn btn-primary btn-sm mr-2"
+                        onclick="SetApprove();"><i class="fa fa-check-circle mr-2"></i> Approve Entries</a>
+                }
+                @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                {
+                    <a href="javascript:void(0)" id="btn_Reverse" class="btn btn-primary btn-sm mr-2"
+                        onclick="SetReverse();"><i class="fa fa-unlock-alt mr-2"></i> Unlock Entries</a>
+                }
+                <a href="javascript:void(0);" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMCCName" class="form-control" placeholder="Enter MCC Name"
+                            maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Route Name can't be blank.</div>
+
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <span id="lblSetEntryId" hidden style="display: none;"></span>
+                        <span id="lblMCCId" hidden style="display: none;"></span>
+                        <span id="lblMilkCollectionDairyId" hidden style="display: none;"></span>
+                        <span id="lblTripDocumentId" hidden style="display: none;"></span>
+                        <span id="lblCollectionShift" hidden style="display: none;"></span>
+                        <span id="lblMCCCollectionShiftId" hidden style="display: none;"></span>
+                        <span id="lblDAIRYfatkg" hidden style="display: none;"></span>
+                        <span id="lblDAIRYsnfkg" hidden style="display: none;"></span>
+                        <span id="lblMCCfatkg" hidden style="display: none;"></span>
+                        <span id="lblMCCsnfkg" hidden style="display: none;"></span>
+                        <span id="lblIsLocked" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Milk Collection Shift <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMilkCollectionShift" class="form-control"
+                            placeholder="Enter Milk Collection Shift" maxlength="50" autocomplete="off"
+                            onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Driver Name must be selected.</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row" id="divTabs">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li><a href="#tab1" class="active" data-toggle="tab"
+                                            onclick="GetOriginalFarmerCollectionList();">Original Data</a></li>
+                                    <li><a id="tabUD" href="#tab2" data-toggle="tab"
+                                            onclick="GetUpdatedFarmerCollectionList();">
+                                            Updated Data</a>
+                                    </li>
+                                    <li><a href="#tab3" data-toggle="tab" onclick="GetMCCCollectionList();">Approval</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Farmer Collection List</div>
+                                    <div class="card-options">
+                                        <a href="#" id="excelDownload" class="btn btn-secondary btn-sm mr-2"
+                                            onclick="ExcelDownload();"><i class="fa fa-file-excel-o mr-2"></i>
+                                            Excel Download</a>
+                                        @* <a href="#" class="btn btn-primary btn-sm mr-2"
+                                        onclick="OpenModalFarmer('Add','');"><i class="fa fa-plus mr-2"></i>
+                                        Add</a> *@
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableOriginalFarmerCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Farmer Code</th>
+                                                    <th>Farmer Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Quantity (KG)</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th hidden></th>
+                                                    <th hidden></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableOriginalEntryFarmerCollection">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Farmer Collection List</div>
+                                    <div class="card-options">
+                                        <a href="#" id="excelUpload" class="btn btn-secondary btn-sm mr-2"
+                                            onclick="ExcelUpload();"><i class="fa fa-file-excel-o mr-2"></i>
+                                            Excel Upload</a>
+                                        <a href="#" id="openModalFarmer" class="btn btn-secondary btn-sm mr-2"
+                                            onclick="OpenModalFarmer('Add','');"><i class="fa fa-plus mr-2"></i>
+                                            Add Manually</a>
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableUpdatedFarmerCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Farmer Code</th>
+                                                    <th>Farmer Name</th>
+                                                    <th>Milk Type</th>
+                                                    <th>Quantity (KG)</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th>Action</th>
+                                                    @* <th hidden></th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableUpdatedEntryFarmerCollection">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">MCC Collection List</div>
+                                    <div class="card-options">
+                                        @if (@Accessor.HttpContext!.Session.GetString("SessionRoleId") == "MU001")
+                                        {
+                                            <a href="#" id="approval_auth" class="btn btn-secondary btn-sm mr-2"
+                                                onclick="ApprovalAuth();"><i class="fa fa-check-circle mr-2"></i>
+                                                Approve Without Validation</a>
+                                        }
+                                        <a href="#" id="approval" class="btn btn-secondary btn-sm mr-2"
+                                            onclick="Approval();"><i class="fa fa-check-circle mr-2"></i>
+                                            Approve</a>
+                                    </div>
+                                </div>
+
+                                <!----    ----    ----    ----    Section - Success and Error Message for Item Entry    ----    ----    ----    ---->
+
+                                <div class="card-alert alert alert-success mb-0 divItemSuccess" style="display: none;">
+                                    Save action was successful
+                                </div>
+                                <div class="card-alert alert alert-danger mb-0 divItemError" style="display: none;">
+                                    Save action failed
+                                </div>
+
+                                <!----    ----    ----    ----    Table - SNF Deduction    ----    ----    ----    ---->
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableMCCCollectionList"
+                                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 20px;">#</th>
+                                                    <th>Location</th>
+                                                    <th>Quantity (KG)</th>
+                                                    <th>Quantity (Ltr)</th>
+                                                    <th>FAT</th>
+                                                    <th>SNF</th>
+                                                    <th>FAT KG</th>
+                                                    <th>SNF KG</th>
+                                                    <th hidden></th>
+                                                    @* <th class="text-right" style="width: 80px;">Action</th> *@
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryMCCCollection">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modelEntryFarmerCollection" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditFarmerCollection"></h5>
+                <span hidden id="lblActionFarmerCollection"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                            <select id="ddlEntryFarmer" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Farmer Name</option>
+                            </select>
+                            <div class="invalid-feedback">Farmer Name must be selected.</div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Type <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkType" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Type</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Type must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">Milk Status <span class="text-red">*</span></label>
+                            <select id="ddlEntryMilkStatus" class="form-control select2 w-100" required=""
+                                onchange="ClearInvalidState(this);">
+                                <option value="">Select Milk Status</option>
+                            </select>
+                            <div class="invalid-feedback">Milk Status must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label">Quantity (Ltr) <span class="text-red">*</span></label>
+                                <input type="text" id="txtEntryLiters" class="form-control"
+                                    placeholder="Enter Quantity (Ltr)" maxlength="50" autocomplete="off"
+                                    onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">Weight can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div>
+                    <div class="row"> *@
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label class="form-label">FAT <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryFAT" class="form-control" placeholder="Enter FAT"
+                                maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                            <div class="invalid-feedback">FAT can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label class="form-label">SNF <span class="text-red">*</span></label>
+                                <input type="text" id="txtEntrySNF" class="form-control" placeholder="Enter SNF"
+                                    maxlength="50" autocomplete="off" onchange="ClearInvalidState(this);">
+                                <div class="invalid-feedback">SNF can't be blank.</div>
+                            </div>
+                        </div>
+                    </div>
+                    @* </div> *@
+
+                    @* <div class="row" id="divEntryCellNo"> *@
+
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Farmer_Collection"
+                    onclick="SaveFarmerCollectionEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modelEntryExcelUpload" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditExcelUpload">Excel Upload</h5>
+                <span hidden id="lblActionExcelUpload"></span>
+                @* <span hidden id="lblEntryBaseRateId"></span> *@
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-4 col-sm-12">
+                        <input id="txtEntryExcelUpload" type="file" class="dropify" data-height="180" />
+                    </div>
+                </div>
+                <div class="modal-footer" style="justify-content:flex-start">
+                    <button type="button" class="btn btn-primary  btn-sm mr-2" id="btn_Save_Excel_Upload"
+                        onclick="SaveExcelUploadEntry();"><i class="fa fa-upload mr-2"></i> Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

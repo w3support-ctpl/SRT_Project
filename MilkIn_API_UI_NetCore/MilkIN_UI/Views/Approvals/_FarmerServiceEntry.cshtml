@@ -1,0 +1,194 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Farmer Service Entry</div>
+            <div class="card-options">
+                <a href="javascript:void(0)" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry(this);"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+           
+
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Approval Status <span class="text-red">*</span></label>
+                        <select id="ddlEntryApprovalStatus" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Status</option>
+                        </select>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                        <div class="invalid-feedback">Approval Status must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divApprovedAmount" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Approved Amount <span class="text-red">*</span></label>
+                        <input type="number" id="txtEntryApprovedAmount" class="form-control"
+                               placeholder="Enter Approved Amount" maxlength="10" autocomplete="off"
+                               onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Amount can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divDate" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Date <span class="text-red">*</span></label>
+                        <input type="date" id="txtEntryDate" class="form-control"
+                               placeholder="Enter Date" maxlength="10" autocomplete="off"
+                               onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Date can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-4 col-sm-12" id="divRemarks">
+                    <div class="form-group">
+                        <label class="form-label">Remarks <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryRemarks" class="form-control" placeholder="Enter Remarks" maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Remarks</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Farmer Name <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryFarmerName" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryMobileNo" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Service Type <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryServiceType" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Service/Material Requested <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryServiceRequested" class="form-control" placeholder=""
+                               maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- FINANCIAL SERVICE -->
+            <div id="divFinancialService" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Financial Service Request</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Requested Amount </label>
+                            <input type="tel" id="txtEntryRequestedAmount" class="form-control"
+                                   maxlength="10" autocomplete="off"
+                                   onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Amount can't be blank.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Remarks </label>
+                            <input type="text" id="txtEntryFarmerRemarksFinancial" class="form-control" placeholder="Enter Remarks"
+                                    maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Invalid Remarks</div>
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+
+
+            <!-- VETERINARY SERVICE -->
+            <div id="divVeterinaryService" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Veterinary Service Request</h5>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Veterinary Service Type <span class="text-red">*</span></label>
+                            <input type="text" id="txtEntryVeterinaryService" class="form-control select2 w-100"
+                                    required="" onchange="ClearInvalidState(this);" disabled/>
+                            <div class="invalid-feedback">Veterinary Service Type must be selected.</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Farmer Remarks </label>
+                            <input type="text" id="txtEntryFarmerRemarksVeterinary" class="form-control" placeholder="Enter Remarks"
+                                   maxlength="200" autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                            <div class="invalid-feedback">Invalid Remarks</div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <!-- MATERIAL SERVICE -->
+            <div id="divMaterialService" style="display:none;">
+                <h5 class="mb-4 font-weight-bold text-secondary">Material Service Request</h5>
+
+                <div class="row">
+                    <div class="table-responsive">
+                        <table id="tableMaterialEntry" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th hidden>Material Id</th>
+                                    <th>Material Name</th>
+                                    <th>Requested Quantity</th>
+                                    <th>Approved Quantity</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableMaterialData">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Cow Mat</td>
+                                    <td>
+                                        <input type="number" id="" class="form-control"
+                                               maxlength="10" autocomplete="off"
+                                               disabled value="14">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="" class="form-control"
+                                               maxlength="10" autocomplete="off"
+                                               onkeypress="ClearInvalidState(this);">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Feed Bag</td>
+                                    <td>
+                                        <input type="number" id="" class="form-control"
+                                               maxlength="10" autocomplete="off"
+                                               disabled value="31">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="" class="form-control"
+                                               maxlength="10" autocomplete="off"
+                                               onkeypress="ClearInvalidState(this);">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

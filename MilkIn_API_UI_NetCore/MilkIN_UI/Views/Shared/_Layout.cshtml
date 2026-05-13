@@ -1,0 +1,384 @@
+﻿@using System.Web;
+@inject IHttpContextAccessor Accessor
+
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Meta data -->
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="MilkIn - Milk Procurement System" name="description">
+	<meta content="W3Tech Works Private Limited" name="author">
+	<meta name="keywords" content="MilkIn - Premium milk procuremnt system, Milk Inward, Procurement" />
+
+	<!-- Favicon -->
+	<link rel="icon" href="~/user_assets/logo/favicon.png" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="~/user_assets/logo/favicon.png" />
+
+	<!-- Title -->
+	<title>MilkIN - @ViewData["Title"]</title>
+
+	<!-- Bootstrap css -->
+	<link href="~/plugins/bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+
+	<!-- Sidemenu Css -->
+	<link href="~/css/sidemenu.css" rel="stylesheet" asp-append-version="true" />
+
+	<!-- Dashboard Css -->
+	<link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+	<link href="~/css/admin-custom.css" rel="stylesheet" asp-append-version="true" />
+
+	<!-- c3.js Charts Plugin -->
+	<link href="~/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+
+	<!-- Data table css -->
+	<link href="~/plugins/datatable/datatables.bundle.css" rel="stylesheet" />
+
+	<!-- daterange Plugin -->
+	<link href="~/plugins/bootstrap-daterangepicker/daterange-picker.css" rel="stylesheet" />
+
+
+
+
+	<!-- select2 Plugin -->
+	<link href="~/plugins/select2/select2.bundle.css" rel="stylesheet" />
+
+	<!-- Time picker Plugin -->
+	<link href="~/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+
+	<!-- Date Picker Plugin -->
+	<link href="~/plugins/date-picker/spectrum.css" rel="stylesheet" />
+
+	<!-- P-scroll bar css-->
+	<link href="~/plugins/pscrollbar/pscrollbar.css" rel="stylesheet" />
+
+	<!-- file Uploads -->
+	<link href="~/plugins/fileuploads/css/fileupload.css" rel="stylesheet" type="text/css" />
+
+	<!---Font icons-->
+	<link href="~/css/icons.css" rel="stylesheet" />
+
+	<!---Sweet-alert css-->
+	<link href="~/plugins/sweet-alert/sweetalert.css" rel="stylesheet" />
+
+	<!-- Switcher css -->
+	<link href="~/switcher/css/switcher.css" rel="stylesheet" id="switcher-css" type="text/css" media="all" />
+
+	<!-- Notifications  Css -->
+	<link href="~/plugins/notify/css/jquery.growl.css" rel="stylesheet" />
+
+
+	<!-- Color Skin css -->
+	<link id="theme" rel="stylesheet" type="text/css" media="all" href="~/color-skins/color1.css"
+		asp-append-version="true" />
+
+</head>
+
+<body class="app sidebar-mini">
+
+	<!--Loader-->
+	<div id="global-loader">
+		<img src="~/images/loader.svg" class="loader-img" alt="">
+	</div>
+	<!--/Loader-->
+	<!--Page-->
+	<div class="page">
+		<div class="page-main">
+
+			<!--App-Header-->
+			<div class="app-header1 header py-1 d-flex">
+				<div class="container-fluid">
+					<div class="d-flex">
+						<a class="header-brand" id="logoClick">
+							<img src="~/user_assets/logo/logosmall.png" class="header-brand-img" alt="MilkIn Logo">
+						</a>
+						<a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
+						@* <div class="header-navicon">
+							<a href="#" data-toggle="search" class="nav-link d-lg-none navsearch-icon">
+								<i class="fa fa-search"></i>
+							</a>
+						</div> *@
+						<div class="header-navsearch" style="padding-top: 15px;">
+							@* <a href="#" data-toggle="search" class="nav-link d-lg-none navsearch-icon">
+								<i class="fa fa-search"></i>
+							</a> *@
+							<h4 id="lblOrgName" class="text-white">
+								@Accessor.HttpContext!.Session.GetString("SessionOrgName")</h4>
+						</div>
+						<div class="d-flex order-lg-2 ml-auto">
+							<div class="header-navsearch" style="padding-top: 15px;">
+								@* <h4 class="text-white">CPU Usage Monitor</h4> *@
+								<h4 id="cpuUsageDisplay" class="text-white">
+									Loading CPU usage...
+								</h4>
+							</div>
+
+							<div class="dropdown d-none d-md-flex">
+								<a class="nav-link icon full-screen-link">
+									<i class="fe fe-maximize-2" id="fullscreen-button"></i>
+								</a>
+							</div>
+							<div class="dropdown ">
+								<a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
+									@* <img src="~/images/users/male/25.jpg" alt="profile-img" class="avatar avatar-md
+									brround"> *@
+									<span class="avatar avatar-md brround namebadge">
+										@Accessor.HttpContext!.Session.GetString("SessionUserName")
+									</span>
+								</a>
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
+									<a class="dropdown-item" href="javascript:void(0)" onclick="ShowMyProfileEntry();">
+										<i class="dropdown-icon icon icon-user"></i> My Profile
+									</a>
+									<a class="dropdown-item" href="#" onclick="ShowChangePasswordModal();">
+										<i class="dropdown-icon  icon icon-settings"></i> Change Password
+									</a>
+									<a class="dropdown-item" href="/Login/Logout">
+										<i class="dropdown-icon icon icon-power"></i> Log out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/App-Header-->
+			<!-- Sidebar menu-->
+			<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+			<aside class="app-sidebar doc-sidebar">
+				<!-- Menu will be added here -->
+				@Html.Raw(HttpUtility.HtmlDecode(@Accessor.HttpContext!.Session.GetString("SessionUserMenu")))
+
+			</aside>
+			<!-- /Sidebar menu-->
+			<!--App-Content-->
+			<main role="main" class="app-content  my-3 my-md-5">
+				@RenderBody()
+			</main>
+		</div>
+
+		<!--Footer-->
+		<footer class="footer">
+			<div class="container">
+				<div class="row align-items-center flex-row-reverse">
+					<div class="col-lg-12 col-sm-12 mt-3 mt-lg-0 text-center">
+						Copyright © @DateTime.Now.Year.ToString() <a href="#">MilkIn</a>. All rights reserved.
+					</div>
+				</div>
+				<span id="lblAccessString" hidden>@ViewBag.AccessString</span>
+			</div>
+		</footer>
+		<!--/Footer-->
+
+	</div>
+
+	<div class="modal fade" id="modelEntryMyProfile" tabdocumentation="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">User Details</h5>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="form-label">User Name</label>
+						<input type="text" id="txtEntryMyProfileName" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionUserName")">
+
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Mobile No</label>
+						<input type="text" id="txtEntryMyProfileMobileNo" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionMobileNo")">
+
+					</div>
+					<div class="form-group">
+						<label class="form-label">User Role</label>
+						<input type="text" id="txtEntryMyProfileRole" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionRoleName")">
+
+					</div>
+
+					<div class="form-group" hidden>
+						<label class="form-label">User Role Id</label>
+						<input type="text" id="txtEntryMyProfileRoleId" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionRoleId")">
+
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Email ID</label>
+						<input type="text" id="txtEntryMyProfileEmail" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionEmailId")">
+
+					</div>
+				</div>
+
+
+				<div class="modal-footer" style="justify-content:flex-start">
+					<button class="btn btn-primary btn-sm mr-2" style="height: calc(1.47em + 1rem + 2px);" type="button"
+						title="Ok" onclick="CloseMyProfileEntry();">
+						<i class="fa fa-info-circle mr-2"></i> Ok
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modelChangePassword" tabdocumentation="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Change Password</h5>
+
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="form-label">User Name</label>
+						<input type="text" id="txtPassChangeName" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" disabled
+							value="@Accessor.HttpContext!.Session.GetString("SessionUserName")">
+
+					</div>
+
+					<div class="form-group">
+						<label class="form-label">Current Password</label>
+						<input type="text" id="txtPassChangeCurPassword" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" value="">
+
+					</div>
+					<div class="form-group">
+						<label class="form-label">New Password</label>
+						<input type="text" id="txtPassChangeNewPassword" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);"
+							onkeyup="PasswordValidator_1($('#txtPassChangeNewPassword').val());" value="">
+						<div id="divPasswordInvalid" class="help-block text-danger">
+							Password Should be Minimum 8 characters and must contain at least one capital and one small
+							case letter with one number and one special character!
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="form-label">Re-enter New Password</label>
+						<input type="text" id="txtPassChangeNewRePassword" class="form-control" autocomplete="off"
+							onkeypress="ClearInvalidState(this);" value="">
+
+					</div>
+				</div>
+
+
+				<div class="modal-footer" style="justify-content:flex-start">
+					<button id="btnSavePassword" class="btn btn-primary btn-sm mr-2"
+						style="height: calc(1.47em + 1rem + 2px);" type="button" title="Change Password"
+						onclick="UpdatePassword();">
+						<i class="fa fa-info-circle mr-2"></i> Change Password
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- JQuery js-->
+	<script src="~/js/jquery-3.2.1.min.js"></script>
+	<script src="~/plugins/bootstrap-daterangepicker/moment.min.js"></script>
+	<!-- Bootstrap js -->
+	<script src="~/plugins/bootstrap-4.3.1/js/popper.min.js"></script>
+	<script src="~/plugins/bootstrap-4.3.1/js/bootstrap.min.js"></script>
+
+	<!--JQuery Sparkline Js-->
+	<script src="~/js/jquery.sparkline.min.js"></script>
+
+	<!-- Circle Progress Js-->
+	<script src="~/js/circle-progress.min.js"></script>
+
+	<!-- Star Rating Js-->
+	<script src="~/plugins/rating/jquery.rating-stars.js"></script>
+
+	<!-- Fullside-menu Js-->
+	<script src="~/plugins/sidemenu/sidemenu.js"></script>
+
+	<!--Select2 js -->
+	<script src="~/plugins/select2/select2.bundle.js"></script>
+
+	<!-- Timepicker js -->
+	<script src="~/plugins/time-picker/jquery.timepicker.js"></script>
+	<script src="~/plugins/time-picker/toggles.min.js"></script>
+
+	<!-- Datepicker js -->
+	<script src="~/plugins/date-picker/spectrum.js"></script>
+	<script src="~/plugins/date-picker/jquery-ui.js"></script>
+	<script src="~/plugins/input-mask/jquery.maskedinput.js"></script>
+
+	<!-- DateRangepicker js -->
+	<script src="~/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+	<script src="~/plugins/bootstrap-daterangepicker/daterange-picker.custom.js"></script>
+	<!-- file uploads js -->
+	<script src="~/plugins/fileuploads/js/fileupload.js"></script>
+
+	<!--InputMask Js-->
+	<script src="~/plugins/jquery-inputmask/jquery.inputmask.bundle.min.js"></script>
+
+	<!-- Custom scroll bar Js-->
+	<script src="~/plugins/pscrollbar/pscrollbar.js"></script>
+	<script src="~/plugins/pscrollbar/pscroll.js"></script>
+
+	<!-- Notifications js -->
+	<script src="~/plugins/notify/js/jquery.growl.js"></script>
+
+	<!-- Data tables -->
+	<script src="~/plugins/datatable/datatables.bundle.js"></script>
+	<script src="~/plugins/datatable/datatables.js"></script>
+	<!-- Sweet alert Plugin -->
+	<script src="~/plugins/sweet-alert/sweetalert.min.js"></script>
+
+	<!--Counters -->
+	<script src="~/plugins/counters/counterup.min.js"></script>
+	<script src="~/plugins/counters/waypoints.min.js"></script>
+	<!--Badges -->
+	<script src="~/plugins/namebadge/jquery.nameBadges.js"></script>
+	<!-- Custom Js-->
+	<script src="~/js/admin-custom.js"></script>
+	<script src="~/tran_js/common.js" asp-append-version="true"></script>
+
+
+
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			var sessionUserName = "@Accessor.HttpContext!.Session.GetString("SessionUserName")";
+			if (sessionUserName == "" || sessionUserName == null || sessionUserName == undefined) {
+				window.location.href = "/Login/Logout";
+			}
+		});
+		$('.namebadge').nameBadge({
+			border: {
+				width: 0
+			},
+			colors: ['#1abc9c', '#2ecc71', '#e74c3c', '#34495e', '#f1c40f'],
+			text: '#fff',
+			margin: 0,
+			size: 35
+		});
+
+
+	</script>
+
+	@await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

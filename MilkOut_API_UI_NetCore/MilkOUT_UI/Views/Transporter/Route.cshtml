@@ -1,0 +1,162 @@
+﻿@{
+    ViewData["Title"] = "Route";
+    string AccessString = ViewBag.AccessString;
+    if (AccessString == null)
+    {
+        AccessString = "0000";
+    }
+    bool ShowAddButton = false;
+    if (AccessString.Substring(1, 1) == "1")
+    {
+        ShowAddButton = true;
+    }
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Route</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Transporter</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Route</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Route List</div>
+                    <div class="card-options">
+
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Route Name</label>
+                                <input type="text" class="form-control" id="txtSearchRouteName" placeholder="Route Name"
+                                    maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-3 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label-search">Order Date <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="txtSearchDate" name="datefilter"
+                                    placeholder="Sales Order Date" maxlength="50" autocomplete="off"
+                                    onkeypress="ClearDataTable('tableSearch');ClearInvalidState(this);"
+                                    onchange="ClearInvalidState(this)">
+                                <div class="invalid-feedback">Invalid Sales Order Date</div>
+                            </div>
+                        </div>
+                        @* <div class="col-sm-6 col-md-3 col-lg-3">
+                        <div class="form-group">
+                        <label class="form-label-search">Route Code</label>
+                        <input type="text" class="form-control" id="txtSearchRouteCode"
+                        placeholder="Route Code"
+                        maxlength="50" autocomplete="off" onchange="ClearDataTable('tableSearch')">
+                        <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                        </div> *@
+
+
+
+                        <div class="col-sm-6 col-lg-3 col-md-3">
+                            <button class="btn btn-sm btn-secondary" style="height: calc(1.47em + 1rem + 2px);"
+                                type="button" title="Search" onclick="GetSearchList(this);">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Route Name</th>
+                                    <th>Vehicle</th>
+                                    <th>Assign Date</th>
+                                    @* <th>latitude</th>
+                                    <th>longitude</th> *@
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 80px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+
+<!--MODAL SECTION-->
+<div class="modal fade" id="modelEntryRoute" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AddEditRouteItem"></h5>
+                <span hidden id="lblActionRouteItem"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="ddlEntryModelType" class="form-label">Type <span class="text-red">*</span></label>
+                    <select id="ddlEntryModelType" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this); ChangeType();">
+                        <option value="">Select Type</option>
+                    </select>
+                    <span id="lblModelEntryId" hidden style="display: none;"></span>
+                    <span id="lblModelAction" hidden style="display: none;"></span>
+                    <div class="invalid-feedback">Type must be selected.</div>
+                </div>
+                <div class="form-group" id="divEntryModelDealer" style="display: none;">
+                    <label for="ddlEntryModelDealer" class="form-label">Dealer <span class="text-red">*</span></label>
+                    <select id="ddlEntryModelDealer" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this);">
+                        <option value="">Select Dealer</option>
+                    </select>
+                    <div class="invalid-feedback">Dealer must be selected.</div>
+                </div>
+                <div class="form-group" id="divEntryModelRetailer" style="display: none;">
+                    <label for="ddlEntryModelRetailer" class="form-label">Retailer <span
+                            class="text-red">*</span></label>
+                    <select id="ddlEntryModelRetailer" class="form-control select2 w-100" required=""
+                        onchange="ClearInvalidState(this);">
+                        <option value="">Select Retailer</option>
+                    </select>
+                    <div class="invalid-feedback">Retailer must be selected.</div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Item"
+                    onclick="SaveRouteItemEntry();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/tran_js/transporter_route.js" asp-append-version="true"></script>
+}

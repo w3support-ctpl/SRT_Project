@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h5 class="page-title">Payments</h5>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Primary</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Payments</li>
+        </ol>
+    </div>
+
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Payment List </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH Delivery-->
+                    <div class="row">
+
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Name </label>
+                                <select id="ddlSearchDealerName" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this);">
+                                    <option value="">Select Dealer Name </option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Payments Date</label>
+                                <input type="text" name="datefilter" class="form-control" id="txtSearchPaymentsDate"
+                                    placeholder="Payments Date" autocomplete="off">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <button id="btn_SearchPDF" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchPDFList();">
+                                <i class="fa fa-search mr-2"></i> View PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive" id="tableStructure">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">SR NO.</th>
+                                    <th>Document Number</th>
+                                    <th>Billing Number</th>
+                                    <th>Payment Date</th>
+                                    <th>Document Type</th>
+                                    <th>Amount</th>
+                                    <th>Currency</th>
+                                    <th hidden></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div id="pdfStructure">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="divContent" class="row">
+</div>
+
+
+
+
+@section Scripts {
+    <script src="~/tran_js/payment.js" asp-append-version="true"></script>
+}

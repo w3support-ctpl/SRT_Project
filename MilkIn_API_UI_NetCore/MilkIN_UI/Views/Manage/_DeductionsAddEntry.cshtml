@@ -1,0 +1,86 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Deductions Entry</div>
+            <div class="card-options">
+                <a href="#" class="btn btn-primary btn-sm mr-2" onclick="SaveAddEntry(this);"><i
+                        class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <!--ENTRY SECTION-->
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryUserType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); GetUserName();GetRequestType();">
+                            <option value="">Select User Type</option>
+                        </select>
+                        <div class="invalid-feedback">User Type must be selected.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divMCCName">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryMCCName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this); GetFarmer();">
+                            <option value="">Select MCC Name</option>
+                        </select>
+                        <div class="invalid-feedback">MCC Name must be selected.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">User Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryUserName" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select User Name</option>
+                        </select>
+                        <div class="invalid-feedback">User Name must be selected.</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Deduction Type <span class="text-red">*</span></label>
+                        <select id="ddlEntryRequestType" class="form-control select2 w-100" required=""
+                            onchange="ClearInvalidState(this);">
+                            <option value="">Select Type</option>
+                        </select>
+                        <div class="invalid-feedback">Deduction Type must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Amount <span class="text-red">*</span></label>
+                        <input type="text" id="txtEntryAmount" onchange="ClearInvalidState(this);"
+                            onkeypress="ClearInvalidState(this);" class="form-control" placeholder="" maxlength="30"
+                            autocomplete="off">
+                        <div class="invalid-feedback">Invalid Amount</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Entry Date </label>
+                        <input type="date" id="txtEntryDate" onchange="ClearInvalidState(this);"
+                            onkeypress="ClearInvalidState(this);" class="form-control" placeholder="" maxlength="30"
+                            autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

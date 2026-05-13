@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Complaint Type";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Complaint Type</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Complaint Type</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Complaint Type List</div>
+                    <div class="card-options">
+                        <a href="#" id="btn_Add" class="btn btn-primary btn-sm" onclick="ShowAddEntry();"><i
+                                class="fa fa-plus mr-2"></i> Add</a>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Complaint Type Name</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+<!--MODAL Edit Targets-->
+<div class="modal fade" id="modelComplaintType" tabdocumentation="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Complaint Type</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="form-label">Complaint Type Name</label>
+                            <input type="text" class="form-control" id="txtSearchComplaintTypeName"
+                                placeholder="Complaint Type Name" maxlength="50" autocomplete="off">
+                            <div class="invalid-feedback">Invalid feedback</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content:flex-start">
+                <button type="button" class="btn btn-primary" id="btn_Save_Item"
+                    onclick="SaveEntryItem();">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/master_complainttype.js" asp-append-version="true"></script>
+}

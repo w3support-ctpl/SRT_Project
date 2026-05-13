@@ -1,0 +1,148 @@
+﻿<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Material Issue To MCC Entry</div>
+            <div class="card-options">
+                <label class="custom-switch" style="margin-right: 40px;">
+                    Active Status
+                    <input id="chkEntryStatus" type="checkbox" value="1" class="custom-switch-input" checked>
+                    <span class="custom-switch-indicator" style="margin-left: 10px"></span>
+                </label>
+                <a href="#" id="btn_Save" class="btn btn-primary btn-sm mr-2" onclick="SaveEntry();"><i class="fa fa-save mr-2"></i> Save</a>
+                <a href="javascript:void(0)" class="btn btn-sm btn-link" onclick="CloseEntry()">Close</a>
+            </div>
+        </div>
+        <div id="divEntrySuccess" class="card-alert alert alert-success mb-0" style="display: none;">
+            Save action was successful
+        </div>
+        <div id="divEntryError" class="card-alert alert alert-danger mb-0" style="display: none;">
+            Save action failed
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Delivery No </label>
+                        <input type="text" id="txtEntryDeliveryNo" class="form-control" placeholder="" maxlength="50"
+                               autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Delivery No can't be blank.</div>
+                        <span id="lblEntryId" hidden style="display: none;"></span>
+                        <span id="lblAction" hidden style="display: none;"></span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Delivery Date </label>
+                        <input type="date" id="txtEntryDeliveryDate" class="form-control" placeholder="" maxlength="50"
+                               autocomplete="off" onkeypress="ClearInvalidState(this);" disabled>
+                        <div class="invalid-feedback">Invalid Delivery Date</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">MCC Name <span class="text-red">*</span></label>
+                        <select id="ddlEntryMCCName" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select MCC Name</option>
+                        </select>
+                        <div class="invalid-feedback">MCC Name must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No <span class="text-red">*</span></label>
+                        <select id="ddlEntryVehicleNo" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Vehicle No</option>
+                        </select>
+                        <div class="invalid-feedback">Vehicle No must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryVehicleNo" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Vehicle No </label>
+                        <input type="text" id="txtEntryVehicleNo" class="form-control" placeholder="Enter Vehicle No"
+                               maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Vehicle No can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Driver <span class="text-red">*</span></label>
+                        <select id="ddlEntryDriverId" class="form-control select2 w-100"
+                                required="" onchange="ClearInvalidState(this);">
+                            <option value="">Select Driver</option>
+                        </select>
+                        <div class="invalid-feedback">Driver must be selected.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12" id="divEntryDriverName" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Driver Name </label>
+                        <input type="text" id="txtEntryDriverName" class="form-control" placeholder="Enter Driver Name"
+                               maxlength="50" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Driver Name can't be blank.</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-12">
+                    <div class="form-group">
+                        <label class="form-label">Mobile No </label>
+                        <input type="tel" id="txtEntryMobileNo" class="form-control" placeholder="Enter Mobile No"
+                               maxlength="10" autocomplete="off" onkeypress="ClearInvalidState(this);">
+                        <div class="invalid-feedback">Invalid Mobile No</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="divMaterialList">
+                <div class="col-12">
+                    <div class="panel panel-primary">
+                        <div>
+                            <div class="user-tabs mb-4">
+                                <!-- Tabs -->
+                                <ul class="nav panel-tabs">
+                                    <li class=""><a href="#tab1" class="active" data-toggle="tab">Material Entry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab1">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Material List</div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="tableMaterialList" class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th hidden>Order For User Id</th>
+                                                    <th>User Type</th>
+                                                    <th>User Name</th>
+                                                    <th>Order Type</th>
+                                                    <th hidden>Order Id</th>
+                                                    <th hidden>Material Id</th>
+                                                    <th>Material Name</th>
+                                                    <th>Approved Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tableEntryMaterialList">
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

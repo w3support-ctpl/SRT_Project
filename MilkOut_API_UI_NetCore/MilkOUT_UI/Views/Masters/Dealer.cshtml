@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Dealer";
+}
+
+<div class="side-app">
+    <div class="page-header">
+        <h4 class="page-title">Dealer</h4>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Masters</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dealer</li>
+        </ol>
+    </div>
+    <!--/Page-Header-->
+    <div id="divSearch" class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Dealer List</div>
+                    <div class="card-options">
+
+
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm  mr-2"
+                            onclick="ShowDownloadEntry();"><i class="fa fa-download mr-2"></i> Download</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                            onclick="DownloadDealerRoute();"><i class="fa fa-download mr-2"></i> Download Route</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                            onclick="SalesGroupEntryAll();"><i class="fa fa-download mr-2"></i>
+                            Download Sales Group</a>
+                        <a href="javascript:void(0);" class="btn btn-primary btn-sm mr-2"
+                            onclick="DownloadDealerSecurityDepositAmount();"><i class="fa fa-download mr-2"></i>
+                            Download Security Deposit</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!--SEARCH FIELDS-->
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Dealer Code</label>
+                                <input type="text" class="form-control" id="txtSearchDealerCode"
+                                    placeholder="Dealer Code" required="" onchange="ClearDataTable('tableSearch')"
+                                    style="font-size: .8375rem;" />
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+
+                                <label class="form-label-search">Dealer Name</label>
+                                <input type="text" class="form-control" id="txtSearchDealerName"
+                                    placeholder="Dealer Name" maxlength="50" autocomplete="off"
+                                    onchange="ClearDataTable('tableSearch')">
+                                <div class="invalid-feedback">Invalid feedback</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label-search">Sales Group </label>
+                                <select id="ddlSearchSalesArea" class="form-control select2 w-100" required=""
+                                    onchange="ClearInvalidState(this); ClearDataTable('tableSearch')">
+                                    <option value="">Select Sales Group</option>
+                                </select>
+                                @* <div class="invalid-feedback">Invalid input</div>*@
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <button id="btn_Search" class="btn btn-sm btn-secondary"
+                                style="height: calc(1.47em + 1rem + 2px);" type="button" title="Search"
+                                onclick="GetSearchList();">
+                                <i class="fa fa-search mr-2"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableSearch"
+                            class="hover table table-bordered table-hover table-striped w-100 border-top-0 border-bottom-0">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">#</th>
+                                    <th>Dealer Code</th>
+                                    <th>Dealer Name</th>
+                                    <th>Sale Group</th>
+                                    <th>Sales User</th>
+                                    <th>Phone No</th>
+                                    <th>Mobile No</th>
+                                    <th>Contact Person</th>
+                                    <th>Email Id</th>
+                                    <th>Address Line 1 Text</th>
+                                    <th>Address Line 2 Text</th>
+                                    <th>Address Line 3 Text</th>
+                                    <th>State Name</th>
+                                    <th>District Name</th>
+                                    <th>Taluka Name</th>
+                                    <th>Village Name</th>
+                                    <th>Pincode</th>
+                                    <th>Pan No</th>
+                                    <th>Bank Name</th>
+                                    <th>Branch Name</th>
+                                    <th>Account No</th>
+                                    <th>Ifsc Code</th>
+                                    <th>Account Name</th>
+                                    <th>Msme No</th>
+                                    <th>Fssai License No</th>
+                                    <th>Fssai Licensevalidity On</th>
+                                    <th>Gst No</th>
+                                    <th>Agreementvalidiy Startdate</th>
+                                    <th>Agreementvalidity Enddate</th>
+                                    <th>Securitydepositamount</th>
+                                    <th>Shoplatitude</th>
+                                    <th>Shoplongitude</th>
+                                    <th>Payment Url</th>
+                                    <th>Cratelimit</th>
+                                    <th>Status</th>
+                                    <th class="text-right" style="width: 50px;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableData">
+                                @*<tr>
+                                   <td style="width: 20px;">1</td>
+                                    <td>D001</td>
+                                    <td>X Y Z</td>
+                                   
+                                   <td>Mumbai</td>
+                                    <td>9011767345</td>
+                                    <td>Manik Patil</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('1');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td style="width: 20px;">2</td>
+                                    <td>D002</td>
+                                    <td>P Q R</td>
+                                    <td>Pune</td>
+                                    <td>9011799345</td>
+                                    <td>Pratik Kale</td>
+                                    <td class="text-right" style="width: 50px; padding: 8px 5px 8px 5px;">
+                                        <a href="javascript:void(0);" class="btn btn-icon py-0" title="Edit" onclick="ShowEditEntry('2');">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </td>
+                                </tr>*@
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divContent" class="row">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    <script src="~/tran_js/masters_Dealer.js" asp-append-version="true"></script>
+}
