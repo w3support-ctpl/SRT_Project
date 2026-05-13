@@ -1,0 +1,34 @@
+-- MySQL dump 10.13
+--
+-- Host: 20.235.14.88    Database: d003_srtprd
+-- ------------------------------------------------------
+
+DROP TABLE IF EXISTS `t106_mcc_material_issue_item`;
+CREATE TABLE `t106_mcc_material_issue_item` (
+  `Org_Id` varchar(20) NOT NULL,
+  `Entry_Id` varchar(20) NOT NULL,
+  `Issue_Id` varchar(45) NOT NULL,
+  `Date` datetime NOT NULL,
+  `Amount` decimal(10,2) DEFAULT NULL,
+  `Is_Deducted` int DEFAULT NULL,
+  `Invoice_Id` varchar(20) DEFAULT NULL,
+  `Is_InvoiceCreated` int DEFAULT '0',
+  `InvoiceCreated_On` datetime DEFAULT NULL,
+  `Is_Check` int DEFAULT '0',
+  `MusterCycle_StartDate` date DEFAULT NULL,
+  `MusterCycle_EndDate` date DEFAULT NULL,
+  PRIMARY KEY (`Org_Id`,`Entry_Id`,`Issue_Id`,`Date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000001','T106251000003','07/23/2025 00:00:00',1600.00,0,NULL,0,NULL,0,'07/21/2025','07/31/2025');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000002','T106251000004','12/20/2025 00:00:00',4050.00,0,NULL,0,NULL,0,'12/11/2025','12/20/2025');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000003','T106251000004','12/30/2025 00:00:00',4050.00,0,NULL,0,NULL,0,'12/21/2025','12/31/2025');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000004','T106251000004','01/09/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'01/01/2026','01/10/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000005','T106251000004','01/19/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'01/11/2026','01/20/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000006','T106251000004','01/29/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'01/21/2026','01/31/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000007','T106251000004','02/08/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'02/01/2026','02/10/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000008','T106251000004','02/18/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'02/11/2026','02/20/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000009','T106251000004','02/28/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'02/21/2026','02/28/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000010','T106251000004','03/10/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'03/01/2026','03/10/2026');
+INSERT INTO `t106_mcc_material_issue_item` VALUES('C005','T106A251000011','T106251000004','03/20/2026 00:00:00',4050.00,0,NULL,0,NULL,0,'03/11/2026','03/20/2026');
+
+-- Dump completed on 2026-05-12 17:16:21

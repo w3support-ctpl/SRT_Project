@@ -1,0 +1,33 @@
+-- MySQL dump 10.13
+--
+-- Host: 20.235.14.88    Database: d003_srtprd
+-- ------------------------------------------------------
+
+DROP TABLE IF EXISTS `m023_product_group`;
+CREATE TABLE `m023_product_group` (
+  `Org_Id` varchar(20) NOT NULL,
+  `ProductGroup_Id` varchar(45) NOT NULL,
+  `Product_Group` varchar(100) DEFAULT NULL,
+  `Product_Name` varchar(150) DEFAULT NULL,
+  `Is_Active` int DEFAULT '1',
+  `Is_Deleted` int DEFAULT '0',
+  PRIMARY KEY (`Org_Id`,`ProductGroup_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `m023_product_group` VALUES('C005','M023231000524','DAHIP','DAHI ',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000532','CHACHP','CHACH ',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000534','LASSIP','LASSI',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000539','SHRIKDP','SHRIKHAND',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000553','CHAKKAP','CHAKKA',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000554','KHOAP','KHOA',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000558','PANEERP','PANEER',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000567','CREAMP','CREAM',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000568','BUTTERP','BUTTER',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000586','CUSTFINIS','NVM',0,1);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000587','POUCHMILK','MILK',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000602','SWEETWETP','PEDHA',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000606','FLVMKP','FLAVOURED MILK',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000619','POWDERP','MILK POWDER',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000631','GHEEP','GHEE',1,0);
+INSERT INTO `m023_product_group` VALUES('C005','M023231000678','STERLZEDP','ESL MILK',1,0);
+
+-- Dump completed on 2026-05-12 17:15:49
